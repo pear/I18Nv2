@@ -56,7 +56,7 @@ class I18Nv2
     */
     function setLocale($locale = null, $cat = LC_ALL)
     {
-        static $triedFallback = false;
+        static $triedFallbacks;
         
         if (!isset($locale)) {
             return setLocale($cat, null);
@@ -77,15 +77,21 @@ class I18Nv2
             $setlocale = $locale;
         }
 
+        if (!isset($triedFallbacks[$locale])) {
+            $triedFallbacks[$locale] = false;
+        } else {
+            $setlocale = $triedFallbacks[$locale];
+        }
+        
         $syslocale = setLocale($cat, $setlocale);
         
         // if the locale is not recognized by the system, check if there 
         // is a fallback locale and try that, otherwise return false
         if (!$syslocale) {
-            if ($triedFallback) {
+            if ($triedFallbacks[$locale]) {
                 return false;
             } else {
-                $triedFallback = true;
+                $triedFallbacks[$locale] = $setlocale;
                 $fallbacks = I18Nv2::getStaticProperty('fallbacks');
                 if (isset($fallbacks[$locale])) {
                     return I18Nv2::setLocale($fallbacks[$locale], $cat);
