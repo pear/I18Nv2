@@ -239,56 +239,69 @@ class I18Nv2_Locale
     {
         $this->initialized = $locale;
         $usedLocale = I18Nv2::setLocale($locale);
-
+        
+        $jan = $mon = mktime(1,1,1,1,1,1990);
+        $feb = $tue = mktime(1,1,1,2,6,1990);
+        $mar = $wed = mktime(1,1,1,3,7,1990);
+        $apr = $thu = mktime(1,1,1,4,5,1990);
+        $may = $fri = mktime(1,1,1,5,4,1990);
+        $jun = $sat = mktime(1,1,1,6,2,1990);
+        $jul = $sun = mktime(1,1,1,7,1,1990);
+        $aug = mktime(1,1,1,8,1,1990);
+        $sep = mktime(1,1,1,9,1,1990);
+        $oct = mktime(1,1,1,10,1,1990);
+        $nov = mktime(1,1,1,11,1,1990);
+        $dec = mktime(1,1,1,12,1,1990);
+        
         if (!$this->loadCache($usedLocale)) {
             $this->days = array(
-                strftime('%A', 320000),
-                strftime('%A', 406000),
-                strftime('%A', 492800),
-                strftime('%A', 579200),
-                strftime('%A', 665600),
-                strftime('%A', 752000),
-                strftime('%A', 838400),
+                strftime('%A', $sun),
+                strftime('%A', $mon),
+                strftime('%A', $tue),
+                strftime('%A', $wed),
+                strftime('%A', $thu),
+                strftime('%A', $fri),
+                strftime('%A', $sat),
             );
             
             $this->abbrDays = array(
-                strftime('%a', 320000),
-                strftime('%a', 406000),
-                strftime('%a', 492800),
-                strftime('%a', 579200),
-                strftime('%a', 665600),
-                strftime('%a', 752000),
-                strftime('%a', 838400),
+                strftime('%a', $sun),
+                strftime('%a', $mon),
+                strftime('%a', $tue),
+                strftime('%a', $wed),
+                strftime('%a', $thu),
+                strftime('%a', $fri),
+                strftime('%a', $sat),
             );
     
             $this->months = array(
-                strftime('%B', 978307261),
-                strftime('%B', 980985661),
-                strftime('%B', 983404861),
-                strftime('%B', 986079661),
-                strftime('%B', 988671661),
-                strftime('%B', 991350061),
-                strftime('%B', 993942061),
-                strftime('%B', 996620461),
-                strftime('%B', 999298861),
-                strftime('%B', 1001890861),
-                strftime('%B', 1004572861),
-                strftime('%B', 1007164861),
+                strftime('%B', $jan),
+                strftime('%B', $feb),
+                strftime('%B', $mar),
+                strftime('%B', $apr),
+                strftime('%B', $may),
+                strftime('%B', $jun),
+                strftime('%B', $jul),
+                strftime('%B', $aug),
+                strftime('%B', $sep),
+                strftime('%B', $oct),
+                strftime('%B', $nov),
+                strftime('%B', $dec),
             );
             
             $this->abbrMonths = array(
-                strftime('%b', 978307261),
-                strftime('%b', 980985661),
-                strftime('%b', 983404861),
-                strftime('%b', 986079661),
-                strftime('%b', 988671661),
-                strftime('%b', 991350061),
-                strftime('%b', 993942061),
-                strftime('%b', 996620461),
-                strftime('%b', 999298861),
-                strftime('%b', 1001890861),
-                strftime('%b', 1004572861),
-                strftime('%b', 1007164861),
+                strftime('%b', $jan),
+                strftime('%b', $feb),
+                strftime('%b', $mar),
+                strftime('%b', $apr),
+                strftime('%b', $may),
+                strftime('%b', $jun),
+                strftime('%b', $jul),
+                strftime('%b', $aug),
+                strftime('%b', $sep),
+                strftime('%b', $oct),
+                strftime('%b', $nov),
+                strftime('%b', $dec),
             );
             
             $info = I18Nv2::getInfo();
