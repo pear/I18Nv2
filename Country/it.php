@@ -4,7 +4,7 @@
 *
 * @author   Lorenzo Alberton <quipo@php.net>
 * @charset  ISO-8859-1
-* @language en
+* @language it
 */
 
 $this->_codes = array(
