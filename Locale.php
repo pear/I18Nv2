@@ -190,15 +190,32 @@ class I18Nv2_Locale
     var $cache = array();
     
     /**
+     * Whether to reset the global locale after each call
+     * 
+     * @access  protected
+     * @var     bool
+     */
+    var $paranoid = false;
+    
+    /**
+     * Store system locale for paranoid mode
+     * 
+     * @access  protected
+     * @var     string
+     */
+    var $usedLocale = '';
+    
+    /**
      * Constructor
      *
      * @access  public
      * @param   string  $locale
      */
-    function I18Nv2_Locale($locale = null)
+    function I18Nv2_Locale($locale = null, $paranoid = false)
     {
         $locale or $locale = I18Nv2::lastLocale(0, 'locale');
         $this->setLocale($locale);
+        $this->setParanoid($paranoid);
     }
     
     /**
@@ -238,7 +255,7 @@ class I18Nv2_Locale
     function initialize($locale)
     {
         $this->initialized = $locale;
-        $usedLocale = I18Nv2::setLocale($locale);
+        $this->usedLocale = I18Nv2::setLocale($locale);
         
         $jan = $mon = mktime(1,1,1,1,1,1990);
         $feb = $tue = mktime(1,1,1,2,6,1990);
@@ -253,7 +270,7 @@ class I18Nv2_Locale
         $nov = mktime(1,1,1,11,1,1990);
         $dec = mktime(1,1,1,12,1,1990);
         
-        if (!$this->loadCache($usedLocale)) {
+        if (!$this->loadCache($this->usedLocale)) {
             $this->days = array(
                 strftime('%A', $sun),
                 strftime('%A', $mon),
@@ -381,11 +398,16 @@ class I18Nv2_Locale
                         $this->timeFormats[I18Nv2_DATETIME_FULL],
                 );
             }
-            $this->updateCache($usedLocale);
+            $this->updateCache($this->usedLocale);
         }
         
         $this->setDefaults();
-        return $usedLocale;
+        
+        if ($this->paranoid) {
+            setlocale(LC_ALL, 'C');
+        }
+        
+        return $this->usedLocale;
     }
     
     /**
@@ -460,6 +482,21 @@ class I18Nv2_Locale
         $this->currentDateTimeFormat    = $this->dateTimeFormats[I18Nv2_DATETIME_DEFAULT];
         $this->currentNumberFormat      = $this->numberFormats[I18Nv2_NUMBER_FLOAT];
         $this->currentCurrencyFormat    = $this->currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
+    }
+    
+    /**
+     * Set Paranoid Mode
+     * 
+     * Whether to reset to the C-locale after every call.
+     * 
+     * @access  public
+     * @return  void
+     * @param   bool    $paranoid Whether to enable paranoid mode.
+     */
+    function setParanoid($paranoid = false)
+    {
+        $this->paranoid = (bool) $paranoid;
+        $paranoid and setLocale(LC_ALL, 'C');
     }
     
     /**
@@ -694,7 +731,10 @@ class I18Nv2_Locale
     {
         $format = isset($overrideFormat) ? 
             $this->dateFormats[$overrideFormat] : $this->currentDateFormat;
-        return strftime($format, isset($timestamp) ? $timestamp : time());
+        $this->paramoid and setLocale(LC_ALL, $this->usedLocale);
+        $date = strftime($format, isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, 'C');
+        return $date;
     }
     
     /**
@@ -709,7 +749,9 @@ class I18Nv2_Locale
     {
         $format = isset($overrideFormat) ? 
             $this->timeFormats[$overrideFormat] : $this->currentTimeFormat;
-        return strftime($format, isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, $this->usedLocale);
+        $date = strftime($format, isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, 'C');
     }
 
     /**
@@ -725,7 +767,10 @@ class I18Nv2_Locale
         $format = isset($overrideFormat) ?
             $this->dateTimeFormats[$overrideFormat] : 
             $this->currentDateTimeFormat;
-        return strftime($format, isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, $this->usedLocale);
+        $date = strftime($format, isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, 'C');
+        return $date;
     }
     
     /**
@@ -737,7 +782,10 @@ class I18Nv2_Locale
      */
     function time($timestamp = null)
     {
-        return strftime('%X', isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, $this->usedLocale);
+        $time = strftime('%X', isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, 'C');
+        return $time;
     }
     
     /**
@@ -749,7 +797,9 @@ class I18Nv2_Locale
      */
     function date($timestamp = null)
     {
-        return strftime('%x', isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, $this->usedLocale);
+        $date = strftime('%x', isset($timestamp) ? $timestamp : time());
+        $this->paranoid and setLocale(LC_ALL, 'C');
     }
     
     /**
