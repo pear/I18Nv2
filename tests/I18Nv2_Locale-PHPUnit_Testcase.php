@@ -1,5 +1,8 @@
 <?php
 
+// some tests may fail with other locales - just see yourself
+$GLOBALS['____locale'] = 'en_US';
+
 require_once 'PHPUnit.php';
 require_once 'I18Nv2/Locale.php';
 
@@ -29,7 +32,7 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     */
     function setUp()
     {
-        $this->l = &new I18Nv2_Locale('en_US');
+        $this->l = &new I18Nv2_Locale($GLOBALS['____locale']);
         $this->t = time();
     }
 
@@ -51,7 +54,7 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     */
     function testsetLocale()
     {
-        $this->assertFalse(PEAR::isError($this->l->setLocale('en_US')));
+        $this->assertFalse(PEAR::isError($this->l->setLocale($GLOBALS['____locale'])));
     }
 
     /**
