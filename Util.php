@@ -188,5 +188,32 @@ class I18Nv2_Util
         }
         return $utf;
     }
+    
+    /**
+    * Apply iconv() to an array
+    *
+    * @access   public
+    * @return   array
+    * @param    array   $array
+    * @param    string  $ocs
+    * @param    string  $ics
+    */
+    function iconvArray($array, $ocs)
+    {
+        array_walk($array, array('I18Nv2_Util', '_iconv_r'), $ocs);
+        return $array;
+    }
+    
+    /**
+    * Apply iconv() to an array
+    *
+    * @access   private
+    * @return   void
+    */
+    function _iconv_r(&$data, $key, $ocs)
+    {
+        $data = @iconv('UTF-8', $ocs, $data);
+    }
+    
 }
 ?>
