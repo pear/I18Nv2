@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.31 $ -->
+<!-- $Revision: 1.32 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -7,17 +7,13 @@ Internationalization
  </summary>
 
  <description>
-This package provides basic support to localize your application, like locale based formatting of dates, numbers and currency.  Beside that it attempts to provide an OS independent way to setlocale() and aims to provide language and country names translated into many languages.
+This package provides basic support to localize your application, 
+like locale based formatting of dates, numbers and currencies.
 
-PUBLIC REQUEST
---------------
-As I'm not able to dig through all locales of the world, any contribution of locale dependent information is very wellcome!
+Beside that it attempts to provide an OS independent way to setlocale() 
+and aims to provide language and country names translated into many languages.
 
-There's very need of people contributing:
- * locale dependent date/time formatting conventions
- * translations and reviews of country names (I18Nv2_Country)
- * translations and reviews of language names (I18Nv2_Language)
-Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if your language or locale is already fully covered.
+NOTE: Contributions are very welcome!
  </description>
 
  <maintainers>
@@ -36,16 +32,16 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
  </maintainers>
 
  <release>
-  <version>0.6.0</version>
+  <version>0.7.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-05-03</date>
-  <notes>
-+ Added some examples
-* Silenced putenv() - save_mode restriction, mishal(@)centrum.cz
-* Fixed I18Nv2_Language, which didn't extend I18Nv2_CommonList
-* Fixed a typo in I18Nv2_DecoratedList_HtmlSelect (parse error)
-* Fixed key case handling in I18Nv2_Country and I18Nv2_Language
+  <date>2004-06-01</date>
+  <notes><![CDATA[
++ Added I18Nv2_DecoratedList_HtmlSpecialchars
++ Added I18Nv2::languageOf($locale)
++ Added I18Nv2::countryOf($locale)
++ Added I18Nv2::splitLocale($locale)
+]]>
   </notes>
 
   <filelist>
@@ -63,6 +59,7 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
     <dir name="DecoratedList">
       <file name="HtmlSelect.php" />
       <file name="HtmlEntities.php" />
+      <file name="HtmlSpecialchars.php" />
     </dir>
 
     <dir name="Country">
@@ -119,6 +116,7 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
 
     <dir name="Locale">
      <file name="af.php" />
+     <file name="cs.php" />
      <file name="da.php" />
      <file name="de.php" />
      <file name="en.php" />
@@ -270,6 +268,19 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
   o HtmlSelect
 + Added czech locale dependent date/time formats, mishal(@)centrum.cz
 + Fixed hebrew locales, sagi(@)php.net 
+   </notes>
+  </release>
+  <release>
+   <version>0.6.0</version>
+   <license>PHP</license>
+   <state>alpha</state>
+   <date>2005-05-03</date>
+   <notes>
++ Added some examples
+* Silenced putenv() - save_mode restriction, mishal(@)centrum.cz
+* Fixed I18Nv2_Language, which didn't extend I18Nv2_CommonList
+* Fixed a typo in I18Nv2_DecoratedList_HtmlSelect (parse error)
+* Fixed key case handling in I18Nv2_Country and I18Nv2_Language
    </notes>
   </release>
  </changelog>
