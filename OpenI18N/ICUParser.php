@@ -85,10 +85,10 @@ class I18Nv2_OpenI18N_ICUParser
     function parse($str)
     {
         $count = 0;
-        $length = strlen($str = $this->stripComments($str));
+        $length = $this->stripComments($str);
         while ($count < $length)
         {
-            $token = $str{$count};
+            $token = $str{$count++};
             if ('{' === $token) {
                 $this->node = &$this->node->addChild($this->buffer);
                 $this->buffer = '';
@@ -99,7 +99,6 @@ class I18Nv2_OpenI18N_ICUParser
             } else {
                 $this->buffer .= $token;
             }
-            ++$count;
         }
         return $length;
     }
@@ -120,12 +119,13 @@ class I18Nv2_OpenI18N_ICUParser
     * Strip comments
     * 
     * @access   public
-    * @return   string
+    * @return   int     cleaned strings length
     * @param    string  $string
     */
-    function stripComments($string)
+    function stripComments(&$string)
     {
-        return preg_replace('/\/\/.*$/m', '', $string);
+        $string = preg_replace('/\/\/.*$/m', '', $string);
+        return strlen($string);
     }
     
 }
@@ -171,6 +171,7 @@ class I18Nv2_OpenI18N_ICURootNode
     * 
     * @access   public
     * @return   mixed
+    * @param    string  $data
     */
     function prepareData($data)
     {
@@ -295,7 +296,7 @@ class I18Nv2_OpenI18N_ICUTreeNode extends I18Nv2_OpenI18N_ICURootNode
     * @return   object
     * @param    string  $name
     */
-    function I18Nv2_OpenI18N_ICUTreeNode(&$name)
+    function I18Nv2_OpenI18N_ICUTreeNode($name)
     {
         I18Nv2_OpenI18N_ICUTreeNode::__construct($name);
     }
