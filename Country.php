@@ -43,7 +43,7 @@ class I18Nv2_Country
     * @access private
     */
     var $_codes = array();
-    var $_language = 'en';
+    var $_language = '';
     var $_encoding = 'UTF-8';
     /**#@-**/
     
@@ -56,34 +56,74 @@ class I18Nv2_Country
     */
     function I18Nv2_Country($language = null, $encoding = null)
     {
-        $this->__construct($language, $encoding);
+        I18Nv2_Country::__construct($language, $encoding);
     }
 
     /**
-    * @access   public
+    * ZE2 Constructor
     * @ignore
     */
     function __construct($language = null, $encoding = null)
     {
-        if (isset($encoding)) {
-            $this->_encoding = $encoding;
-        }
-        if (isset($language)) {
-            $this->_language = $language;
-            @include 'I18Nv2/Country/' . strToLower($language) . '.php';
-        } elseif (class_exists('I18Nv2')) {
-            $locale = I18Nv2::lastLocale(0, true);
-            if (isset($locale)) {
-                $this->_language = $locale['language'];
-                @include 'I18Nv2/Country/' . $locale['language'] . '.php';
+        $this->setEncoding($encoding);
+        
+        if (!$this->setLanguage($language)) {
+            if (class_exists('I18Nv2')) {
+                $locale = I18Nv2::lastLocale(0, true);
+                if (isset($locale)) {
+                    $this->_language = $locale['language'];
+                    if (!@include 'I18Nv2/Country/' . $locale['language'] . '.php') {
+                        $this->setLanguage('en');
+                    }
+                }
+            } else {
+                $this->setLanguage('en');
             }
-        }
-        if (!count($this->_codes)) {
-            $this->_language = 'en';
-            include 'I18Nv2/Country/en.php';
         }
     }
 
+    /**
+    * Set active language
+    * 
+    * Note that each time you set a different language the corresponding
+    * language file has to be loaded again, too.
+    *
+    * @access   public
+    * @return   bool
+    * @param    string  $language
+    */
+    function setLanguage($language)
+    {
+        if (!isset($language)) {
+            return false;
+        }
+        $language = strToLower($language);
+        if (!strcmp($language, $this->_language)) {
+            return true;
+        }
+        if (@include "I18Nv2/Country/$language.php") {
+            $this->_language = $language;
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+    * Set active encoding
+    *
+    * @access   public
+    * @return   bool
+    * @param    string  $encoding
+    */
+    function setEncoding($encoding)
+    {
+        if (isset($encoding)) {
+            $this->_encoding = strToUpper($encoding);
+            return true;
+        }
+        return false;
+    }
+    
     /**
     * Check if Country Code is valid
     * 
@@ -105,7 +145,14 @@ class I18Nv2_Country
     */
     function getName($code)
     {
-        return iconv('UTF-8', $this->_encoding, @$this->_codes[strToUpper($code)]);
+        $code = strToUpper($code);
+        if (!isset($this->_codes[$code])) {
+            return '';
+        }
+        if (strcmp('UTF-8', $this->_encoding)) {
+            return iconv('UTF-8', $this->_encoding, $this->_codes[$code]);
+        }
+        return $this->_codes[$code];
     }
 
     /**
@@ -116,9 +163,12 @@ class I18Nv2_Country
     */
     function getAllCodes()
     {
-        $codes = $this->_codes;
-        array_walk($codes, array(&$this, '_iconv'));
-        return $codes;
+        if (strcmp('UTF-8', $this->_encoding)) {
+            $codes = $this->_codes;
+            array_walk($codes, array(&$this, '_iconv'));
+            return $codes;
+        }
+        return $this->_codes;
     }
     
     /**
