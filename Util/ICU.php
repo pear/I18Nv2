@@ -14,6 +14,16 @@
 // $Id$
 
 /**
+* I18Nv2::Util::ICU
+* 
+* @author       Michael Wallner <mike@php.net>
+* @package      I18NV2
+* @category     Internationalization
+*/
+
+require_once 'I18Nv2/Util.php';
+
+/**
 * I18Nv2_Util_ICU
 * 
 * @see  The OpenI18N Project    http://www.OpenI18N.org/
@@ -58,20 +68,36 @@ class I18Nv2_Util_ICU
     * 
     * @access   public
     * @return   object
+    * @param    array   $options
     */
-    function I18Nv2_Util_ICU()
+    function I18Nv2_Util_ICU($options = array())
     {
-        I18Nv2_Util_ICU::__construct();
+        I18Nv2_Util_ICU::__construct($options);
     }
     
     /**
     * ZE2 Constructor
     * @ignore
     */
-    function __construct()
+    function __construct($options = array())
     {
         $this->tree = &new I18Nv2_Util_ICU_RootNode;
         $this->node = &$this->tree;
+        $this->setOptions($options);
+    }
+    
+    /**
+    * Set Options
+    *
+    * @access   public
+    * @return   void
+    * @param    array   $options
+    */
+    function setOptions($options)
+    {
+        foreach ((array) $options as $property => $value) {
+            $this->$property = $value;
+        }
     }
     
     /**
@@ -141,36 +167,6 @@ class I18Nv2_Util_ICU
         $string = preg_replace('/\/\/.*$/m', '', $string);
         return strlen($string);
     }
-    
-    /**
-    * Converts literal unicode characters
-    * 
-    * Converts "\u00F4" style unicode to UTF-8 chracters
-    * Thanks to Asgeir Frimannsson!
-    *
-    * @static
-    * @access   public
-    * @return   string
-    * @param    string  $hex
-    */
-    function unichr($hex)
-    {
-        $utf = '';
-        $hex = hexdec((substr($hex, 0,2) === '\\u') ? substr($hex, 2) : $hex);
-        
-        if ($hex < 128) {
-            $utf = chr($hex);
-        } elseif ($hex < 2048) {
-            $utf .= chr(192 + (($hex - ($hex % 64)) / 64));
-            $utf .= chr(128 + ($hex % 64));
-        } else {
-            $utf .= chr(224 + (($hex - ($hex % 4096)) / 4096));
-            $utf .= chr(128 + ((($hex % 4096) - ($hex % 64)) / 64));
-            $utf .= chr(128 + ($hex % 64));
-        }
-        return $utf;
-    }
-    
 }
 
 /**
@@ -222,7 +218,7 @@ class I18Nv2_Util_ICU_RootNode
         foreach (preg_split('/",\s*"/', $data, -1, PREG_SPLIT_NO_EMPTY) as $d) {
             $d = preg_replace('/^[\s",]*(.+?)[\s",]*$/', '\\1', $d);
             $result[] = preg_replace('/(\\\\u([[:alnum:]]{4}))/e',
-                'I18Nv2_Util_ICU::unichr(\'\\2\')', $d);
+                'I18Nv2_Util::unichr(\'\\2\')', $d);
         }
         
         if (!$count = count($result)) {
