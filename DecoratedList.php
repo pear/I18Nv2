@@ -115,5 +115,67 @@ class I18Nv2_DecoratedList
         $decoratedList = 'I18Nv2_DecoratedList_' . $type;
         return new $decoratedList($this);
     }
+
+    /**
+    * changeKeyCase
+    *
+    * @access   protected
+    * @return   string
+    * @param    string  $code
+    */
+    function changeKeyCase($code)
+    {
+        return $this->list->changeKeyCase($code);
+    }
+
+    /**
+    * Set active language
+    * 
+    * Note that each time you set a different language the corresponding
+    * language file has to be loaded again, too.
+    *
+    * @access   public
+    * @return   bool
+    * @param    string  $language
+    */
+    function setLanguage($language)
+    {
+        return $this->list->setLanguage($language);
+    }
+    
+    /**
+    * Get current language
+    * 
+    * 
+    * @access   public
+    * @return   string
+    */
+    function getLanguage()
+    {
+        return $this->list->getLanguage();
+    }
+    
+    /**
+    * Set active encoding
+    *
+    * @access   public
+    * @return   bool
+    * @param    string  $encoding
+    */
+    function setEncoding($encoding)
+    {
+        return $this->list->setEncoding($encoding);
+    }
+    
+    /** 
+    * Get current encoding
+    * 
+    * @access   public
+    * @return   string
+    */
+    function getEncoding()
+    {
+        return $this->list->getEncdogin();
+    }
 }
 ?>
