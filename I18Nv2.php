@@ -187,11 +187,12 @@ class I18Nv2
      * @return  object  I18Nv2_Negotiator
      * @param   string  $defLang        default language
      * @param   string  $defCharset     default character set
+     * @param   string  $defCtry        default country
      */
-    function &createNegotiator($defLang = 'en', $defCharset = 'iso-8859-1')
+    function &createNegotiator($defLang = 'en', $defCharset = 'iso-8859-1', $defCtry = '')
     {
         require_once 'I18Nv2/Negotiator.php';
-        return new I18Nv2_Negotiator($defLang, $defCharset);
+        return new I18Nv2_Negotiator($defLang, $defCharset, $defCtry);
     }
     
     /**
