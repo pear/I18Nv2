@@ -140,7 +140,7 @@ class I18Nv2_Util_ICU
     function parse($str)
     {
         $count = 0;
-        $length = $this->stripComments($str);
+        $length = $this->prepareRawData($str);
         while ($count < $length)
         {
             $token = $str{$count++};
@@ -195,9 +195,11 @@ class I18Nv2_Util_ICU
     * @return   int     cleaned strings length
     * @param    string  $string
     */
-    function stripComments(&$string)
+    function prepareRawData(&$string)
     {
-        $string = preg_replace('/\/\/.*$/m', '', $string);
+        static $s = array('/\/\/.*$/m', '/\\\\u([0-9a-fA-F]{4})/e');
+        static $r = array('', 'I18Nv2_Util::unichr("\\1")');
+        $string = preg_replace($s, $r, $string);
         return strlen($string);
     }
     
@@ -251,13 +253,9 @@ class I18Nv2_Util_ICU
     */
     function prepareData($data)
     {
-        static $search  = array('/^[\s",]*(.+?)[\s",]*$/', '/(\\\\u([[:alnum:]]{4}))/e');
-        static $replace = array('\\1', 'I18Nv2_Util::unichr(\'\\2\')');
+        preg_match_all('/"(.*?)",?/', $data, $matches);
         
-        $result = array();
-        foreach (preg_split('/",\s*"/', $data, -1, PREG_SPLIT_NO_EMPTY) as $d) {
-            $result[] = preg_replace($search, $replace, $d);
-        }
+        $result = $matches[1];
         
         if (!$count = count($result)) {
             return iconv('UTF-8', $this->encoding, trim($data));
