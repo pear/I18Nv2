@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.25 $ -->
+<!-- $Revision: 1.26 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -36,16 +36,13 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
  </maintainers>
 
  <release>
-  <version>0.6.0</version>
+  <version>0.7.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-05-03</date>
+  <date>2004-05-05</date>
   <notes>
-+ Added some examples
-* Silenced putenv() - save_mode restriction, mishal(@)centrum.cz
-* Fixed I18Nv2_Language, which didn't extend I18Nv2_CommonList
-* Fixed a typo in I18Nv2_DecoratedList_HtmlSelect (parse error)
-* Fixed key case handling in I18Nv2_Country and I18Nv2_Language
++ Added class I18Nv2_DecoratedList_HtmlSpecialchars
++ Added method &I18Nv2_(Common|Decorated)List::toDecoratedList()
   </notes>
 
   <filelist>
@@ -63,6 +60,7 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
     <dir name="DecoratedList">
       <file name="HtmlSelect.php" />
       <file name="HtmlEntities.php" />
+      <file name="HtmlSpecialchars.php" />
     </dir>
 
     <dir name="Country">
@@ -234,6 +232,9 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
    <file role="doc" install-as="examples/using_I18Nv2_Negotiator.php">
     docs/examples/using_I18Nv2_Negotiator.php
    </file>
+   <file role="doc" install-as="examples/decorating_a_list.php">
+    docs/examples/decorating_a_list.php
+   </file>
   </filelist>
  </release>
  <deps>
@@ -270,6 +271,19 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
   o HtmlSelect
 + Added czech locale dependent date/time formats, mishal(@)centrum.cz
 + Fixed hebrew locales, sagi(@)php.net 
+   </notes>
+  </release>
+  <release>
+   <version>0.6.0</version>
+   <license>PHP</license>
+   <state>alpha</state>
+   <date>2004-05-03</date>
+   <notes>
++ Added some examples
+* Silenced putenv() - save_mode restriction, mishal(@)centrum.cz
+* Fixed I18Nv2_Language, which didn't extend I18Nv2_CommonList
+* Fixed a typo in I18Nv2_DecoratedList_HtmlSelect (parse error)
+* Fixed key case handling in I18Nv2_Country and I18Nv2_Language
    </notes>
   </release>
  </changelog>
