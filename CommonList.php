@@ -37,8 +37,8 @@ class I18Nv2_CommonList
     * @access protected
     */
     var $codes = array();
-    var $language;
-    var $encoding;
+    var $language = '';
+    var $encoding = '';
     /**#@-**/
     
     /**
