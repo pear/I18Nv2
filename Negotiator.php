@@ -265,7 +265,7 @@ class I18Nv2_Negotiator
     {
         $lang = $this->_getMatch($langs, $this->_acceptLanguage, $this->_defaultLanguage);
         $ctry = $this->_getMatch($countries, @$this->_country[$lang], $this->_defaultCountry);
-        return $lang . '_' . $ctry;
+        return $lang . ($ctry ? '_' . $ctry : '');
     }
     
     /**
