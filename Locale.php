@@ -232,28 +232,30 @@ class I18Nv2_Locale
         $this->loadExtension();
         $this->setDefaults();
 
-        $this->_dateTimeFormats = array(
-            I18Nv2_DATETIME_SHORT   => 
-                $this->_dateFormats[I18Nv2_DATETIME_SHORT]
-                . ', ' .
-                $this->_timeFormats[I18Nv2_DATETIME_SHORT],
-            I18Nv2_DATETIME_MEDIUM   => 
-                $this->_dateFormats[I18Nv2_DATETIME_MEDIUM]
-                . ', ' .
-                $this->_timeFormats[I18Nv2_DATETIME_MEDIUM],
-            I18Nv2_DATETIME_DEFAULT   => 
-                $this->_dateFormats[I18Nv2_DATETIME_DEFAULT]
-                . ', ' .
-                $this->_timeFormats[I18Nv2_DATETIME_DEFAULT],
-            I18Nv2_DATETIME_LONG   => 
-                $this->_dateFormats[I18Nv2_DATETIME_LONG]
-                . ', ' .
-                $this->_timeFormats[I18Nv2_DATETIME_LONG],
-            I18Nv2_DATETIME_FULL   => 
-                $this->_dateFormats[I18Nv2_DATETIME_FULL]
-                . ', ' .
-                $this->_timeFormats[I18Nv2_DATETIME_FULL],
-        );
+        if (!count($this->_dateTimeFormats)) {
+            $this->_dateTimeFormats = array(
+                I18Nv2_DATETIME_SHORT   => 
+                    $this->_dateFormats[I18Nv2_DATETIME_SHORT]
+                    . ', ' .
+                    $this->_timeFormats[I18Nv2_DATETIME_SHORT],
+                I18Nv2_DATETIME_MEDIUM   => 
+                    $this->_dateFormats[I18Nv2_DATETIME_MEDIUM]
+                    . ', ' .
+                    $this->_timeFormats[I18Nv2_DATETIME_MEDIUM],
+                I18Nv2_DATETIME_DEFAULT   => 
+                    $this->_dateFormats[I18Nv2_DATETIME_DEFAULT]
+                    . ', ' .
+                    $this->_timeFormats[I18Nv2_DATETIME_DEFAULT],
+                I18Nv2_DATETIME_LONG   => 
+                    $this->_dateFormats[I18Nv2_DATETIME_LONG]
+                    . ', ' .
+                    $this->_timeFormats[I18Nv2_DATETIME_LONG],
+                I18Nv2_DATETIME_FULL   => 
+                    $this->_dateFormats[I18Nv2_DATETIME_FULL]
+                    . ', ' .
+                    $this->_timeFormats[I18Nv2_DATETIME_FULL],
+            );
+        }
     }
     
     /**
