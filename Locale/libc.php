@@ -24,6 +24,8 @@
 require_once 'PEAR.php';
 require_once 'I18Nv2.php';
 require_once 'I18Nv2/Locale.php';
+require_once 'I18Nv2/Country.php';
+require_once 'I18Nv2/Language.php';
 
 /** 
 * I18Nv2_Locale_libc
@@ -44,6 +46,13 @@ class I18Nv2_Locale_libc extends I18Nv2_Locale
     function init($locale)
     {
         I18Nv2::setLocale($locale);
+        
+        $lang = I18Nv2_Util::languageOf($locale);
+        $isoc = &new I18Nv2_Country($lang, 'iso-8859-1');
+        $this->names['countries'] = $isoc->getAllCodes();
+        $isol = &new I18Nv2_Language($lang, 'iso-8859-1');
+        $this->names['languages'] = $isol->getAllCodes();
+        unset($lang, $isoc, $isol);
 
         $this->names['days']['long'] = array(
             strftime('%A', 320000),
@@ -142,8 +151,7 @@ class I18Nv2_Locale_libc extends I18Nv2_Locale
         );
 
         $this->loadExtension();
-        parent::init($locale);
-        return true;
+        return parent::init(true);
     }
     
     /**
