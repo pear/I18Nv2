@@ -51,6 +51,7 @@ class I18Nv2_Locale
     var $_abbrMonths;
     
     var $_dateFormats;
+    var $_timeFormats;
     var $_numberFormats;
     var $_currencyFormats;
     
@@ -94,8 +95,8 @@ class I18Nv2_Locale
     */
     function setLocale($locale)
     {
-        if (!preg_match('/^[a-z]{2}(_[A-Z]{2})?/$', $locale)) {
-            return PEAR::raiseError('Invalid locale supplied: ' . $locale)
+        if (isset($locale) && !preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $locale)) {
+            return PEAR::raiseError('Invalid locale supplied: ' . $locale);
         }
         $this->_locale = $locale;
         $this->initialize();
@@ -110,7 +111,7 @@ class I18Nv2_Locale
     */
     function initialize()
     {
-        I18N::setLocale($this->_locale);
+        I18Nv2::setLocale($this->_locale);
 
         $this->_days = array(
             strftime('%A', 320000),
@@ -223,9 +224,11 @@ class I18Nv2_Locale
     function loadExtension()
     {
         $locale = I18Nv2::lastLocale(0, true);
-        foreach ($locale as $lc) {
-            if (@include('I18Nv2/Locale/'. $lc .'.php')) {
-                return true;
+        if (isset($locale)) {
+            foreach ($locale as $lc) {
+                if (@include('I18Nv2/Locale/'. $lc .'.php')) {
+                    return true;
+                }
             }
         }
         return false;
