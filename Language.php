@@ -22,7 +22,9 @@
 * @package      I18Nv2
 * @category     Internationalization
 */
- 
+
+require_once 'I18Nv2/CommonList.php';
+
 /**
 * I18Nv2_Language
 * 
@@ -33,7 +35,7 @@
 * @access       public
 * @package      I18Nv2
 */
-class I18Nv2_Language
+class I18Nv2_Language extends I18Nv2_CommonList
 {
     /**
     * Load language file
@@ -45,6 +47,18 @@ class I18Nv2_Language
     function loadLanguage($language)
     {
         return @include 'I18Nv2/Language/' . $language . '.php';
+    }
+
+    /**
+    * Change case of code key
+    *
+    * @access   protected
+    * @return   string
+    * @param    string  $code
+    */
+    function changeKeyCase($code)
+    {
+        return strToLower($code);
     }
 }
 ?>
