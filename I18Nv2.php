@@ -281,7 +281,7 @@ class I18Nv2
             if (is_array($val)) {
                 I18Nv2::recursiveIconv($value[$key], $from, $to);
             } else {
-                $value[$key] = iconv($from, $to, $val);
+                $value[$key] = iconv($from, $to .'//TRANSLIT', $val);
             }
         }
     }
