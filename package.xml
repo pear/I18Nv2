@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.61 $ -->
+<!-- $Revision: 1.62 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -42,8 +42,8 @@ more or less completely available in the following languages:
  Hungarian, Icelandic, Indonesian, Inuktitut, Irish, Italian, Japanese, 
  Kalaallisut, Kannada, Kazakh, Khmer, Kirghiz, Korean, Lao, Latvian, Lithuanian, 
  Macedonian, Malay, Malayalam, Maltese, Manx, Marathi, Mongolian, 
- Norwegian Bokmål, Norwegian Nynorsk, Oriya, Oromo, Pashto (Pushto), Persian, 
- Polish, Portuguese, Punjabi, Romanian, Russian, Sanskrit, Serbian, 
+ Norwegian Bokm&#x00E5;l, Norwegian Nynorsk, Oriya, Oromo, Pashto (Pushto), 
+ Persian, Polish, Portuguese, Punjabi, Romanian, Russian, Sanskrit, Serbian, 
  Serbo-Croatian, Slovak, Slovenian, Somali, Spanish, Swahili, Swedish, Tamil, 
  Tatar, Telugu, Thai, Tigrinya, Turkish, Ukrainian, Urdu, Uzbek, Vietnamese 
  and Welsh
@@ -73,9 +73,11 @@ FINAL NOTE:
   <version>0.11.2</version>
   <license>PHP</license>
   <state>beta</state>
-  <date>2005-02-00</date>
+  <date>2005-02-28</date>
   <notes><![CDATA[
+* Fixed package.xml for PEAR 1.4
 * Fixed bug in I18Nv2_AreaCode::mergeCountry() (notices about non existing properties)
++ Added "paranoid" mode for I18Nv2_Locale which resets the global locale to C after each call
 ]]>
   </notes>
 
