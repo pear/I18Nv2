@@ -149,7 +149,7 @@ class I18Nv2_CommonList
     */
     function isValidCode($code)
     {
-        return isset($this->codes[strToUpper($code)]);
+        return isset($this->codes[$this->changeKeyCase($code)]);
     }
 
     /**
@@ -161,7 +161,7 @@ class I18Nv2_CommonList
     */
     function getName($code)
     {
-        $code = strToUpper($code);
+        $code = $this->changeKeyCase($code);
         if (!isset($this->codes[$code])) {
             return '';
         }
@@ -206,6 +206,18 @@ class I18Nv2_CommonList
     function loadLanguage($language)
     {
         return false;
+    }
+    
+    /**
+    * changeKeyCase
+    *
+    * @access   protected
+    * @return   string
+    * @param    string  $code
+    */
+    function changeKeyCase($code)
+    {
+        return $code;
     }
     
 }
