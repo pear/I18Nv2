@@ -43,7 +43,7 @@ class I18Nv2_Negotiator
     * @var      object
     * @access   public
     */
-    var $I18Nv2Lang = null;
+    var $I18NLang = null;
     
     /**
     * I18Nv2_Country
@@ -164,7 +164,7 @@ class I18Nv2_Negotiator
                     $lang = $sub;
                 } else {
                     $lang = $pri;
-                    $this->createI18NCountry();
+                    $this->singleI18NCountry();
                     if ($this->I18NCountry->isValidCode($sub)) {
                         $this->_country[$lang][] = strToUpper($sub);
                     } else { 
@@ -301,7 +301,7 @@ class I18Nv2_Negotiator
     */
     function getCountryName($code)
     {
-        $this->createI18NCountry();
+        $this->singleI18NCountry();
         return $this->I18NCountry->getName($code);
     }
 
@@ -314,7 +314,7 @@ class I18Nv2_Negotiator
     */
     function getLanguageName($code)
     {
-        $this->createI18NLanguage();
+        $this->singleI18NLanguage();
         return $this->I18NLang->getName($code);
     }
 
@@ -324,10 +324,10 @@ class I18Nv2_Negotiator
     * @access   public
     * @return   object
     */
-    function &createI18NLanguage()
+    function &singleI18NLanguage()
     {
         if (!isset($this->I18NLang)) {
-            include_once('I18Nv2/Language.php');
+            include_once 'I18Nv2/Language.php';
             $this->I18NLang = &new I18Nv2_Language();
         }
         return $this->I18NLang;
@@ -339,10 +339,10 @@ class I18Nv2_Negotiator
     * @access   public
     * @return   object
     */
-    function &createI18NCountry()
+    function &singleI18NCountry()
     {
         if (!isset($this->I18NCountry)) {
-            include_once('I18Nv2/Country.php');
+            include_once 'I18Nv2/Country.php';
             $this->I18NCountry = &new I18Nv2_Country();
         }
         return $this->I18NCountry;
