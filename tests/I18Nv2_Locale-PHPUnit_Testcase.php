@@ -54,7 +54,7 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     */
     function testsetLocale()
     {
-        $this->assertFalse(PEAR::isError($this->l->setLocale($GLOBALS['____locale'])));
+        $this->assertTrue($this->l->setLocale($GLOBALS['____locale']));
     }
 
     /**
@@ -116,7 +116,9 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     */
     function testformatCurrency()
     {
-        $this->assertEquals('USD 2,000.00', $this->l->formatCurrency(2000));
+        $this->l->setLocale('de_AT');
+        $this->assertEquals('EUR 2.000,00', $this->l->formatCurrency(2000));
+        $this->l->setLocale($GLOBALS['____locale']);
     }
 
     /**
@@ -146,7 +148,7 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     */
     function testformatTime()
     {
-        $this->assertEquals(strftime('%T', $this->t), $this->l->formatTime($this->t));
+        $this->assertEquals(strftime('%H:%M:%S', $this->t), $this->l->formatTime($this->t));
     }
 
     /**
