@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.56 $ -->
+<!-- $Revision: 1.57 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -70,12 +70,12 @@ FINAL NOTE:
  </maintainers>
 
  <release>
-  <version>0.11.0</version>
+  <version>0.11.1</version>
   <license>PHP</license>
   <state>beta</state>
-  <date>2005-01-28</date>
+  <date>2005-01-xx</date>
   <notes><![CDATA[
-Moved to beta state.
+* Fixed bug in I18Nv2_Locale constructor if no locale was supplied
 ]]>
   </notes>
 
@@ -592,6 +592,16 @@ New Features:
 + cache already loaded locales in I18Nv2_Locale
 + added I18Nv2_Currency (translated currency names)
 - renamed I18Nv2_Charset to I18Nv2_Encoding
+]]>
+   </notes>
+  </release>
+  <release>
+   <version>0.11.0</version>
+   <license>PHP</license>
+   <state>beta</state>
+   <date>2005-01-28</date>
+   <notes><![CDATA[
+Moved to beta state.
 ]]>
    </notes>
   </release>
