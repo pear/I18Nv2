@@ -104,6 +104,21 @@ class I18Nv2_OpenI18N_ICUParser
     }
     
     /**
+    * Parse ICU file
+    *
+    * @access   public
+    * @return   mixed
+    * @param    string  path to ICU file
+    */
+    function parseFile($file)
+    {
+        if (!is_file($file)) {
+            return false;
+        }
+        return $this->parse(file_get_contents($file));
+    }
+    
+    /**
     * Get the tree
     * 
     * @access   public
