@@ -21,7 +21,7 @@
  * I18Nv2::Negotiator
  *
  * @package      I18Nv2
- * @category     Internationalisation
+ * @category     Internationalization
  */
 
 /**
@@ -146,7 +146,10 @@ class I18Nv2_Negotiator
      */
     function _negotiateLanguage()
     {
-        foreach(explode(',', @$_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
+        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            return;
+        }
+        foreach(explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
             // Cut off any q-value that might come after a semi-colon
             if ($pos = strpos($lang, ';')) {
                 $lang = trim(substr($lang, 0, $pos));
@@ -182,7 +185,10 @@ class I18Nv2_Negotiator
      */
     function _negotiateCharset()
     {
-        foreach (explode(',', @$_SERVER['HTTP_ACCEPT_CHARSET']) as $charset) {
+        if (!isset($_SERVER['HTTP_ACCEPT_CHARSET'])) {
+            return;
+        }
+        foreach (explode(',', $_SERVER['HTTP_ACCEPT_CHARSET']) as $charset) {
             if (!empty($charset)) {
                 $this->_acceptCharset[] = preg_replace('/;.*/', '', $charset);
             }
