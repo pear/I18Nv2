@@ -197,16 +197,7 @@ class I18Nv2_Locale
      */
     function I18Nv2_Locale($locale = null)
     {
-        I18Nv2_Locale::__construct($locale);
-    }
-
-    /**
-     * ZE2 Constructor
-     * @ignore
-     */
-    function __construct($locale = null)
-    {
-        $locale or $locale = I18Nv2::lastLocale();
+        $locale or $locale = I18Nv2::lastLocale(0, 'locale');
         $this->setLocale($locale);
     }
     
