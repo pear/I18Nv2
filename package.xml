@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.26 $ -->
+<!-- $Revision: 1.27 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -240,6 +240,7 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
  <deps>
   <dep type="pkg" rel="has" optional="no">PEAR</dep>
   <dep type="php" rel="ge" optional="no" version="4.0.6" />
+  <dep type="php" rel="ge" optional="yes" version="4.2.0" />
   <dep type="ext" rel="has" optional="no">pcre</dep>
   <dep type="ext" rel="has" optional="no">iconv</dep>
  </deps>
