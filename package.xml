@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.6 $ -->
+<!-- $Revision: 1.7 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -7,7 +7,14 @@ Internationalization
  </summary>
  
  <description>
-This package provides basic support to localize your application, like locale based formatting of dates, numbers and currency.
+This package provides basic support to localize your application, like locale based formatting of dates, numbers and currency.  Beside that it attempts to provide a OS independent way to setlocale().
+
+# REQUEST:
+As I'm not able to dig through all locales of the world, any contribution of locale dependent formatting information is very wellcome!
+There's very need of people contributing:
+ * locale dependent date/time formatting conventions
+ * translations of country names (I18Nv2_Country)
+ * translations of language names (I18Nv2_Language)
  </description>
  
  <maintainers>
@@ -20,12 +27,15 @@ This package provides basic support to localize your application, like locale ba
  </maintainers>
  
  <release>
-  <version>0.2.1</version>
+  <version>0.3.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-04-??</date>
+  <date>2004-04-14</date>
   <notes>
-Added norwegian (no/nb/nn) time/date formats (contributed by Asgeir Frimannsson)
+Added some contributions and ideas by Asgeir Frimannsson:
+* norwegian (no/nb/nn) time/date formats
+* basic support to format compound datetime values
+* current set format may now be overriden by passing a format constant as second parameter to the format methods
   </notes>
   
   <filelist>
