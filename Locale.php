@@ -65,11 +65,13 @@ class I18Nv2_Locale
     
     var $_dateFormats;
     var $_timeFormats;
+    var $_dateTimeFormats;
     var $_numberFormats;
     var $_currencyFormats;
     
     var $_currentTimeFormat;
     var $_currentDateFormat;
+    var $_currentDateTimeFormat;
     var $_currentNumberFormat;
     var $_currentCurrencyFormat;
     
@@ -229,6 +231,29 @@ class I18Nv2_Locale
         
         $this->loadExtension();
         $this->setDefaults();
+
+        $this->_dateTimeFormats = array(
+            I18Nv2_DATETIME_SHORT   => 
+                $this->_dateFormats[I18Nv2_DATETIME_SHORT]
+                . ', ' .
+                $this->_timeFormats[I18Nv2_DATETIME_SHORT],
+            I18Nv2_DATETIME_MEDIUM   => 
+                $this->_dateFormats[I18Nv2_DATETIME_MEDIUM]
+                . ', ' .
+                $this->_timeFormats[I18Nv2_DATETIME_MEDIUM],
+            I18Nv2_DATETIME_DEFAULT   => 
+                $this->_dateFormats[I18Nv2_DATETIME_DEFAULT]
+                . ', ' .
+                $this->_timeFormats[I18Nv2_DATETIME_DEFAULT],
+            I18Nv2_DATETIME_LONG   => 
+                $this->_dateFormats[I18Nv2_DATETIME_LONG]
+                . ', ' .
+                $this->_timeFormats[I18Nv2_DATETIME_LONG],
+            I18Nv2_DATETIME_FULL   => 
+                $this->_dateFormats[I18Nv2_DATETIME_FULL]
+                . ', ' .
+                $this->_timeFormats[I18Nv2_DATETIME_FULL],
+        );
     }
     
     /**
@@ -257,6 +282,7 @@ class I18Nv2_Locale
     {
         $this->_currentTimeFormat = $this->_timeFormats[I18Nv2_DATETIME_DEFAULT];
         $this->_currentDateFormat = $this->_dateFormats[I18Nv2_DATETIME_DEFAULT];
+        $this->_currentDateTimeFormat = $this->_dateTimeFormats[I18Nv2_DATETIME_DEFAULT];
         $this->_currentNumberFormat = $this->_numberFormats[I18Nv2_NUMBER_FLOAT];
         $this->_currentCurrencyFormat = $this->_currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
     }
@@ -358,6 +384,30 @@ class I18Nv2_Locale
     }
     
     /**
+    * Set datetime format
+    *
+    * @access   public
+    * @return   mixed
+    * @param    int     $format     a I18Nv2_DATETIME constant
+    * @param    bool    $custom     whether to use a defined custom format
+    */
+    function setDateTimeFormat($format, $custom = false)
+    {
+        if ($custom) {
+            if (!isset($this->_customFormats[$format])) {
+                return PEAR::raiseError('Custom datetime format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentDateTimeFormat = $this->_customFormats[$format];
+        } else {
+            if (!isset($this->_dateTimeFormats[$format])) {
+                return PEAR::raiseError('Datetime format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentDateTimeFormat = $this->_dateTimeFormats[$format];
+        }
+        return true;
+    }
+    
+    /**
     * Set custom format
     *
     * If <var>$format</var> is omitted, the custom format for <var>$type</var>
@@ -388,11 +438,14 @@ class I18Nv2_Locale
     * @access   public
     * @return   string
     * @param    numeric $value
+    * @param    int     $overrideFormat
     */
-    function formatCurrency($value)
+    function formatCurrency($value, $overrideFormat = null)
     {
         list($sym, $dig, $dec, $sep, $nsign, $psign, $npre, $ppre, $nsep, $psep) 
-            = $this->_currentCurrencyFormat;
+            = isset($overrideFormat) ? 
+            $this->_currencyFormats[$overrideFormat] :
+            $this->_currentCurrencyFormat;
 
         if ($value < 0) {
             if ($npre) {
@@ -424,7 +477,7 @@ class I18Nv2_Locale
             }
         }
 
-        return $fString . ' ' . number_format($value, $dig, $dec, $sep);
+        return $fString . number_format($value, $dig, $dec, $sep);
 
     }
     
@@ -434,10 +487,13 @@ class I18Nv2_Locale
     * @access   public
     * @return   string
     * @param    numeric $value
+    * @param    int     $overrideFormat
     */
-    function formatNumber($value)
+    function formatNumber($value, $overrideFormat = null)
     {
-        list($dig, $dec, $sep) = $this->_currentNumberFormat;
+        list($dig, $dec, $sep) = isset($overrideFormat) ?
+            $this->_numberFormats[$overrideFormat] :
+            $this->_currentNumberFormat;
         return number_format($value, $dig, $dec, $sep);
     }
     
@@ -447,11 +503,13 @@ class I18Nv2_Locale
     * @access   public
     * @return   string
     * @param    int     $timestamp
+    * @param    int     $overrideFormat
     */
-    function formatDate($timestamp = null)
+    function formatDate($timestamp = null, $overrideFormat = null)
     {
-        return strftime($this->_currentDateFormat, 
-            is_null($timestamp) ? time() : $timestamp);
+        $format = isset($overrideFormat) ? 
+            $this->_dateFormats[$overrideFormat] : $this->_currentDateFormat;
+        return strftime($format, isset($timestamp) ? $timestamp : time());
     }
     
     /**
@@ -460,13 +518,31 @@ class I18Nv2_Locale
     * @access   public
     * @return   string
     * @param    int     $timestamp
+    * @param    int     $overrideFormat
     */
-    function formatTime($timestamp = null)
+    function formatTime($timestamp = null, $overrideFormat = null)
     {
-        return strftime($this->_currentTimeFormat, 
-             is_null($timestamp) ? time() : $timestamp);
+        $format = isset($overrideFormat) ? 
+            $this->_timeFormats[$overrideFormat] : $this->_currentTimeFormat;
+        return strftime($format, isset($timestamp) ? $timestamp : time());
     }
 
+    /**
+    * Format a datetime
+    *
+    * @access   public
+    * @return   string
+    * @param    int     $timestamp
+    * @param    int     $overrideFormat
+    */
+    function formatDateTime($timestamp = null, $overrideFormat = null)
+    {
+        $format = isset($overrideFormat) ?
+            $this->_dateTimeFormats[$overrideFormat] : 
+            $this->_currentDateTimeFormat;
+        return strftime($format, isset($timestamp) ? $timestamp : time());
+    }
+    
     /**
     * Locale time
     *
@@ -476,7 +552,7 @@ class I18Nv2_Locale
     */
     function time($timestamp = null)
     {
-        return strftime('%x', is_null($timestamp) ? time() : $timestamp);
+        return strftime('%x', isset($timestamp) ? $timestamp : time());
     }
     
     /**
@@ -488,7 +564,7 @@ class I18Nv2_Locale
     */
     function date($timestamp = null)
     {
-        return strftime('%X', is_null($timestamp) ? time() : $timestamp);
+        return strftime('%X', isset($timestamp) ? $timestamp : time());
     }
     
     /**
