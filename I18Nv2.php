@@ -37,10 +37,11 @@ class I18Nv2
     * I18Nv2::setLocale('en_GB');
     * </code>
     * 
-    * @access   static
+    * @static
+    * @access   public
     * @return   mixed   &type.string; used locale or false on failure
-    * @param    string  $locale
-    * @param    int     $cat
+    * @param    string  $locale     a valid locale like en_US or de_DE
+    * @param    int     $cat        the locale category - usually LC_ALL
     */
     function setLocale($locale, $cat = LC_ALL)
     {
@@ -73,7 +74,8 @@ class I18Nv2
     *
     * This only works, if you I18Nv2::setLocale() has already been called
     * 
-    * @access   static
+    * @static
+    * @access   public
     * @return   string  last locale
     * @param    int     $prior  if 0, the current otherwise n prior current
     * @param    bool    $full   wheter to return the array with locale, 
@@ -96,7 +98,8 @@ class I18Nv2
     * $point  = I18Nv2::getInfo('decimal_point');
     * </code>
     * 
-    * @access   static
+    * @static
+    * @access   public
     * @return   mixed
     * @param    string  $part
     */
@@ -109,7 +112,8 @@ class I18Nv2
     /**
     * Create a Locale object
     *
-    * @access   static
+    * @static
+    * @access   public
     * @return   object  I18Nv2_Locale
     * @param    string  $locale
     */
@@ -122,6 +126,7 @@ class I18Nv2
     /**
     * Create a Negotiator object
     *
+    * @static
     * @access   public
     * @return   object  I18Nv2_Negotiator
     * @param    string  $defLang        default language
@@ -152,7 +157,8 @@ class I18Nv2
     *   ?>
     * </code>
     * 
-    * @access   static
+    * @static
+    * @access   public
     * @return   mixed   Returns &true; on success or 
     *                   <classname>PEAR_Error</classname> on failure.
     * @param    string  $ocs    desired output character set
@@ -181,7 +187,8 @@ class I18Nv2
     /**
     * Mimics PEAR::getStaticProperty()
     * 
-    * @access   static
+    * @static
+    * @access   public
     * @return   mixed   reference to static property
     * @param    string  $property   property
     */
