@@ -363,13 +363,5 @@ class I18Nv2_Util_LDML_Supplemental extends XML_Parser
         $p = &new I18Nv2_Util_LDML_Supplemental($datapath, $encoding);
         return $p->getData();
     }
-    
 }
-
-$p = &new I18Nv2_Util_LDML;
-$p->setOptions(array(
-    'encoding' => 'Iso-8859-1', 
-    'datapath' => '/www/mike/pear/i18nv2/data/ldml/')
-);
-print_r($p->getFullLocale('fr_FR'));
 ?>
