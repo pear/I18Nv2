@@ -142,7 +142,7 @@ class I18Nv2_Util_LDML extends XML_Parser
             return $en;
         }
 
-        @list($lang, $country) = array_shift(I18Nv2_Util::splitLocale($locale));
+        @list($lang, $country) = I18Nv2_Util::splitLocale($locale);
         if ($locale === 'en' || !is_array($langdata = $this->getLocale($lang))) {
             return $en;
         }
