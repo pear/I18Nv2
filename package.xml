@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.14 $ -->
+<!-- $Revision: 1.15 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
 Internationalization
  </summary>
- 
+
  <description>
 This package provides basic support to localize your application, like locale based formatting of dates, numbers and currency.  Beside that it attempts to provide an OS independent way to setlocale() and aims to provide language and country names translated into many languages.
 
@@ -19,7 +19,7 @@ There's very need of people contributing:
  * translations of language names (I18Nv2_Language)
 Just grab the CVS sources or download the package and see if your language or locale is already covered.
  </description>
- 
+
  <maintainers>
   <maintainer>
    <user>mike</user>
@@ -34,37 +34,34 @@ Just grab the CVS sources or download the package and see if your language or lo
    <role>contributor</role>
   </maintainer>
  </maintainers>
- 
+
  <release>
-  <version>0.4.0</version>
+  <version>0.5.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-04-16</date>
+  <date>2004-04-20</date>
   <notes>
-* Reorganized the Win32 locale and "fully qualified locale" maps.
-* Fixed I18Nv2_Locale::loadExtension() to load language extension prior to locale extension.
-+ Introduced kind of a fallback mechanism for not recognized locales in I18Nv2::setLocale() (currently only norwegian locales suffer from a reorganization).
-+ Started to localize I18Nv2_Country (currently english, german, italian and french are covered)
-+ Started to localize I18Nv2_Language (currently english and german are covered)
++ Added new localizations for I18Nv2_Country (currently 49 languages are covered)
++ Added new localizations for I18Nv2_Language (currently 50 languages are covered)
   </notes>
-  
+
   <filelist>
    <file role="php" name="I18Nv2.php" />
-   
+
    <dir name="/" role="php" baseinstalldir="I18Nv2">
-    
+
     <file name="Locale.php" />
     <file name="Country.php" />
     <file name="Language.php" />
     <file name="Negotiator.php" />
-    
+
     <dir name="Country">
      <file name="de.php" />
      <file name="en.php" />
      <file name="fr.php" />
      <file name="it.php" />
     </dir>
-    
+
     <dir name="Locale">
      <file name="af.php" />
      <file name="da.php" />
@@ -105,9 +102,9 @@ Just grab the CVS sources or download the package and see if your language or lo
      <file name="de.php" />
      <file name="en.php" />
     </dir>
-    
+
    </dir>
-   
+
    <file role="test" install-as="I18Nv2_Locale-PHPUnit_Testcase.php">
     tests/I18Nv2_Locale-PHPUnit_Testcase.php
    </file>
@@ -119,4 +116,19 @@ Just grab the CVS sources or download the package and see if your language or lo
   <dep type="ext" rel="has" optional="no">pcre</dep>
   <dep type="ext" rel="has" optional="yes">iconv</dep>
  </deps>
+  <changelog>
+    <release>
+      <version>0.4.0</version>
+      <license>PHP</license>
+      <state>alpha</state>
+      <date>2004-04-16</date>
+      <notes>
+* Reorganized the Win32 locale and "fully qualified locale" maps.
+* Fixed I18Nv2_Locale::loadExtension() to load language extension prior to locale extension.
++ Introduced kind of a fallback mechanism for not recognized locales in I18Nv2::setLocale() (currently only norwegian locales suffer from a reorganization).
++ Started to localize I18Nv2_Country (currently english, german, italian and french are covered)
++ Started to localize I18Nv2_Language (currently english and german are covered)
+      </notes>
+    </release>
+  </changelog>
 </package>
