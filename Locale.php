@@ -21,21 +21,23 @@
  */
 
 /**#@+ Constants **/
-define('I18Nv2_NUMBER',                   10);
-define('I18Nv2_CURRENCY',                 20);
-define('I18Nv2_DATETIME',                 30);
+define('I18Nv2_NUMBER',                     'number');
+define('I18Nv2_CURRENCY',                   'currency');
+define('I18Nv2_DATE',                       'date');
+define('I18Nv2_TIME',                       'time');
+define('I18Nv2_DATETIME',                   'datetime');
 
-define('I18Nv2_NUMBER_FLOAT' ,            11);
-define('I18Nv2_NUMBER_INTEGER' ,          12);
+define('I18Nv2_NUMBER_FLOAT' ,              'float');
+define('I18Nv2_NUMBER_INTEGER' ,            'integer');
 
-define('I18Nv2_CURRENCY_LOCAL',           21);
-define('I18Nv2_CURRENCY_INTERNATIONAL',   22);
+define('I18Nv2_CURRENCY_LOCAL',             'local');
+define('I18Nv2_CURRENCY_INTERNATIONAL',     'international');
 
-define('I18Nv2_DATETIME_SHORT',           31);
-define('I18Nv2_DATETIME_DEFAULT',         32);
-define('I18Nv2_DATETIME_MEDIUM',          33);
-define('I18Nv2_DATETIME_LONG',            34);
-define('I18Nv2_DATETIME_FULL',            35);
+define('I18Nv2_DATETIME_SHORT',             'short');
+define('I18Nv2_DATETIME_DEFAULT',           'default');
+define('I18Nv2_DATETIME_MEDIUM',            'medium');
+define('I18Nv2_DATETIME_LONG',              'long');
+define('I18Nv2_DATETIME_FULL',              'full');
 /**#@-*/
 
 require_once 'PEAR.php';
@@ -449,11 +451,11 @@ class I18Nv2_Locale
      */
     function setDefaults()
     {
-        $this->currentTimeFormat = $this->timeFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentDateFormat = $this->dateFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentDateTimeFormat = $this->dateTimeFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentNumberFormat = $this->numberFormats[I18Nv2_NUMBER_FLOAT];
-        $this->currentCurrencyFormat = $this->currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
+        $this->currentTimeFormat        = $this->timeFormats[I18Nv2_DATETIME_DEFAULT];
+        $this->currentDateFormat        = $this->dateFormats[I18Nv2_DATETIME_DEFAULT];
+        $this->currentDateTimeFormat    = $this->dateTimeFormats[I18Nv2_DATETIME_DEFAULT];
+        $this->currentNumberFormat      = $this->numberFormats[I18Nv2_NUMBER_FLOAT];
+        $this->currentCurrencyFormat    = $this->currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
     }
     
     /**
