@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.38 $ -->
+<!-- $Revision: 1.39 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -32,20 +32,12 @@ NOTE: Contributions are very welcome!
  </maintainers>
 
  <release>
-  <version>0.8.0</version>
+  <version>0.8.1</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-10-04</date>
+  <date>2004-10-05</date>
   <notes><![CDATA[
-Bug Fixes:
-* strftime() codes for I18Nv2_Locale::date() and I18Nv2_Locale::time() were mixed up
-* set inconv's input encoding to the same as output encoding in I18Nv2::autoConv()
-* fixed typos in I18Nv2::languageOf() and I18Nv2::countryOf() referring non-existent class
-* prevent encoding the output buffer multiple times if I18Nv2::autoConv() is called more than once
-
-New Features:
-+ allow overriding of the currency symbol in I18Nv2_Locale::formatCurrency() (requested by Andreas Schamberger)
-+ added a filtering decorator for lists, I18Nv2_DecoratedList_Filter
+* I18Nv2::autoConv() may now decode request variables
 ]]>
   </notes>
 
@@ -309,6 +301,24 @@ New Features:
    <date>2004-08-18</date>
    <notes><![CDATA[
 * Fixed bug #2152
+]]>
+   </notes>
+  </release>
+  <release>
+   <version>0.8.0</version>
+   <license>PHP</license>
+   <state>alpha</state>
+   <date>2004-10-04</date>
+   <notes><![CDATA[
+Bug Fixes:
+* strftime() codes for I18Nv2_Locale::date() and I18Nv2_Locale::time() were mixed up
+* set inconv's input encoding to the same as output encoding in I18Nv2::autoConv()
+* fixed typos in I18Nv2::languageOf() and I18Nv2::countryOf() referring non-existent class
+* prevent encoding the output buffer multiple times if I18Nv2::autoConv() is called more than once
+
+New Features:
++ allow overriding of the currency symbol in I18Nv2_Locale::formatCurrency() (requested by Andreas Schamberger)
++ added a filtering decorator for lists, I18Nv2_DecoratedList_Filter
 ]]>
    </notes>
   </release>

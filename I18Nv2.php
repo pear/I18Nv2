@@ -215,10 +215,12 @@ class I18Nv2
     * @access   public
     * @return   mixed   Returns &true; on success or 
     *                   <classname>PEAR_Error</classname> on failure.
-    * @param    string  $ocs    desired output character set
-    * @param    string  $ics    current intput character set
+    * @param    string  $ocs            desired output character set
+    * @param    string  $ics            internal character set
+    * @param    bool    $decodeRequest  whether to decode request variables
+    *                                   from $ocs to $ics
     */
-    function autoConv($ocs = 'UTF-8', $ics = 'ISO-8859-1')
+    function autoConv($ocs = 'UTF-8', $ics = 'ISO-8859-1', $decodeRequest = true)
     {
         if (!strcasecmp($ocs, $ics)) {
             return true;
@@ -246,7 +248,34 @@ class I18Nv2
         }
         echo $buffer;
         
+        if ($decodeRequest) {
+            I18Nv2::recursiveIconv($_GET, $ocs, $ics);
+            I18Nv2::recursiveIconv($_POST, $ocs, $ics);
+            I18Nv2::recursiveIconv($_REQUEST, $ocs, $ics);
+        }
+        
         return true;
+    }
+    
+    /**
+     * Recursive Iconv
+     * 
+     * @static
+     * @access  public
+     * @return  void
+     * @param   array   $value
+     * @param   string  $ocs
+     * @param   string  $ics
+     */
+    function recursiveIconv(&$value, $from, $to)
+    {
+        foreach ($value as $key => $val) {
+            if (is_array($val)) {
+                I18Nv2::recursiveIconv($value[$key], $from, $to);
+            } else {
+                $value[$key] = iconv($from, $to, $val);
+            }
+        }
     }
     
     /**
