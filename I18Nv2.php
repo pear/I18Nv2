@@ -186,13 +186,13 @@ class I18Nv2
      * @access  public
      * @return  object  I18Nv2_Negotiator
      * @param   string  $defLang        default language
-     * @param   string  $defEncoding     default encoding
+     * @param   string  $defEnc         default encoding
      * @param   string  $defCtry        default country
      */
-    function &createNegotiator($defLang = 'en', $defEncoding = 'iso-8859-1', $defCtry = '')
+    function &createNegotiator($defLang = 'en', $defEnc = 'iso-8859-1', $defCtry = '')
     {
         require_once 'I18Nv2/Negotiator.php';
-        return new I18Nv2_Negotiator($defLang, $defEncoding, $defCtry);
+        return new I18Nv2_Negotiator($defLang, $defEnc, $defCtry);
     }
     
     /**
@@ -214,10 +214,10 @@ class I18Nv2
      * @access  public
      * @return  mixed   Returns &true; on success or 
      *                  <classname>PEAR_Error</classname> on failure.
-     * @param   string  $ocs            desired output encoding
-     * @param   string  $ics            internal encoding
+     * @param   string  $oe             desired output encoding
+     * @param   string  $ie             internal encoding
      * @param   bool    $decodeRequest  whether to decode request variables
-     *                                  ($_GET and $_POST) from $ocs to $ics
+     *                                  ($_GET and $_POST) from $oe to $ie
      */
     function autoConv($oe = 'UTF-8', $ie = 'ISO-8859-1', $decodeRequest = true)
     {
