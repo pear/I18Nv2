@@ -87,7 +87,7 @@ class I18Nv2_Locale
     */
     function I18Nv2_Locale($locale = null)
     {
-        $this->__construct($locale);
+        I18Nv2_Locale::__construct($locale);
     }
 
     /**
