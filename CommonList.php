@@ -60,12 +60,9 @@ class I18Nv2_CommonList
     {
         if (!$this->setLanguage($language)) {
             if (class_exists('I18Nv2')) {
-                $locale = I18Nv2::lastLocale(0, true);
-                if (isset($locale)) {
-                    $this->_language = $locale['language'];
-                    if (!$this->setLanguage($locale['language'])) {
-                        $this->setLanguage('en');
-                    }
+                $l = I18Nv2::lastLocale(0, true);
+                if (!isset($l) || !$this->setLanguage($l['language'])) {
+                    $this->setLanguage('en');
                 }
             } else {
                 $this->setLanguage('en');
