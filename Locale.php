@@ -43,23 +43,23 @@ define('I18Nv2_DATETIME_FULL',            35);
 */
 class I18Nv2_Locale
 {
-    var $locale = 'en_US';
+    var $_locale = 'en_US';
     
-    var $days;
-    var $months;
-    var $abbrDays;
-    var $abbrMonths;
+    var $_days;
+    var $_months;
+    var $_abbrDays;
+    var $_abbrMonths;
     
-    var $dateFormats;
-    var $numberFormats;
-    var $currencyFormats;
+    var $_dateFormats;
+    var $_numberFormats;
+    var $_currencyFormats;
     
-    var $currentTimeFormat;
-    var $currentDateFormat;
-    var $currentNumberFormat;
-    var $currentCurrencyFormat;
+    var $_currentTimeFormat;
+    var $_currentDateFormat;
+    var $_currentNumberFormat;
+    var $_currentCurrencyFormat;
     
-    var $customFormats;
+    var $_customFormats;
 
     /**
     * Constructor
@@ -84,20 +84,20 @@ class I18Nv2_Locale
     }
     
     /**
-    * Set locale
+    * Set _locale
     * 
     * This automatically calls I18Nv2_Locale::initialize()
     *
     * @access   public
     * @return   mixed
-    * @param    string  $locale
+    * @param    string  $_locale
     */
     function setLocale($locale)
     {
         if (!preg_match('/^[a-z]{2}(_[A-Z]{2})?/$', $locale)) {
             return PEAR::raiseError('Invalid locale supplied: ' . $locale)
         }
-        $this->locale = $locale;
+        $this->_locale = $locale;
         $this->initialize();
         return true;
     }
@@ -107,13 +107,13 @@ class I18Nv2_Locale
     *
     * @access   public
     * @return   void
-    * @param    string  $locale
+    * @param    string  $_locale
     */
     function initialize()
     {
-        I18N::setLocale($this->locale);
+        I18N::setLocale($this->_locale);
 
-        $this->days = array(
+        $this->_days = array(
             strftime('%A', 320000),
             strftime('%A', 406000),
             strftime('%A', 492800),
@@ -123,7 +123,7 @@ class I18Nv2_Locale
             strftime('%A', 838400),
         );
         
-        $this->abbrDays = array(
+        $this->_abbrDays = array(
             strftime('%a', 320000),
             strftime('%a', 406000),
             strftime('%a', 492800),
@@ -133,7 +133,7 @@ class I18Nv2_Locale
             strftime('%a', 838400),
         );
 
-        $this->months = array(
+        $this->_months = array(
             strftime('%B', 978307261),
             strftime('%B', 980985661),
             strftime('%B', 983404861),
@@ -148,7 +148,7 @@ class I18Nv2_Locale
             strftime('%B', 1007164861),
         );
         
-        $this->abbrMonths = array(
+        $this->_abbrMonths = array(
             strftime('%b', 978307261),
             strftime('%b', 980985661),
             strftime('%b', 983404861),
@@ -170,7 +170,7 @@ class I18Nv2_Locale
         * ###
         * Some get extended/overwritten with other local conventions
         */
-        $this->currencyFormats = array(
+        $this->_currencyFormats = array(
             I18Nv2_CURRENCY_LOCAL => array(
                 $info['currency_symbol'],
                 $info['int_frac_digits'],
@@ -197,7 +197,7 @@ class I18Nv2_Locale
             ),
         );
         
-        $this->numberFormats = array(
+        $this->_numberFormats = array(
             I18Nv2_NUMBER_FLOAT => array(
                 $info['frac_digits'],
                 $info['decimal_point'],
@@ -216,7 +216,7 @@ class I18Nv2_Locale
     }
     
     /**
-    * Loads corresponding locale extension
+    * Loads corresponding _locale extension
     *
     * @access   public
     * @return   bool
@@ -225,7 +225,7 @@ class I18Nv2_Locale
     {
         $locale = I18Nv2::lastLocale(0, true);
         foreach ($locale as $lc) {
-            if (@include("I18Nv2/Locale/{$lc}.php")) {
+            if (@include('I18Nv2/Locale/'. $lc .'.php')) {
                 return true;
             }
         }
@@ -240,58 +240,82 @@ class I18Nv2_Locale
     */
     function setDefaults()
     {
-        $this->currentTimeFormat = $this->timeFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentDateFormat = $this->dateFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentNumberFormat = $this->numberFormats[I18Nv2_NUMBER_FLOAT];
-        $this->currentCurrencyFormat = $this->currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
+        $this->_currentTimeFormat = $this->_timeFormats[I18Nv2_DATETIME_DEFAULT];
+        $this->_currentDateFormat = $this->_dateFormats[I18Nv2_DATETIME_DEFAULT];
+        $this->_currentNumberFormat = $this->_numberFormats[I18Nv2_NUMBER_FLOAT];
+        $this->_currentCurrencyFormat = $this->_currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
     }
     
     /**
     * Set currency format
     *
     * @access   public
-    * @return   void
+    * @return   mixed   Returns &true; on success or <classname>PEAR_Error</classname> on failure.
     * @param    int     $format     a I18Nv2_CURRENCY constant
     * @param    bool    $custom     whether to use a defined custom format
     */
     function setCurrencyFormat($format, $custom = false)
     {
-        $this->currentCurrencyFormat = 
-            $custom ?
-            @$this->customFormats[$format] :
-            @$this->currencyFormats[$format];
+        if ($custom) {
+            if (!isset($this->_customFormats[$format])) {
+                return PEAR::raiseError('Custom currency format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentCurrencyFormat = $this->_customFormats[$format];
+        } else {
+            if (!isset($this->_currencyFormats[$format])) {
+                return PEAR::raiseError('Currency format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentCurrencyFormat = $this->_currencyFormats[$format];
+        }
+        return true;
     }
     
     /**
     * Set number format
     *
     * @access   public
-    * @return   void
+    * @return   mixed   Returns &true; on success or <classname>PEAR_Error</classname> on failure.
     * @param    int     $format     a I18Nv2_NUMBER constant
     * @param    bool    $custom     whether to use a defined custom format
     */
     function setNumberFormat($format, $custom = false)
     {
-        $this->currentNumberFormat = 
-            $custom ?
-                @$this->customFormats[$format] :
-                @$this->numberFormats[$format];
+        if ($custom) {
+            if (!isset($this->_customFormats[$format])) {
+                return PEAR::raiseError('Custom number format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentNumberFormat = $this->_customFormats[$format];
+        } else {
+            if (!isset($this->_numberFormats[$format])) {
+                return PEAR::raiseError('Number format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentNumberFormat = $this->_numberFormats[$format];
+        }
+        return true;
     }
     
     /**
     * Set date format
     *
     * @access   public
-    * @return   void
+    * @return   mixed   Returns &true; on success or <classname>PEAR_Error</classname> on failure.
     * @param    int     $format     a I18Nv2_DATETIME constant
     * @param    bool    $custom     whether to use a defined custom format
     */
     function setDateFormat($format, $custom = false)
     {
-        $this->currentDateFormat = 
-            $custom ? 
-                @$this->customFormats[$format] :
-                @$this->dateFormats[$format];
+        if ($custom) {
+            if (!isset($this->_customFormats[$format])) {
+                return PEAR::raiseError('Custom date fromat "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentDateFormat = $this->_customFormats[$format];
+        } else {
+            if (!isset($this->_dateFormats[$format])) {
+                return PEAR::raiseError('Date format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentDateFormat = $this->_dateFormats[$format];
+        }
+        return true;
     }
     
     /**
@@ -304,10 +328,18 @@ class I18Nv2_Locale
     */
     function setTimeFormat($format, $custom = false)
     {
-        $this->currentTimeFormat = 
-            $custom ? 
-                @$this->customFormats[$format] :
-                @$this->timeFormats[$format];
+        if ($custom) {
+            if (!isset($this->_customFormats[$format])) {
+                return PEAR::raiseError('Custom time format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentTimeFormat = $this->_customFormats[$format];
+        } else {
+            if (!isset($this->_timeFormats[$format])) {
+                return PEAR::raiseError('Time format "'.$format.'" doesn\'t exist.');
+            }
+            $this->_currentTimeFormat = $this->_timeFormats[$format];
+        }
+        return true;
     }
     
     /**
@@ -326,12 +358,12 @@ class I18Nv2_Locale
     {
         if (is_null($format)) {
             if (is_null($type)) {
-                $this->customFormats = array();
+                $this->_customFormats = array();
             } else {
-                unset($this->customFormats[$type]);
+                unset($this->_customFormats[$type]);
             }
         } else {
-            $this->customFormats[$type] = $format;
+            $this->_customFormats[$type] = $format;
         }
     }
     
@@ -345,7 +377,7 @@ class I18Nv2_Locale
     function formatCurrency($value)
     {
         list($sym, $dig, $dec, $sep, $nsign, $psign, $npre, $ppre, $nsep, $psep) 
-            = $this->currentCurrencyFormat;
+            = $this->_currentCurrencyFormat;
 
         if ($value < 0) {
             if ($npre) {
@@ -390,7 +422,7 @@ class I18Nv2_Locale
     */
     function formatNumber($value)
     {
-        list($dig, $dec, $sep) = $this->currentNumberFormat;
+        list($dig, $dec, $sep) = $this->_currentNumberFormat;
         return number_format($value, $dig, $dec, $sep);
     }
     
@@ -401,9 +433,10 @@ class I18Nv2_Locale
     * @return   string
     * @param    int     $timestamp
     */
-    function formatDate($timestamp = 0)
+    function formatDate($timestamp = null)
     {
-        return strftime($this->currentDateFormat, $timestamp ? $timestamp : time());
+        return strftime($this->_currentDateFormat, 
+            is_null($timestamp) ? time() : $timestamp);
     }
     
     /**
@@ -413,9 +446,10 @@ class I18Nv2_Locale
     * @return   string
     * @param    int     $timestamp
     */
-    function formatTime($timestamp = 0)
+    function formatTime($timestamp = null)
     {
-        return strftime($this->currentTimeFormat, $timestamp ? $timestamp : time());
+        return strftime($this->_currentTimeFormat, 
+             is_null($timestamp) ? time() : $timestamp);
     }
 
     /**
@@ -425,9 +459,9 @@ class I18Nv2_Locale
     * @return   string
     * @param    int     $timestamp
     */
-    function time($timestamp = 0)
+    function time($timestamp = null)
     {
-        return strftime('%x', $timestamp ? $timestamp : time());
+        return strftime('%x', is_null($timestamp) ? time() : $timestamp);
     }
     
     /**
@@ -437,37 +471,59 @@ class I18Nv2_Locale
     * @return   string
     * @param    int     $timestamp
     */
-    function date($timestamp = 0)
+    function date($timestamp = null)
     {
-        return strftime('%X', $timestamp ? $timestamp : time());
+        return strftime('%X', is_null($timestamp) ? time() : $timestamp);
     }
     
     /**
     * Day name
     *
     * @access   public
-    * @return   string
+    * @return   mixed   Returns &type.string; name of weekday on success or
+    *                   <classname>PEAR_Error</classname> on failure.
     * @param    int     $weekday    numerical representation of weekday
     *                               (0 = Sunday, 1 = Monday, ...)
     * @param    bool    $short  whether to return the abbreviation
     */
     function dayName($weekday, $short = false)
     {
-        return $short ? $this->abbrDays[$weekday] : $this->days[$weekday];
+        if ($short) {
+            if (!isset($this->_abbrDays[$weekday])) {
+                return PEAR::raiseError('Weekday "'.$weekday.'" is out of range.');
+            }
+            return $this->_abbrDays[$weekday];
+        } else {
+            if (!isset($this->_days[$weekday])) {
+                return PEAR::raiseError('Weekday "'.$weekday.'" is out of range.');
+            }
+            return $this->_days[$weekday];
+        }
     }
     
     /**
     * Month name
     *
     * @access   public
-    * @return   string
+    * @return   mixed   Returns &type.string; name of month on success or
+    *                   <classname>PEAR_Error</classname> on failure.
     * @param    int     $month  numerical representation of month
     *                           (0 = January, 1 = February, ...)
     * @param    bool    $short  whether to return the abbreviation
     */
     function monthName($month, $short = false)
     {
-        return $short ? $this->abbrMonths[$month] : $this->months[$month];
+        if ($short) {
+            if (!isset($this->_abbrMonths[$month])) {
+                return PEAR::raiseError('Month "'.$month.'" is out of range.');
+            }
+            return $this->_abbrMonths[$month];
+        } else {
+            if (!isset($this->_months[$month])) {
+                return PEAR::raiseError('Month "'.$month.'" is out of range.');
+            }
+            return $this->_months[$month];
+        }
     }
 }
 ?>
