@@ -4,7 +4,7 @@
 */
 
 
-$_I18N_locales = &I18N::getStaticProperty('locales');
+$_I18N_locales = &I18Nv2::getStaticProperty('locales');
 $_I18N_locales = array(
 
     'de'      => 'deu',
