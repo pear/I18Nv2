@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.8 $ -->
+<!-- $Revision: 1.9 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -27,15 +27,14 @@ There's very need of people contributing:
  </maintainers>
  
  <release>
-  <version>0.3.0</version>
+  <version>0.4.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-04-14</date>
+  <date>2004-04-??</date>
   <notes>
-Added some contributions and ideas by Asgeir Frimannsson:
-* norwegian (no/nb/nn) time/date formats
-* basic support to format compound datetime values
-* current format may now be overriden by passing a format constant as second parameter to the format* methods
+Reorganized the Win32 locale and "fully qualified locale" maps.
+Fixed I18Nv2::loadExtension() to load language extension before locale extension.
+Introduced kind of a fallback mechanism for not recognized locales.
   </notes>
   
   <filelist>
@@ -65,8 +64,7 @@ Added some contributions and ideas by Asgeir Frimannsson:
      <file name="pt.php" />
      <file name="ru.php" />
      <file name="sl.php" />
-     <file name="Map.php" />
-     <file name="MapWindows.php" />
+     <file name="Windows.php" />
      <file name="EUR.php" />
      <file name="de_AT.php" />
      <file name="de_DE.php" />
