@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.55 $ -->
+<!-- $Revision: 1.56 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -70,10 +70,10 @@ FINAL NOTE:
  </maintainers>
 
  <release>
-  <version>0.10.0</version>
+  <version>0.11.0</version>
   <license>PHP</license>
   <state>beta</state>
-  <date>2005-01-26</date>
+  <date>2005-01-28</date>
   <notes><![CDATA[
 Moved to beta state.
 ]]>
