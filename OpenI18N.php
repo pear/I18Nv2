@@ -21,7 +21,7 @@
 * @category     Internationalization
 */
 
-require_once 'I18Nv2/OpenI18N/LDML/Parser.php';
+require_once 'I18Nv2/OpenI18N/LDMLParser.php';
 
 /** 
 * I18Nv2_OpenI18N          
@@ -54,7 +54,7 @@ class I18Nv2_OpenI18N
     */
     function __construct($locale, $encoding = 'UTF-8')
     {
-        $this->parser = &new I18Nv2_OpenI18N_LDML_Parser($encoding);
+        $this->parser = &new I18Nv2_OpenI18N_LDMLParser($encoding);
         $this->setLocale($locale, $encoding);
     }
 
