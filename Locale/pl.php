@@ -12,9 +12,9 @@ $this->_dateFormats = array(
 );
 $this->_timeFormats = array(
     I18Nv2_DATETIME_SHORT     =>  '%H:%M',
-    I18Nv2_DATETIME_DEFAULT   =>  '%T',
-    I18Nv2_DATETIME_MEDIUM    =>  '%T',
-    I18Nv2_DATETIME_LONG      =>  '%T %Z',
+    I18Nv2_DATETIME_DEFAULT   =>  '%H:%M:%S',
+    I18Nv2_DATETIME_MEDIUM    =>  '%H:%M:%S',
+    I18Nv2_DATETIME_LONG      =>  '%H:%M:%S %Z',
     I18Nv2_DATETIME_FULL      =>  'godz. %H:%M %Z'
 );      
 ?>
