@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $Revision: 1.1 $ -->
+<package version="1.0">
+ <name>I18Nv2</name>
+ <summary>
+Internationalization
+ </summary>
+ 
+ <description>
+This package provides basic support to localize your package, like locale based formatting of dates, numbers an currency.
+ </description>
+ 
+ <maintainers>
+  <maintainer>
+   <user>mike</user>
+   <name>Michael Wallner</name>
+   <email>mike@php.net</email>
+   <role>lead</role>
+  </maintainer>
+ </maintainers>
+ 
+ <release>
+  <version>0.1.0</version>
+  <license>PHP</license>
+  <state>alpha</state>
+  <date>2004-03-06</date>
+  <notes>
+Initaial release based upon the former PEAR::I18N
+  </notes>
+  
+  <filelist>
+   <file role="php" name="I18Nv2.php" />
+   
+   <dir name="/" role="php" baseinstalldir="I18Nv2">
+    
+    <file name="Locale.php" />
+    <file name="Country.php" />
+    <file name="Language.php" />
+    <file name="Negotiator.php" />
+    
+    <dir name="Locale">
+     <file name="af.php" />
+     <file name="de.php" />
+     <file name="en.php" />
+     <file name="es.php" />
+     <file name="fr.php" />
+     <file name="hu.php" />
+     <file name="it.php" />
+     <file name="nl.php" />
+     <file name="pl.php" />
+     <file name="pt.php" />
+     <file name="ru.php" />
+     <file name="sl.php" />
+     <file name="Map.php" />
+     <file name="MapWindows.php" />
+    </dir>
+
+    <dir role="php" name="Language">
+     <file name="ISO-639-1.php" />
+     <file name="ISO-639-2.php" />
+    </dir>
+    
+   </dir>
+  </filelist>
+ </release>
+</package>
