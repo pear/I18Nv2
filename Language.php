@@ -28,8 +28,7 @@
 /**
 * I18Nv2_Language
 * 
-* Save list of ISO-639-1 two letter resp. ISO-639-2 three letter 
-* language code to language name mapping.
+* List of ISO-639-1 two letter language code to language name mapping.
 * 
 * @author       Wolfram Kriesing <wk@visionp.de>
 * @author       Michael Wallner <mike@php.net>
@@ -50,23 +49,29 @@ class I18Nv2_Language
     * 
     * @access   public
     * @return   object  I18Nv2_Language
-    * @param    bool    use three letters format
+    * @param    string  $language
     */
-    function I18Nv2_Language($threeLetters = false)
+    function I18Nv2_Language($language = null)
     {
-        $this->__construct($threeLetters);
+        $this->__construct($language);
     }
     
     /**
     * ZE2 Constructor
     * @ignore
     */
-    function __construct($threeLetters = false)
+    function __construct($language)
     {
-        if ($threeLetters) {
-            include 'I18Nv2/Language/ISO-639-2.php';
-        } else {
-            include 'I18Nv2/Language/ISO-639-1.php';
+        if (isset($language)) {
+            @include 'I18Nv2/Language/' . strToLower($language) . '.php';
+        } elseif (class_exists('I18Nv2')) {
+            $locale = I18Nv2::lastLocale(0, true);
+            if (isset($locale)) {
+                @include 'I18Nv2/Language/' . $locale['language'] . '.php';
+            }
+        }
+        if (!count($this->_codes)) {
+            include 'I18Nv2/Language/en.php';
         }
     }
 
