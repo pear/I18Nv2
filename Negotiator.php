@@ -148,7 +148,7 @@ class I18Nv2_Negotiator
     */
     function _negotiateLanguage()
     {
-        foreach(explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
+        foreach(explode(',', @$_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
             // Cut off any q-value that might come after a semi-colon
             if ($pos = strpos($lang, ';')) {
                 $lang = trim(substr($lang, 0, $pos));
