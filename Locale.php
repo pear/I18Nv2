@@ -84,13 +84,13 @@ class I18Nv2_Locale
     }
     
     /**
-    * Set _locale
+    * Set locale
     * 
     * This automatically calls I18Nv2_Locale::initialize()
     *
     * @access   public
     * @return   mixed
-    * @param    string  $_locale
+    * @param    string  $locale
     */
     function setLocale($locale)
     {
@@ -107,7 +107,6 @@ class I18Nv2_Locale
     *
     * @access   public
     * @return   void
-    * @param    string  $_locale
     */
     function initialize()
     {
@@ -216,7 +215,7 @@ class I18Nv2_Locale
     }
     
     /**
-    * Loads corresponding _locale extension
+    * Loads corresponding locale extension
     *
     * @access   public
     * @return   bool
