@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------+
-// | PEAR :: I18Nv2 :: Locale :: ICU                                      |
+// | PEAR :: I18Nv2 :: Locale :: icu                                      |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 3.0 of the PHP license,       |
 // | that is available at http://www.php.net/license/3_0.txt              |
@@ -14,7 +14,7 @@
 // $Id$
 
 /**
-* I18Nv2::Locale::ICU
+* I18Nv2::Locale::icu
 * 
 * @author       Michael Wallner <mike@php.net>
 * @package      I18Nv2
@@ -45,21 +45,36 @@ class I18Nv2_Locale_icu extends I18Nv2_Locale
     */
     function init($locale)
     {
-        $ICU = &new I18Nv2_Util_ICU(
+        $icu = &new I18Nv2_Util_ICU(
             array(  'datapath' => $this->datapath, 
                     'encoding' => $this->encoding   )
         );
-        if (PEAR::isError($data = $ICU->getFullLocale($locale))) {
+        if (PEAR::isError($data = $icu->getFullLocale($locale))) {
             return $data;
         }
-        unset($ICU);
+        unset($icu);
+
+        $this->names['languages'] = $data['Languages'];
+        $this->names['countries'] = $data['Countries'];
         
-        $this->names['days']['long']    = $data['DayNames'];
-        $this->names['days']['short']   = $data['DayAbbreviations'];
-        $this->names['months']['long']  = $data['MonthNames'];
-        $this->names['months']['short'] = $data['MonthAbbreviations'];
-        $this->names['languages']       = $data['Languages'];
-        $this->names['countries']       = $data['Countries'];
+        // these are set in newer ICU files, e.g. en
+        if (isset($data['calendar'])) {
+            $names = array_shift($data['calendar']);
+            $this->names['days']['long']    = $names['dayNames']['format']['wide'];
+            $this->names['days']['short']   = $names['dayNames']['format']['abbreviated'];
+            $this->names['months']['long']  = $names['monthNames']['format']['wide'];
+            $this->names['months']['short'] = $names['monthNames']['format']['abbreviated'];
+        }
+        
+        // override with older ones like de_AT
+        if (isset($data['DayNames'])) {
+            $this->names['days']['long']    = $data['DayNames'];
+            $this->names['days']['short']   = $data['DayAbbreviations'];
+            $this->names['months']['long']  = $data['MonthNames'];
+            $this->names['months']['short'] = $data['MonthAbbreviations'];
+        }
+
+        
 /*
         $this->formats['currency'] = array(
             I18Nv2_CURRENCY_LOCAL           => $data['localCurrencyFormat'],
