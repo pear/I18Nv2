@@ -150,6 +150,7 @@ class I18Nv2_Locale_libc extends I18Nv2_Locale
             ),
         );
 
+        $this->locale = $locale;
         $this->loadExtension();
         return parent::init(true);
     }
