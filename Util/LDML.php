@@ -280,6 +280,10 @@ class I18Nv2_Util_LDML extends XML_Parser
                 $this->_pos = &$this->_data['formats']['number']['negative_sign'];
             break;
 
+            case 'LOCALICEDPATTERNCHARS':
+                $this->_get = true;
+                $this->_pos = &$this->_data['patternchars'];
+            break;
         }
     }
     

@@ -21,9 +21,12 @@
 * @category     Internationalization
 */
 
+require_once 'PHP/Compat.php';
 require_once 'PEAR.php';
 require_once 'I18Nv2/Locale.php';
 require_once 'I18Nv2/Util/LDML.php';
+
+PHP_Compat::loadFunction('str_split');
 
 /** 
 * I18Nv2_Locale_ldml
@@ -36,6 +39,23 @@ class I18Nv2_Locale_ldml extends I18Nv2_Locale
 {
     var $datapath = '@DATA_DIR@/I18Nv2/LDML';
     var $encoding = 'UTF-8';
+    
+    var $patterns = array(
+        'datetime'  => array(),
+        'number'    => array(),
+        '_phpdate'  => array(
+            'day of week'   => 'w',
+            'week of year'  => 'W',
+            'full year'     => 'Y',
+            'short year'    => 'y',
+            'day of year'   => 'z',
+            'month'         => 'n',
+            'full hour'     => 'G',
+            'short hour'    => 'g',
+            'day of month'  => 'd',
+            'am pm'         => 'a',
+        ),
+    );
     
     /**
     * Init
@@ -84,15 +104,92 @@ class I18Nv2_Locale_ldml extends I18Nv2_Locale
                 $data['formats']['number']['thousands_sep']
             ),
             I18Nv2_NUMBER_INTEGER => array(
-                2,
+                0,
                 $data['formats']['number']['decimal_point'],
                 $data['formats']['number']['thousands_sep']
             )
         );
         
+        list(   $this->patterns['datetime']['era'],
+                $this->patterns['datetime']['year'],
+                $this->patterns['datetime']['month'],
+                $this->patterns['datetime']['day of month'],
+                $this->patterns['datetime']['hour24'],
+                $this->patterns['datetime']['hour00'],
+                $this->patterns['datetime']['minute'],
+                $this->patterns['datetime']['second'],
+                $this->patterns['datetime']['millisecond'],
+                $this->patterns['datetime']['day of week'],
+                $this->patterns['datetime']['day of year'],
+                $this->patterns['datetime']['day of week in month'],
+                $this->patterns['datetime']['week of year'],
+                $this->patterns['datetime']['week of month'],
+                $this->patterns['datetime']['am pm'],
+                $this->patterns['datetime']['hour1'],
+                $this->patterns['datetime']['hour0'],
+                $this->patterns['datetime']['timezone'],
+                $this->patterns['datetime']['year of week of year'], //WTF?
+                $this->patterns['datetime']['timezone-e']
+        ) = str_split($data['patternchars'], 1);
+        
+        print_r(($data['patternchars']));
+        
         $this->locale = $locale;
         return parent::init(true);
     }
     
+    /**
+    * Format
+    *
+    * @access   public
+    * @return   mixed
+    */
+    function format($type, $value, $override)
+    {
+        $type = strToLower($type);
+        $frmt = isset($override) ? 
+            $this->formats[$type][$override] : 
+            $this->current[$type];
+
+        switch ($type) {
+            case 'time':
+                $datetime = &new I18Nv2_Locale_ldml_DateTime($frmt);
+                $datetime->format($value);
+            break;
+        }
+        
+    }
+    
 }
+class I18Nv2_Locale_ldml_DateTime
+{
+    /**
+    * Constructor
+    *
+    * @access   public
+    * @return   mixed
+    */
+    function I18Nv2_Locale_ldml_DateTime($format)
+    {
+        $this->format = $format;
+    }
+    
+    /**
+    * Format
+    *
+    * @access   public
+    * @return   mixed
+    */
+    function format($value)
+    {
+        $literal_count = 0;
+        preg_match_all('/(\'.*?\')/', $value, $literals);
+        $value = preg_replace('/(\'.*?\')/e', '"__".$literal_count++."__"', $value);
+        print_r($value);
+    }
+    
+}
+$l = new I18Nv2_Locale_ldml;
+$l->setLocale('de');
+$l->formatTime(123);
 ?>

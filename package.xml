@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.30 $ -->
+<!-- $Revision: 1.31 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -36,33 +36,16 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
  </maintainers>
 
  <release>
-  <version>0.8.0</version>
+  <version>0.6.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-05-07</date>
-  <notes><![CDATA[
-BC-BREAK:
-I18Nv2_Locale now has to be instantiated by the factory:
-$locale = &I18Nv2_Locale::factory();
-
-CHANGES:
-# split I18Nv2_Locale up into several backend modules (LibC, ICU, LDML)
-# moved I18Nv2/Locale/* to I18Nv2/Locale/libc/
-# integrated I18Nv2/Locale/Windows.php into I18Nv2.php
-
-NEW FEATURES:
-+ added I18Nv2_Util, I18Nv2_Util_ICU and I18Nv2_Util_LDML
-+ added support to use different backends for the I18Nv2_Locale formatter
-. o LibC implementation: as it was using PHPs setlocale(), localeconv() 
-. . and the I18Nv2_Locale extensions
-. o ICU: International Components for Unicode,
-. . see http://www.ibm.com/developerworks/opensource/icu/project/
-. o LDML: Locale Data Markup Language,
-. . see http://www.OpenI18N.org/modules.php?op=modload&name=Sections&file=index&req=viewarticle&artid=13&page=1
-
-BUGFIXES:
-* CS locale libc extension were missing
-]]>
+  <date>2004-05-03</date>
+  <notes>
++ Added some examples
+* Silenced putenv() - save_mode restriction, mishal(@)centrum.cz
+* Fixed I18Nv2_Language, which didn't extend I18Nv2_CommonList
+* Fixed a typo in I18Nv2_DecoratedList_HtmlSelect (parse error)
+* Fixed key case handling in I18Nv2_Country and I18Nv2_Language
   </notes>
 
   <filelist>
@@ -71,26 +54,6 @@ BUGFIXES:
    <dir name="/" role="php" baseinstalldir="I18Nv2">
 
     <file name="Locale.php" />
-    <dir name="Locale">
-     <file name="libc.php" />
-     <file name="icu.php">
-      <replace type="pear-config" from="@DATA_DIR@" to="data_dir" />
-     </file>
-     <file name="ldml.php">
-      <replace type="pear-config" from="@DATA_DIR@" to="data_dir" />
-     </file>
-    </dir>
-    
-    <file name="Util.php" />
-    <dir name="Util">
-     <file name="ICU.php">
-      <replace type="pear-config" from="@DATA_DIR@" to="data_dir" />
-     </file>
-     <file name="LDML.php">
-      <replace type="pear-config" from="@DATA_DIR@" to="data_dir" />
-     </file>
-    </dir>
-
     <file name="CommonList.php" />
     <file name="Country.php" />
     <file name="Language.php" />
@@ -100,7 +63,6 @@ BUGFIXES:
     <dir name="DecoratedList">
       <file name="HtmlSelect.php" />
       <file name="HtmlEntities.php" />
-      <file name="HtmlSpecialchars.php" />
     </dir>
 
     <dir name="Country">
@@ -155,9 +117,8 @@ BUGFIXES:
      <file>zh.php</file>
     </dir>
 
-    <dir name="Locale/libc">
+    <dir name="Locale">
      <file name="af.php" />
-     <file name="cs.php" />
      <file name="da.php" />
      <file name="de.php" />
      <file name="en.php" />
@@ -173,6 +134,7 @@ BUGFIXES:
      <file name="pt.php" />
      <file name="ru.php" />
      <file name="sl.php" />
+     <file name="Windows.php" />
      <file name="EUR.php" />
      <file name="de_AT.php" />
      <file name="de_DE.php" />
@@ -191,7 +153,7 @@ BUGFIXES:
      <file name="sv_FI.php" />
     </dir>
 
-    <dir name="Language">
+    <dir role="php" name="Language">
      <file>am.php</file>
      <file>ar.php</file>
      <file>bg.php</file>
@@ -245,12 +207,9 @@ BUGFIXES:
 
    </dir>
 
-<!-- TESTS -->
    <file role="test" install-as="I18Nv2_Locale-PHPUnit_Testcase.php">
     tests/I18Nv2_Locale-PHPUnit_Testcase.php
    </file>
-
-<!-- DOCS -->
    <file role="doc" install-as="examples/retrieving_locale_conventions.php">
     docs/examples/retrieving_locale_conventions.php
    </file>
@@ -275,15 +234,11 @@ BUGFIXES:
    <file role="doc" install-as="examples/using_I18Nv2_Negotiator.php">
     docs/examples/using_I18Nv2_Negotiator.php
    </file>
-   <file role="doc" install-as="examples/decorating_a_list.php">
-    docs/examples/decorating_a_list.php
-   </file>
   </filelist>
  </release>
  <deps>
   <dep type="pkg" rel="has" optional="no">PEAR</dep>
   <dep type="php" rel="ge" optional="no" version="4.0.6" />
-  <dep type="php" rel="ge" optional="yes" version="4.2.0" />
   <dep type="ext" rel="has" optional="no">pcre</dep>
   <dep type="ext" rel="has" optional="no">iconv</dep>
  </deps>
@@ -315,29 +270,6 @@ BUGFIXES:
   o HtmlSelect
 + Added czech locale dependent date/time formats, mishal(@)centrum.cz
 + Fixed hebrew locales, sagi(@)php.net 
-   </notes>
-  </release>
-  <release>
-   <version>0.6.0</version>
-   <license>PHP</license>
-   <state>alpha</state>
-   <date>2004-05-03</date>
-   <notes>
-+ Added some examples
-* Silenced putenv() - save_mode restriction, mishal(@)centrum.cz
-* Fixed I18Nv2_Language, which didn't extend I18Nv2_CommonList
-* Fixed a typo in I18Nv2_DecoratedList_HtmlSelect (parse error)
-* Fixed key case handling in I18Nv2_Country and I18Nv2_Language
-   </notes>
-  </release>
-  <release>
-   <version>0.7.0</version>
-   <license>PHP</license>
-   <state>alpha</state>
-   <date>2004-05-05</date>
-   <notes>
-+ Added class I18Nv2_DecoratedList_HtmlSpecialchars
-+ Added method I18Nv2_(Common|Decorated)List::toDecoratedList()
    </notes>
   </release>
  </changelog>

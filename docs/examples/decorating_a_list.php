@@ -12,7 +12,7 @@
 
 require_once 'I18Nv2/Country.php';
 
-$c = &new I18Nv2_Country('fr', 'iso-8859-1');
+$c = &new I18Nv2_Country('it', 'iso-8859-1');
 $s = &$c->toDecoratedList('HtmlSelect');
 
 // set some attributes

@@ -232,6 +232,6 @@ class I18Nv2_CommonList
         require_once 'I18Nv2/DecoratedList/'. $type .'.php';
         $decoratedList = 'I18Nv2_DecoratedList_' . $type;
         return new $decoratedList($this);
-    }
+    }    
 }
 ?>
