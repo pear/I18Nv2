@@ -202,7 +202,8 @@ class I18Nv2
      * This method utilizes ob_iconv_handler(), so you should call it at the 
      * beginning of your script (prior to output).  If any output buffering has 
      * been started before, the contents will be fetched with ob_get_contents() 
-     * and the buffers will be destroyed by ob_end_clean().
+     * and the buffers will be destroyed by ob_end_clean() if $refetchOB is set
+     * to true.
      * 
      * <code>
      * require_once('I18Nv2.php');
@@ -219,8 +220,13 @@ class I18Nv2
      * @param   string  $ie             internal encoding
      * @param   bool    $decodeRequest  whether to decode request variables
      *                                  ($_GET and $_POST) from $oe to $ie
+     * @param   bool    $refetchOB      whether contents of already active 
+     *                                  output buffers should be fetched, the
+     *                                  output buffer handlers destroyed and
+     *                                  the fetched data be passed through
+     *                                  ob_iconvhandler
      */
-    function autoConv($oe = 'UTF-8', $ie = 'ISO-8859-1', $decodeRequest = true)
+    function autoConv($oe = 'UTF-8', $ie = 'ISO-8859-1', $decodeRequest = true, $refetchOB = true)
     {
         if (!strcasecmp($oe, $ie)) {
             return true;
@@ -238,7 +244,7 @@ class I18Nv2
         iconv_set_encoding('input_encoding', $oe);
         
         $buffer = '';
-        if ($level = ob_get_level()) {
+        if ($refetchOB && $level = ob_get_level()) {
             while ($level--) {
                 $buffer .= ob_get_contents();
                 ob_end_clean();
