@@ -443,14 +443,19 @@ class I18Nv2_Locale
     * @return   string
     * @param    numeric $value
     * @param    int     $overrideFormat
+    * @param    string  $overrideSymbol
     */
-    function formatCurrency($value, $overrideFormat = null)
+    function formatCurrency($value, $overrideFormat = null, $overrideSymbol = null)
     {
         list($sym, $dig, $dec, $sep, $nsign, $psign, $npre, $ppre, $nsep, $psep) 
             = isset($overrideFormat) ? 
             $this->_currencyFormats[$overrideFormat] :
             $this->_currentCurrencyFormat;
 
+        if (isset($overrideSymbol)) {
+            $sym = $overrideSymbol;
+        }
+        
         if ($value < 0) {
             if ($npre) {
                 if ($nsep) {
