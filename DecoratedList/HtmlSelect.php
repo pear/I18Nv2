@@ -77,7 +77,7 @@ class I18Nv2_DecoratedList_HtmlSelect extends I18Nv2_DecoratedList
     {
         static $codes;
         
-        if (is_string($value)) {
+        if (is_scalar($value)) {
             if (!isset($codes)) {
                 $codes = $this->list->getAllCodes();
             }
