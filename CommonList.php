@@ -68,7 +68,9 @@ class I18Nv2_CommonList
                 $this->setLanguage('en');
             }
         }
-        $this->setEncoding($encoding);
+        if (!$this->setEncoding($encoding)) {
+            $this->setEncoding('UTF-8');
+        }
     }
 
     /**
@@ -87,14 +89,26 @@ class I18Nv2_CommonList
             return false;
         }
         $language = strToLower($language);
-        if (!strcmp($language, $this->language)) {
+        if ($language === $this->language) {
             return true;
         }
-        if ($this->_loadLanguage($language)) {
+        if ($this->loadLanguage($language)) {
             $this->language = $language;
             return true;
         }
         return false;
+    }
+    
+    /**
+    * Get current language
+    * 
+    * 
+    * @access   public
+    * @return   string
+    */
+    function getLanguage()
+    {
+        return $this->language;
     }
     
     /**
@@ -111,6 +125,17 @@ class I18Nv2_CommonList
         }
         $this->encoding = strToUpper($encoding);
         return true;
+    }
+    
+    /** 
+    * Get current encoding
+    * 
+    * @access   public
+    * @return   string
+    */
+    function getEncoding()
+    {
+        return $this->encoding;
     }
 
     /**
@@ -138,7 +163,7 @@ class I18Nv2_CommonList
         if (!isset($this->codes[$code])) {
             return '';
         }
-        if (strcmp('UTF-8', $this->encoding)) {
+        if ('UTF-8' !== $this->encoding) {
             return iconv('UTF-8', $this->encoding, $this->codes[$code]);
         }
         return $this->codes[$code];
@@ -152,7 +177,7 @@ class I18Nv2_CommonList
     */
     function getAllCodes()
     {
-        if (strcmp('UTF-8', $this->encoding)) {
+        if ('UTF-8' !== $this->encoding) {
             $codes = $this->codes;
             array_walk($codes, array(&$this, '_iconv'));
             return $codes;
@@ -167,6 +192,18 @@ class I18Nv2_CommonList
     function _iconv(&$code, $key)
     {
         $code = iconv('UTF-8', $this->encoding, $code);
+    }
+    
+    /** 
+    * loadLanguage
+    * 
+    * @access   proteceted
+    * @return   bool
+    * @param    string  $language
+    */
+    function loadLanguage($language)
+    {
+        return false;
     }
     
 }
