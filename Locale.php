@@ -269,8 +269,11 @@ class I18Nv2_Locale
     {
         $locale = I18Nv2::lastLocale(0, true);
         if (isset($locale)) {
+            $dir = dirname(__FILE__);
             foreach ($locale as $lc) {
-                @include 'I18Nv2/Locale/'. $lc .'.php';
+                if (is_file($dir . '/Locale/' . $lc . '.php')) {
+                    include $dir . '/Locale/' . $lc . '.php';
+                }
             }
         }
     }
