@@ -25,10 +25,7 @@
 * @category     Internationalization
 */
 
-/**
-* Requires PEAR
-*/
-require_once 'PEAR.php';
+define('I18Nv2_WIN', defined('OS_WINDOWS') ? OS_WINDOWS : (strToUpper(substr(PHP_OS, 0,3)) === 'WIN'));
 
 /** 
 * I18Nv2 - Internationalization v2
@@ -70,7 +67,7 @@ class I18Nv2
         }
         
         // get Win32 locale code (en_US => enu)
-        if (OS_WINDOWS) {
+        if (I18Nv2_WIN) {
             $windows   = I18Nv2::getStaticProperty('windows');
             $setlocale = isset($windows[$locale]) ? $windows[$locale] : $locale;
         } else {
@@ -102,7 +99,7 @@ class I18Nv2
         
         $language = substr($locale, 0,2);
         
-        if (OS_WINDOWS) {
+        if (I18Nv2_WIN) {
             putEnv('LANG='     . $language);
             putEnv('LANGUAGE=' . $language);
         } else {
@@ -227,6 +224,7 @@ class I18Nv2
             return true;
         }
 
+        require_once 'PEAR.php';
         if (!PEAR::loadExtension('iconv')) {
             return PEAR::raiseError('Error: ext/iconv is not available');
         }
@@ -352,7 +350,7 @@ class I18Nv2
         );
         
         // include Win32 locale codes
-        if (OS_WINDOWS) {
+        if (I18Nv2_WIN) {
             include_once 'I18Nv2/Locale/Windows.php';
         }
     }
