@@ -210,10 +210,13 @@ class I18Nv2_Locale
      */
     function setLocale($locale)
     {
-        if (isset($locale) && !preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $locale)) {
-            return PEAR::raiseError('Invalid locale supplied: ' . $locale);
+        if (isset($locale)) {
+            if (!preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $locale)) {
+                return PEAR::raiseError('Invalid locale supplied: ' . $locale);
+            }
+            $this->locale = $locale;
         }
-        $this->locale = $locale;
+        
         $this->initialize();
         return true;
     }
