@@ -84,7 +84,7 @@ class I18Nv2_DecoratedList_HtmlSelect extends I18Nv2_DecoratedList
             $key = array_search($value, $codes);
             return
                 '<option ' . $this->_optAttr($key) . '>' . 
-                    $value . ^
+                    $value .
                 '</option>';
         } elseif(is_array($value)) {
             return 
