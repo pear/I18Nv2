@@ -2,7 +2,7 @@
 <?php
 
 /**
- * Extractor for I18Nv2
+ * Updater for I18Nv2
  *
  * $Id$
  */
@@ -17,12 +17,19 @@ ini_set('track_errors', true);
  *  o PHP5
  *  o PEAR
  *  o Console_Getargs
- *  o pecl/cvsclient
+ *  o pecl/cvsclient (only for --updatecvs)
  *  o ext/mbstring
  *  o ext/simplexml
  */
 require_once 'PEAR.php';
 require_once 'Console/Getargs.php';
+
+if (!PEAR::loadExtension('simplexml')) {
+    usage('ext/simplexml is required!');
+}
+if (!PEAR::loadExtension('mbstring')) {
+    usage('ext/mbstring is required!');
+}
 /**#@-*/
 
 $cnf = array(
@@ -108,13 +115,6 @@ $opt = &Console_Getargs::factory($cnf);
 
 if (PEAR::isError($opt)) {
     usage($opt);
-}
-
-if (!PEAR::loadExtension('simplexml')) {
-    usage('ext/simplexml is required!');
-}
-if (!PEAR::loadExtension('mbstring')) {
-    usage('ext/mbstring is required!');
 }
 
 if (    !$opt->isDefined('updatecvs')   and
@@ -258,7 +258,7 @@ function sx_load($array, $casefunc)
     if (count($array))
     foreach ($array as $p) {
         if (strlen($p['type']) == 2) {
-            echo '.';
+            verbose('.');
             $ar[$casefunc($p['type'])] = 
                 mb_ereg_replace('\'', '\\\'', 
                 mb_convert_case($p, MB_CASE_TITLE, 'UTF-8'));
@@ -295,7 +295,7 @@ function write_file($path, $codes)
     }
     $content = "<?php\n/**\n * \$Id\$\n */\n\$this->codes = array(\n";
     foreach ($codes as $code => $string) {
-        echo '.';
+        verbose('.');
         $content .= "    '$code' => '$string',\n";
     }
     $content .= ");\n?>\n";
