@@ -122,19 +122,25 @@ class I18Nv2
     /**
      * Get current/prior Locale
      *
-     * This only works, if I18Nv2::setLocale() has already been called
-     * 
      * @static
      * @access  public
-     * @return  string  last locale
-     * @param   int     $prior  if 0, the current otherwise n prior current
-     * @param   bool    $full   wheter to return the array with locale, 
-     *                           language and actually used system locale
+     * @return  mixed   last locale as string or array
+     * @param   int     $prior  if 0, the current otherwise n prior to current
+     * @param   bool    $part   true|all|0=locale|1=language|2=syslocale
      */
-    function lastLocale($prior = 0, $full = false)
+    function lastLocale($prior = 0, $part = 0)
     {
         $last = I18Nv2::getStaticProperty('last');
-        return $full ? @$last[$prior] : @$last[$prior][0];
+        if (!isset($last)) {
+            return I18Nv2::setLocale();
+        }
+        if (!isset($last[$prior])) {
+            return null;
+        }
+        if ($part === true || $part == 'all') {
+            return $last[$prior];
+        }
+        return $last[$prior][$part];
     }
     
     /**
