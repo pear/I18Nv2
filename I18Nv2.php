@@ -51,7 +51,7 @@ class I18Nv2
     {
         static $triedFallbacks;
         
-        if (!isset($locale)) {
+        if (!strlen($locale)) {
             return setLocale($cat, null);
         }
         
