@@ -46,6 +46,14 @@ class I18Nv2_Util_ICU
     var $datapath = '@DATA_DIR@/I18Nv2/ICU';
     
     /**
+    * Desired Character Set
+    * 
+    * @var      string
+    * @access   public
+    */
+    var $encoding = 'UTF-8';
+    
+    /**
     * Reference to the current node in the tree
     * 
     * @var      object
@@ -105,6 +113,9 @@ class I18Nv2_Util_ICU
         if (isset($options['datapath'])) {
             $this->datapath = $options['datapath'];
         }
+        if (isset($options['encoding'])) {
+            $this->encoding = $options['encoding'];
+        }
     }
     
     /**
@@ -123,7 +134,7 @@ class I18Nv2_Util_ICU
     * Parse ICU string
     * 
     * @access   public
-    * @return   int     string length
+    * @return   int     string length (bytes)
     * @param    string  $str
     */
     function parse($str)
@@ -137,8 +148,10 @@ class I18Nv2_Util_ICU
                 $this->node = &$this->node->addChild($this->buffer);
                 $this->buffer = '';
             } elseif ('}' === $token) {
-                $this->node->setData($this->buffer);
-                $this->node = &$this->node->parent;
+                $this->node->setData($this->prepareData($this->buffer));
+                if (isset($this->node->parent)) {
+                    $this->node = &$this->node->parent;
+                }
                 $this->buffer = '';
             } else {
                 $this->buffer .= $token;
@@ -229,6 +242,32 @@ class I18Nv2_Util_ICU
         return I18Nv2_Util::mergeMany($en, $langdata, $localedata);
     }
     
+    /** 
+    * Prepare data
+    * 
+    * @access   public
+    * @return   mixed
+    * @param    string  $data
+    */
+    function prepareData($data)
+    {
+        static $search  = array('/^[\s",]*(.+?)[\s",]*$/', '/(\\\\u([[:alnum:]]{4}))/e');
+        static $replace = array('\\1', 'I18Nv2_Util::unichr(\'\\2\')');
+        
+        $result = array();
+        foreach (preg_split('/",\s*"/', $data, -1, PREG_SPLIT_NO_EMPTY) as $d) {
+            $result[] = preg_replace($search, $replace, $d);
+        }
+        
+        if (!$count = count($result)) {
+            return iconv('UTF-8', $this->encoding, trim($data));
+        } elseif ($count == 1) {
+            return iconv('UTF-8', $this->encoding, array_shift($result));
+        } else {
+            return I18Nv2_Util::iconvArray($result, $this->encoding);
+        }
+    }
+    
 }
 
 /**
@@ -264,33 +303,7 @@ class I18Nv2_Util_ICU_RootNode
     */
     function setData($data)
     {
-        $this->data = $this->prepareData($data);
-    }
-    
-    /** 
-    * Prepare payload data
-    * 
-    * @access   public
-    * @return   mixed
-    * @param    string  $data
-    */
-    function prepareData($data)
-    {
-        static $search  = array('/^[\s",]*(.+?)[\s",]*$/', '/(\\\\u([[:alnum:]]{4}))/e');
-        static $replace = array('\\1', 'I18Nv2_Util::unichr(\'\\2\')');
-        
-        $result = array();
-        foreach (preg_split('/",\s*"/', $data, -1, PREG_SPLIT_NO_EMPTY) as $d) {
-            $result[] = preg_replace($search, $replace, $d);
-        }
-        
-        if (!$count = count($result)) {
-            return trim($data);
-        } elseif ($count == 1) {
-            return array_shift($result);
-        } else {
-            return $result;
-        }
+        $this->data = $data;
     }
     
     /**
