@@ -34,6 +34,9 @@ require_once 'I18Nv2/Util/ICU.php';
 */
 class I18Nv2_Locale_icu extends I18Nv2_Locale
 {
+    var $datapath = '@DATA_DIR@/I18Nv2/ICU';
+    var $encoding = 'UTF-8';
+    
     /**
     * Init
     *
@@ -42,7 +45,10 @@ class I18Nv2_Locale_icu extends I18Nv2_Locale
     */
     function init($locale)
     {
-        $ICU = &new I18Nv2_Util_ICU(array('datapath' => $this->datapath));
+        $ICU = &new I18Nv2_Util_ICU(
+            array(  'datapath' => $this->datapath, 
+                    'encoding' => $this->encoding   )
+        );
         if (PEAR::isError($data = $ICU->getFullLocale($locale))) {
             return $data;
         }
