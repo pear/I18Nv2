@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.50 $ -->
+<!-- $Revision: 1.51 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -20,7 +20,7 @@ Short descriptions of provided classes:
  - I18Nv2_Negotiator         HTTP negiotiation of preferred language and charset
  - I18Nv2_Country            multilingual list of country names
  - I18Nv2_Language           multilingual list of language names
- - I18Nv2_Charset            list of common and not so common charsets and aliases
+ - I18Nv2_Encoding           list of common and not so common charsets and aliases
  - I18Nv2_AreaCode           list of international area codes (phone)
 
 Decorators for lists like I18Nv2_Country and I18Nv2_Language:
@@ -33,13 +33,18 @@ Decorators for lists like I18Nv2_Country and I18Nv2_Language:
 Translations of language and country names are 
 more or less completely available in the following languages:
 =============================================================
- Amharic, Arabic, Bulgarian, Catalan, Chinese, Croatian, Czech, Danish, Dutch, 
- English, Esperanto, Estonian, Finnish, French, German, Greek, Hebrew, Hindi, 
- Hungarian, Indonesian, Irish, Italian, Japanese, Korean, Latvian, Lithuanian, 
- Malay, Maltese, Marathi, Norwegian, Norwegian Bokmål, Pashto (Pushto), 
- Persian, Polish, Portuguese, Romanian, Russian, Serbian, Serbo-Croatian, 
- Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Tigrinya, Turkish, 
- Ukrainian, Vietnamese
+ Afar, Afrikaans, Albanian, Amharic, Arabic, Armenian, Assamese, Azerbaijani, 
+ Basque, Belarusian, Bengali, Bulgarian, Catalan, Chinese, Cornish, Croatian, 
+ Czech, Danish, Divehi, Dutch, Dzongkha, English, Esperanto, Estonian, Faroese, 
+ Finnish, French, Gallegan, Georgian, German, Greek, Gujarati, Hebrew, Hindi, 
+ Hungarian, Icelandic, Indonesian, Inuktitut, Irish, Italian, Japanese, 
+ Kalaallisut, Kannada, Kazakh, Khmer, Kirghiz, Korean, Lao, Latvian, Lithuanian, 
+ Macedonian, Malay, Malayalam, Maltese, Manx, Marathi, Mongolian, Norwegian, 
+ Norwegian Bokmål, Norwegian Nynorsk, Oriya, Oromo, Pashto (Pushto), Persian, 
+ Polish, Portuguese, Punjabi, Romanian, Russian, Sanskrit, Serbian, 
+ Serbo-Croatian, Slovak, Slovenian, Somali, Spanish, Swahili, Swedish, Tamil, 
+ Tatar, Telugu, Thai, Tigrinya, Turkish, Ukrainian, Urdu, Uzbek, Vietnamese 
+ and Welsh
 
 FINAL NOTE:
 ===========
@@ -66,7 +71,7 @@ FINAL NOTE:
   <version>0.10.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-11-29</date>
+  <date>2004-12-06</date>
   <notes><![CDATA[
 + cache already loaded locales in I18Nv2_Locale
 - renamed I18Nv2_Charset to I18Nv2_Encoding
