@@ -556,7 +556,7 @@ class I18Nv2_Locale
     */
     function time($timestamp = null)
     {
-        return strftime('%x', isset($timestamp) ? $timestamp : time());
+        return strftime('%X', isset($timestamp) ? $timestamp : time());
     }
     
     /**
@@ -568,7 +568,7 @@ class I18Nv2_Locale
     */
     function date($timestamp = null)
     {
-        return strftime('%X', isset($timestamp) ? $timestamp : time());
+        return strftime('%x', isset($timestamp) ? $timestamp : time());
     }
     
     /**
