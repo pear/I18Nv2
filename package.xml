@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.9 $ -->
+<!-- $Revision: 1.10 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -24,6 +24,12 @@ There's very need of people contributing:
    <email>mike@php.net</email>
    <role>lead</role>
   </maintainer>
+  <maintainer>
+   <user>quipo</user>
+   <name>Lorenzo Alberton</name>
+   <email>quipo@php.net</email>
+   <role>contributor</role>
+  </maintainer>
  </maintainers>
  
  <release>
@@ -35,6 +41,7 @@ There's very need of people contributing:
 Reorganized the Win32 locale and "fully qualified locale" maps.
 Fixed I18Nv2::loadExtension() to load language extension before locale extension.
 Introduced kind of a fallback mechanism for not recognized locales.
+Starting to localize I18Nv2_Country (currently en, de and it are covered)
   </notes>
   
   <filelist>
@@ -46,6 +53,12 @@ Introduced kind of a fallback mechanism for not recognized locales.
     <file name="Country.php" />
     <file name="Language.php" />
     <file name="Negotiator.php" />
+    
+    <dir name="Country">
+     <file name="de.php" />
+     <file name="en.php" />
+     <file name="it.php" />
+    </dir>
     
     <dir name="Locale">
      <file name="af.php" />
