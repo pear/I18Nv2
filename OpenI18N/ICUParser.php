@@ -1,7 +1,25 @@
 <?php
+// +----------------------------------------------------------------------+
+// | PEAR :: I18Nv2 :: OpenI18N :: ICUParser                              |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 3.0 of the PHP license,       |
+// | that is available at http://www.php.net/license/3_0.txt              |
+// | If you did not receive a copy of the PHP license and are unable      |
+// | to obtain it through the world-wide-web, please send a note to       |
+// | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 2004 Michael Wallner <mike@iworks.at>                  |
+// +----------------------------------------------------------------------+
+//
+// $Id$
+
 
 /**
 * I18Nv2_OpenI18N_ICUParser
+* 
+* @see  The OpenI18N Project    http://www.OpenI18N.org/
+* @see  IBM ICU CVS             http://oss.software.ibm.com/cvs/icu/
+* @see  IBM ICU Data            http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/
 * 
 * @author   Michael Wallner <mike@php.net>
 * @package  I18Nv2
@@ -267,6 +285,7 @@ class I18Nv2_OpenI18N_ICUTreeNode extends I18Nv2_OpenI18N_ICURootNode
     */
     function __construct(&$name)
     {
+        parent::__construct();
         $this->name = trim($name);
         $name = '';
     }
