@@ -85,9 +85,7 @@ class I18Nv2
         // if the locale is not recognized by the system, check if there 
         // is a fallback locale and try that, otherwise return false
         if (!$syslocale) {
-            if ($triedFallbacks[$locale]) {
-                return false;
-            } else {
+            if (!$triedFallbacks[$locale]) {
                 $triedFallbacks[$locale] = $setlocale;
                 $fallbacks = I18Nv2::getStaticProperty('fallbacks');
                 if (isset($fallbacks[$locale])) {
@@ -100,11 +98,11 @@ class I18Nv2
         $language = substr($locale, 0,2);
         
         if (I18Nv2_WIN) {
-            putEnv('LANG='     . $language);
-            putEnv('LANGUAGE=' . $language);
+            @putEnv('LANG='     . $language);
+            @putEnv('LANGUAGE=' . $language);
         } else {
-            putEnv('LANG='     . $locale);
-            putEnv('LANGUAGE=' . $locale);
+            @putEnv('LANG='     . $locale);
+            @putEnv('LANGUAGE=' . $locale);
         }
         
         // unshift locale stack
