@@ -127,7 +127,7 @@ class I18Nv2
         $info = &I18Nv2::getStaticProperty('info');
         $info = localeConv();
         
-        return $usedloc;
+        return $syslocale;
     }
     
     /**
