@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.17 $ -->
+<!-- $Revision: 1.18 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -58,6 +58,7 @@ Just grab the CVS sources or download the package and see if your language or lo
    <dir name="/" role="php" baseinstalldir="I18Nv2">
 
     <file name="Locale.php" />
+    <file name="CommonList.php" />
     <file name="Country.php" />
     <file name="Language.php" />
     <file name="Negotiator.php" />
