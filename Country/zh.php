@@ -7,7 +7,7 @@
  * @language  zh
  */
 $this->codes = array(
-    'AX' => '�land Isle',
+    'AX' => 'Åland Isle',
     'UG' => '乌干达',
     'UZ' => '乌兹别克斯坦',
     'UA' => '乌克兰',

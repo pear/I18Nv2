@@ -7,7 +7,7 @@
  * @language  hu
  */
 $this->codes = array(
-    'AX' => '�land Isle',
+    'AX' => 'Åland Isle',
     'MP' => 'Északi Mariana-szigetek',
     'EE' => 'Észtország',
     'IE' => 'Írország',

@@ -7,7 +7,7 @@
  * @language  ga
  */
 $this->codes = array(
-    'AX' => '�land Isle',
+    'AX' => 'Åland Isle',
     'YE' => 'Éimin',
     'IE' => 'Éire',
     'UZ' => 'Úisbéiceastáin',

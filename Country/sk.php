@@ -7,7 +7,7 @@
  * @language  sk
  */
 $this->codes = array(
-    'AX' => '�land Isle',
+    'AX' => 'Åland Isle',
     'IE' => 'Írsko',
     'CN' => 'Čína',
     'TD' => 'Čad',

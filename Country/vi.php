@@ -7,7 +7,7 @@
  * @language  vi
  */
 $this->codes = array(
-    'AX' => '�land Isle',
+    'AX' => 'Åland Isle',
     'AR' => 'Ác-hen-ti-na',
     'AM' => 'Ác-mê-ni-a',
     'AT' => 'Áo',
