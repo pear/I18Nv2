@@ -230,7 +230,6 @@ class I18Nv2_Locale
         );
         
         $this->loadExtension();
-        $this->setDefaults();
 
         if (!count($this->_dateTimeFormats)) {
             $this->_dateTimeFormats = array(
@@ -256,6 +255,8 @@ class I18Nv2_Locale
                     $this->_timeFormats[I18Nv2_DATETIME_FULL],
             );
         }
+
+        $this->setDefaults();
     }
     
     /**
