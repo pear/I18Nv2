@@ -21,7 +21,7 @@
 * @category     Internationalization
 */
 
-require_once '../Util.php';
+require_once 'I18Nv2/Util.php';
 
 /**
 * I18Nv2_Util_ICU
