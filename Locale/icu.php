@@ -42,14 +42,19 @@ class I18Nv2_Locale_icu extends I18Nv2_Locale
     */
     function init($locale)
     {
-        if (PEAR::isError($data = $this->_getLocaleData($locale))) {
+        $ICU = &new I18Nv2_Util_ICU(array('datapath' => $this->datapath));
+        if (PEAR::isError($data = $ICU->getFullLocale($locale))) {
             return $data;
         }
-        $this->names['days']['long']    = $data['days'];
-        $this->names['days']['short']   = $data['abbrDays'];
-        $this->names['months']['long']  = $data['months'];
-        $this->names['months']['short'] = $data['abbrMonths'];
-
+        unset($ICU);
+        
+        $this->names['days']['long']    = $data['DayNames'];
+        $this->names['days']['short']   = $data['DayAbbreviations'];
+        $this->names['months']['long']  = $data['MonthNames'];
+        $this->names['months']['short'] = $data['MonthAbbreviations'];
+        $this->names['languages']       = $data['Languages'];
+        $this->names['countries']       = $data['Countries'];
+/*
         $this->formats['currency'] = array(
             I18Nv2_CURRENCY_LOCAL           => $data['localCurrencyFormat'],
             I18Nv2_CURRENCY_INTERNATIONAL   => $data['intlCurrencyFormat'],
@@ -58,6 +63,10 @@ class I18Nv2_Locale_icu extends I18Nv2_Locale
             I18Nv2_NUMBER_FLOAT     => $data['floatNumber'],
             I18Nv2_NUMBER_INTEGER   => $data['intNumber'],
         );
+*/
+        $this->locale = $locale;
+        return parent::init(true);
     }
+    
 }
 ?>
