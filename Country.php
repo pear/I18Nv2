@@ -48,5 +48,17 @@ class I18Nv2_Country extends I18Nv2_CommonList
     {
         return @include 'I18Nv2/Country/' . $language . '.php';
     }
+    
+    /**
+    * Change case of code key
+    *
+    * @access   protected
+    * @return   string
+    * @param    string  $code
+    */
+    function changeKeyCase($code)
+    {
+        return strToUpper($code);
+    }
 }
 ?>
