@@ -14,14 +14,22 @@
 // $Id$
 
 /**
+ * I18Nv2::Charset
+ * 
+ * List of common and not so common character sets and their aliases.
+ * 
+ * @package     I18Nv2
+ * @category    Internationalization
+ */
+
+/**
  * I18Nv2_Charset
  *
  * @author      Michael Wallner <mike@php.net>
  * @version     $Revision$
  * @package     I18Nv2
- * 
- * @static
  * @access      public
+ * @static
  */
 class I18Nv2_Charset
 {
