@@ -32,7 +32,7 @@ require_once 'I18Nv2/Util/ICU.php';
 * @version  $Revision$
 * @access   public
 */
-class I18Nv2_Locale_icu
+class I18Nv2_Locale_icu extends I18Nv2_Locale
 {
     /**
     * Init
@@ -59,6 +59,5 @@ class I18Nv2_Locale_icu
             I18Nv2_NUMBER_INTEGER   => $data['intNumber'],
         );
     }
-    
 }
 ?>
