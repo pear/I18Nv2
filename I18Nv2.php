@@ -249,7 +249,7 @@ class I18Nv2
     */
     function locales2langs($locales)
     {
-        return I18Nv2::_traverseLL($locales, '_', '-');
+        return array_map(array('I18Nv2','l2l'), (array) $locales);
     }
     
     /**
@@ -264,28 +264,62 @@ class I18Nv2
     */
     function langs2locales($languages)
     {
-        return I18Nv2::_traverseLL($languages, '-', '_');
+        return array_map(array('I18Nv2','l2l'), (array) $languages);
     }
     
     /**
-    * Helper for traversing locales and languages
+    * Locale to language or language to locale
     *
     * @static
-    * @access   private
-    * @return   array
-    * @param    array   $array
-    * @param    string  $from
-    * @param    string  $to
+    * @access   public
+    * @return   string
+    * @param    string  $localeOrLanguage
     */
-    function _traverseLL($array, $from, $to)
+    function l2l($localeOrLanguage)
     {
-        setType($array, 'array');
-        foreach ($array as $key => $entry) {
-            $array[$key] = str_replace($from, $to, $entry);
-        }
-        return $array;
+        return strtr($localeOrLanguage, '-_', '_-');
     }
     
+    /**
+    * Split locale code
+    * 
+    * Splits locale codes into its language and country part
+    *
+    * @static
+    * @access   public
+    * @return   array
+    * @param    string  $locale
+    */
+    function splitLocale($locale)
+    {
+        return preg_split('/[_-]/', $locale, 2, PREG_SPLIT_NO_EMPTY);
+    }
+    
+    /**
+    * Get language code of locale
+    *
+    * @static
+    * @access   public
+    * @return   string
+    * @patram   string  $locale
+    */
+    function languageOf($locale)
+    {
+        return array_shift(I18Nv2_Util::splitLocale($locale));
+    }
+    
+    /**
+    * Get country code of locale
+    *
+    * @static
+    * @access   public
+    * @return   string
+    * @param    string  $locale
+    */
+    function countryOf($locale)
+    {
+        return array_pop(I18NV2_Util::splitLocale($locale));
+    }
     
     /**
     * Get access to static property
@@ -319,26 +353,26 @@ class I18Nv2
         // map of "fully qualified locale" codes
         $locales = &I18Nv2::getStaticProperty('locales');
         $locales = array(
-            'af'    => 'af_ZA',
-            'de'    => 'de_DE',
-            'en'    => 'en_US',
-            'fr'    => 'fr_FR',
-            'it'    => 'it_IT',
-            'es'    => 'es_ES',
-            'pt'    => 'pt_PT',
-            'sv'    => 'sv_SE',
-            'nb'    => 'nb_NO',
-            'nn'    => 'nn_NO',
-            'no'    => 'no_NO',
-            'fi'    => 'fi_FI',
-            'is'    => 'is_IS',
-            'da'    => 'da_DK',
-            'nl'    => 'nl_NL',
-            'pl'    => 'pl_PL',
-            'sl'    => 'sl_SI',
-            'hu'    => 'hu_HU',
-            'ru'    => 'ru_RU',
-            'cs'    => 'cs_CZ',
+            'af' => 'af_ZA',
+            'de' => 'de_DE',
+            'en' => 'en_US',
+            'fr' => 'fr_FR',
+            'it' => 'it_IT',
+            'es' => 'es_ES',
+            'pt' => 'pt_PT',
+            'sv' => 'sv_SE',
+            'nb' => 'nb_NO',
+            'nn' => 'nn_NO',
+            'no' => 'no_NO',
+            'fi' => 'fi_FI',
+            'is' => 'is_IS',
+            'da' => 'da_DK',
+            'nl' => 'nl_NL',
+            'pl' => 'pl_PL',
+            'sl' => 'sl_SI',
+            'hu' => 'hu_HU',
+            'ru' => 'ru_RU',
+            'cs' => 'cs_CZ',
         );
         
         // define locale fallbacks
