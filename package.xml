@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.36 $ -->
+<!-- $Revision: 1.37 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -32,10 +32,10 @@ NOTE: Contributions are very welcome!
  </maintainers>
 
  <release>
-  <version>0.8.0dev</version>
+  <version>0.8.0</version>
   <license>PHP</license>
-  <state>devel</state>
-  <date>2004-10-01</date>
+  <state>alpha</state>
+  <date>2004-10-04</date>
   <notes><![CDATA[
 Bug Fixes:
 * strftime() codes for I18Nv2_Locale::date() and I18Nv2_Locale::time() were mixed up
