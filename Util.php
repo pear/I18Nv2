@@ -44,7 +44,7 @@ class I18Nv2_Util
     */
     function splitLocale($locale)
     {
-        return preg_split('/[_-]/', $locale, PREG_SPLIT_NO_EMPTY);
+        return preg_split('/[_-]/', $locale, 2, PREG_SPLIT_NO_EMPTY);
     }
     
     /**
@@ -106,7 +106,7 @@ class I18Nv2_Util
         }
         foreach($a2 as $key => $val) {
             if (isset($a1[$key]) && is_array($val) && is_array($a1[$key])) {
-                $a1[$key] = I18Nv2_Util_LDML::mergeLocales($a1[$key], $val);
+                $a1[$key] = I18Nv2_Util::merge($a1[$key], $val);
             } else {
                 $a1[$key] = $val;
             }
