@@ -269,5 +269,31 @@ class I18Nv2_AreaCode extends I18Nv2_CommonList
         return strToUpper($key);
     }
     
+    /**
+     * Merge Country
+     * 
+     * Merge this list with an I18Nv2_Country list to a new I18Nv2_CommonList,
+     * where the international area codes map to the full country name.
+     * 
+     * @access  public
+     * @return  object  I18Nv2_CommonList
+     * @param   object  $country I18Nv2_Country
+     */
+    function &mergeCountry(&$country)
+    {
+        $list = &new I18Nv2_CommonList($country->language, $country->encoding);
+        
+        $ctys = $country->getAllCodes();
+        $acds = $this->getAllCodes();
+        
+        $uniq = array_intersect(array_keys($acds), array_keys($ctys));
+        
+        foreach ($uniq as $code) {
+            $list->codes[$acds[$code]] = $ctys[$code];
+        }
+        
+        return $list;
+    }
+    
 }
 ?>
