@@ -175,7 +175,7 @@ class I18Nv2_DecoratedList
     */
     function getEncoding()
     {
-        return $this->list->getEncdogin();
+        return $this->list->getEncoding();
     }
 }
 ?>
