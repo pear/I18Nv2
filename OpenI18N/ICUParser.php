@@ -91,9 +91,11 @@ class I18Nv2_OpenI18N_ICUParser
             $token = $str{$count};
             if ('{' === $token) {
                 $this->node = &$this->node->addChild($this->buffer);
+                $this->buffer = '';
             } elseif ('}' === $token) {
                 $this->node->setData($this->buffer);
                 $this->node = &$this->node->parent;
+                $this->buffer = '';
             } else {
                 $this->buffer .= $token;
             }
@@ -155,22 +157,17 @@ class I18Nv2_OpenI18N_ICURootNode
     /**
     * Set payload of the treenode
     * 
-    * Supplied data will be truncated.
-    * 
     * @access   public
     * @return   void
     * @param    string  $data
     */
-    function setData(&$data)
+    function setData($data)
     {
         $this->data = trim($data);
-        $data = '';
     }
     
     /**
     * Add a ICUTreeNode child
-    * 
-    * Returns the child supplied as parameter.
     * 
     * @access   public
     * @return   object
@@ -285,11 +282,10 @@ class I18Nv2_OpenI18N_ICUTreeNode extends I18Nv2_OpenI18N_ICURootNode
     * ZE2 Constructor
     * @ignore
     */
-    function __construct(&$name)
+    function __construct($name)
     {
         parent::__construct();
         $this->name = trim($name);
-        $name = '';
     }
     
     /**
