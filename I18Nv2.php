@@ -54,24 +54,68 @@ class I18Nv2
     * @param    string  $locale     a valid locale like en_US or de_DE
     * @param    int     $cat        the locale category - usually LC_ALL
     */
-    function setLocale($locale, $cat = LC_ALL)
+    function setLocale($locale = null, $cat = LC_ALL)
     {
-        if (!$locale) {
+        static $triedFallback = false;
+        
+        if (!isset($locale)) {
             return setLocale($cat, null);
         }
         
-        $locales = &I18Nv2::getStaticProperty('locales');
-        $llocale = isset($locales[$locale]) ? $locales[$locale] : $locale;
-        $usedloc = setLocale($cat, $llocale);
+        $locales = I18Nv2::getStaticProperty('locales');
         
-        // this satisfies gettext
-        $language = OS_WINDOWS ? substr($llocale, 0,2) : $llocale;
-        putEnv('LANG=' . $language);
-        putEnv('LANGUAGE=' . $language);
+        // get complete standard locale code (en => en_US)
+        if (isset($locales[$locale])) {
+            $locale = $locales[$locale];
+        }
         
-        // push locale stack
+        // get Win32 locale code (en_US => enu)
+        if (OS_WINDOWS) {
+            $windows   = I18Nv2::getStaticProperty('windows');
+            $setlocale = isset($windows[$locale]) ? $windows[$locale] : $locale;
+        } else {
+            $setlocale = $locale;
+        }
+
+        $syslocale = setLocale($cat, $setlocale);
+        
+        // if the locale is not recognized by the system, check if there 
+        // is a fallback locale and try that, otherwise return false
+        if (!$syslocale) {
+            if ($triedFallback) {
+                return false;
+            } else {
+                $triedFallback = true;
+                $fallbacks = I18Nv2::getStaticProperty('fallbacks');
+                if (isset($fallbacks[$locale])) {
+                    return I18Nv2::setLocale($fallbacks[$locale], $cat);
+                }
+            }
+            return false;
+        }
+        
+        $language = substr($locale, 0,2);
+        
+        if (OS_WINDOWS) {
+            putEnv('LANG='     . $language);
+            putEnv('LANGUAGE=' . $language);
+        } else {
+            putEnv('LANG='     . $locale);
+            putEnv('LANGUAGE=' . $locale);
+        }
+        
+        // unshift locale stack
         $last = &I18Nv2::getStaticProperty('last');
-        array_unshift($last, array($locale, $llocale, $language, $usedloc));
+        array_unshift($last, 
+            array(
+                0           => $locale, 
+                1           => $language, 
+                2           => $syslocale,
+                'locale'    => $locale,
+                'language'  => $language,
+                'syslocale' => $syslocale,
+            )
+        );
         
         // fetch locale specific information
         $info = &I18Nv2::getStaticProperty('info');
@@ -117,7 +161,7 @@ class I18Nv2
     function getInfo($part = null)
     {
         $info = &I18Nv2::getStaticProperty('info');
-        return $part ? $info[$part] : $info;
+        return isset($part, $info[$part]) ? $info[$part] : $info;
     }
     
     /**
@@ -270,12 +314,40 @@ class I18Nv2
         $last = &I18Nv2::getStaticProperty('last');
         $last = array();
         
+        // map of "fully qualified locale" codes
+        $locales = &I18Nv2::getStaticProperty('locales');
+        $locales = array(
+            'af'    => 'af_ZA',
+            'de'    => 'de_DE',
+            'en'    => 'en_US',
+            'fr'    => 'fr_FR',
+            'it'    => 'it_IT',
+            'es'    => 'es_ES',
+            'pt'    => 'pt_PT',
+            'sv'    => 'sv_SE',
+            'nb'    => 'nb_NO',
+            'nn'    => 'nn_NO',
+            'no'    => 'no_NO',
+            'fi'    => 'fi_FI',
+            'is'    => 'is_IS',
+            'da'    => 'da_DK',
+            'nl'    => 'nl_NL',
+            'pl'    => 'pl_PL',
+            'sl'    => 'sl_SI',
+            'hu'    => 'hu_HU',
+            'ru'    => 'ru_RU',
+        );
+        
+        // define locale fallbacks
+        $fallbacks = &I18Nv2::getStaticProperty('fallbacks');
+        $fallbacks = array(
+            'no_NO' => 'nb_NO',
+            'nb_NO' => 'no_NO',
+        );
+        
+        // include Win32 locale codes
         if (OS_WINDOWS) {
-            // include Win32 locales map
-            include_once 'I18Nv2/Locale/MapWindows.php';
-        } else {
-            // or some standard mappings for other systems (?)
-            include_once 'I18Nv2/Locale/Map.php';
+            include_once 'I18Nv2/Locale/Windows.php';
         }
     }
 }

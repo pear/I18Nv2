@@ -270,7 +270,7 @@ class I18Nv2_Locale
         $locale = I18Nv2::lastLocale(0, true);
         if (isset($locale)) {
             $dir = dirname(__FILE__);
-            foreach ($locale as $lc) {
+            foreach (array($locale['language'], $locale['locale']) as $lc) {
                 if (is_file($dir . '/Locale/' . $lc . '.php')) {
                     include $dir . '/Locale/' . $lc . '.php';
                 }
@@ -483,7 +483,7 @@ class I18Nv2_Locale
             }
         }
 
-        return $fString . number_format($value, $dig, $dec, $sep);
+        return $fString . ' ' . number_format($value, $dig, $dec, $sep);
 
     }
     
