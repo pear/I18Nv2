@@ -22,6 +22,7 @@
 */
 
 require_once 'XML/Parser.php';
+require_once 'I18Nv2/Util.php';
 
 /** 
 * I18Nv2_Util_LDML
@@ -141,49 +142,32 @@ class I18Nv2_Util_LDML extends XML_Parser
             return $en;
         }
 
-        $lang = substr($locale, 0,2);
-        if ($locale === 'en' || is_a($langdata = $this->getLocale($lang), 'PEAR_Error')) {
+        @list($lang, $country) = array_shift(I18Nv2_Util::splitLocale($locale));
+        if ($locale === 'en' || !is_array($langdata = $this->getLocale($lang))) {
             return $en;
         }
 
-        if ($lang == $locale || is_a($localedata = $this->getLocale($locale), 'PEAR_Error')) {
-            return $this->mergeLocales($en, $langdata);
+        if ($lang === $locale || !is_array($localedata = $this->getLocale($locale))) {
+            return I18Nv2_Util::merge($en, $langdata);
         } else {
-            $data = $this->mergeLocales($this->mergeLocales($en, $langdata), $localedata);
-            if (isset($this->_supp[$this->tgtenc]['currencies'][$c = substr($locale, -2)])) {
-                $c = $this->_supp[$this->tgtenc]['currencies'][$c];
-                $data['formats']['currency']['name'] = $c;
-                if (isset($this->_supp[$this->tgtenc]['fracdigits'][$c])) {
+            
+            $data = $this->mergeMany($en, $langdata, $localedata);
+            
+            // check for the currency symbol and fracdigits in supplemental data
+            if (isset($this->_supp[$this->tgtenc]['currencies'][$country])) {
+                $currency = $this->_supp[$this->tgtenc]['currencies'][$country];
+                $data['formats']['currency']['name'] = $currency;
+                if (isset($this->_supp[$this->tgtenc]['fracdigits'][$currency])) {
                     $data['formats']['currency']['fracdigits'] =
-                        $this->_supp[$this->tgtenc]['fracdigits'][$c];
+                        $this->_supp[$this->tgtenc]['fracdigits'][$currency];
                 } else {
                     $data['formats']['currency']['fracdigits'] =
                         $this->_supp[$this->tgtenc]['fracdigits']['DEFAULT'];
                 }
             }
+            
             return $data;
         }
-    }
-    
-    /**
-    * Merge locale data arrays
-    *
-    * @access   public
-    * @return   array
-    */
-    function mergeLocales($a1, $a2)
-    {
-        if (!is_array($a1) || !is_array($a2)) {
-            return false;
-        }
-        foreach($a2 as $key => $val) {
-            if (isset($a1[$key]) && is_array($val) && is_array($a1[$key])) {
-                $a1[$key] = I18Nv2_Util_LDML::mergeLocales($a1[$key], $val);
-            } else {
-                $a1[$key] = $val;
-            }
-        }
-        return $a1;
     }
     
     /**
