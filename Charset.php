@@ -109,8 +109,7 @@ class I18Nv2_Charset
     {
         $name = I18Nv2_Charset::standardize($alias);
         foreach (array_keys($GLOBALS['_I18Nv2_Charset_Aliases']) as $a) {
-            if (    isset($GLOBALS['_I18Nv2_Charset_Aliases'][$a]) and
-                    in_array($name, $GLOBALS['_I18Nv2_Charset_Aliases'][$a])) {
+            if (in_array($name, $GLOBALS['_I18Nv2_Charset_Aliases'][$a])) {
                 return $a;
             }
         }
