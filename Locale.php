@@ -198,6 +198,8 @@ class I18Nv2_Locale
                 $info['p_cs_precedes'],
                 $info['n_sep_by_space'],
                 $info['p_sep_by_space'],
+                $info['n_sign_posn'],
+                $info['p_sign_posn'],
             ),
             I18Nv2_CURRENCY_INTERNATIONAL => array(
                 $info['int_curr_symbol'],
@@ -208,8 +210,10 @@ class I18Nv2_Locale
                 $info['positive_sign'],
                 $info['n_cs_precedes'],
                 $info['p_cs_precedes'],
-                $info['n_sep_by_space'],
-                $info['p_sep_by_space'],
+                true,
+                true,
+                $info['n_sign_posn'],
+                $info['p_sign_posn'],
             ),
         );
         
@@ -437,7 +441,7 @@ class I18Nv2_Locale
     }
     
     /**
-    * Format currency (incomplete)
+    * Format currency
     *
     * @access   public
     * @return   string
@@ -447,47 +451,52 @@ class I18Nv2_Locale
     */
     function formatCurrency($value, $overrideFormat = null, $overrideSymbol = null)
     {
-        list($sym, $dig, $dec, $sep, $nsign, $psign, $npre, $ppre, $nsep, $psep) 
-            = isset($overrideFormat) ? 
+        @list(
+            $symbol, 
+            $digits, 
+            $decpoint, 
+            $thseparator, 
+            $sign['-'], 
+            $sign['+'], 
+            $precedes['-'], 
+            $precedes['+'], 
+            $separate['-'], 
+            $separate['+'],
+            $position['-'],
+            $position['+']
+        ) = isset($overrideFormat) ? 
             $this->_currencyFormats[$overrideFormat] :
             $this->_currentCurrencyFormat;
 
         if (isset($overrideSymbol)) {
-            $sym = $overrideSymbol;
+            $symbol = $overrideSymbol;
         }
         
-        if ($value < 0) {
-            if ($npre) {
-                if ($nsep) {
-                    $fString = $sym . ' ' . $nsign;
-                } else {
-                    $fString = $sym . $nsign;
-                }
-            } else {
-                if ($nsep) {
-                    $fString = $nsign . ' ' . $sym;
-                } else {
-                    $fString = $nsign . $sym;
-                }
-            }
-        } else {
-            if ($ppre) {
-                if ($psep) {
-                    $fString = $sym . ' ' . $psign;
-                } else {
-                    $fString = $sym . $psign;
-                }
-            } else {
-                if ($psep) {
-                    $fString = $psign . ' ' . $sym;
-                } else {
-                    $fString = $psign . $sym;
-                }
-            }
+        // number_format the absolute value
+        $amount = number_format(abs($value), $digits, $decpoint, $thseparator);
+        
+        $S = $value < 0 ? '-' : '+';
+        
+        // check posittion of the positive/negative sign(s)
+        switch ($position[$S])
+        {
+            case 0: $amount  = '('. $amount .')';   break;
+            case 1: $amount  = $sign[$S] . $amount; break;
+            case 2: $amount .= $sign[$S];           break;
+            case 3: $symbol  = $sign[$S] . $symbol; break;
+            case 4: $symbol .= $sign[$S];           break;
         }
-
-        return $fString . ' ' . number_format($value, $dig, $dec, $sep);
-
+        
+        // currency symbol precedes amount
+        if ($precedes[$S]) {
+            $amount = $symbol . ($separate[$S] ? ' ':'') . $amount;
+        }
+        // currency symbol succedes amount
+        else {
+            $amount .= ($separate[$S] ? ' ':'') . $symbol;
+        }
+        
+        return $amount;
     }
     
     /**
