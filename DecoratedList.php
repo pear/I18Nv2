@@ -14,38 +14,47 @@
 // $Id$
 
 /**
-* I18Nv2_DecoratedList
-*
-* @author       Michael Wallner <mike@php.net>
-* @version      $Revision$
-* @package      I18Nv2
-*/
+ * I18Nv2::DecoratedList
+ * 
+ * Decorator for I18Nv2_CommonList objects.
+ * 
+ * @package     I18Nv2
+ * @category    Internationalization
+ */
+
+/**
+ * I18Nv2_DecoratedList
+ *
+ * @author      Michael Wallner <mike@php.net>
+ * @version     $Revision$
+ * @package     I18Nv2
+ * @access      public
+ */
 class I18Nv2_DecoratedList
 {
     /**
-    * I18Nv2_(Common|Decorated)List
-    * 
-    * @access   protected
-    * @var      object
-    */
-    var $list;
+     * I18Nv2_(Common|Decorated)List
+     * 
+     * @access  protected
+     * @var     object
+     */
+    var $list = null;
     
     /**
-    * Constructor
-    * 
-    * @access   public
-    * @return   object
-    * @param    object  $list   I18Nv2_DecoratedList or I18Nv2_CommonList
-    */
+     * Constructor
+     * 
+     * @access  public
+     * @param   object  $list   I18Nv2_DecoratedList or I18Nv2_CommonList
+     */
     function I18Nv2_DecoratedList(&$list)
     {
         I18Nv2_DecoratedList::__construct($list);
     }
     
     /**
-    * ZE2 Constructor
-    * @ignore
-    */
+     * ZE2 Constructor
+     * @ignore
+     */
     function __construct(&$list)
     {
         if (is_a($list, 'I18Nv2_CommonList') ||
@@ -55,60 +64,60 @@ class I18Nv2_DecoratedList
     }
 
     /** 
-    * Get all codes
-    * 
-    * @access   public
-    * @return   array
-    */
+     * Get all codes
+     * 
+     * @access  public
+     * @return  array
+     */
     function getAllCodes()
     {
         return $this->decorate($this->list->getAllCodes());
     }
     
     /** 
-    * Check if code is valid
-    * 
-    * @access   public
-    * @return   bool
-    * @param    string  $code
-    */
+     * Check if code is valid
+     * 
+     * @access  public
+     * @return  bool
+     * @param   string  $code
+     */
     function isValidCode($code)
     {
         return $this->decorate($this->list->isValidCode($code));
     }
     
     /** 
-    * Get name for code
-    * 
-    * @access   public
-    * @return   string
-    * @param    string  $code
-    */
+     * Get name for code
+     * 
+     * @access  public
+     * @return  string
+     * @param   string  $code
+     */
     function getName($code)
     {
         return $this->decorate($this->list->getName($code));
     }
     
     /**
-    * decorate
-    * 
-    * @abstract
-    * @access   protected
-    * @return   mixed
-    * @param    mixed   $value
-    */
+     * Decorate
+     * 
+     * @abstract
+     * @access  protected
+     * @return  mixed
+     * @param   mixed   $value
+     */
     function decorate($value)
     {
         return $value;
     }
 
     /**
-    * Decorate this list
-    *
-    * @access   public
-    * @return   object  I18NV2_DecoratedList
-    * @param    string  $type
-    */
+     * Decorate this list
+     *
+     * @access  public
+     * @return  object  I18NV2_DecoratedList
+     * @param   string  $type
+     */
     function &toDecoratedList($type)
     {
         require_once 'I18Nv2/DecoratedList/'. $type .'.php';
@@ -117,62 +126,61 @@ class I18Nv2_DecoratedList
     }
 
     /**
-    * changeKeyCase
-    *
-    * @access   protected
-    * @return   string
-    * @param    string  $code
-    */
+     * Change Key Case
+     *
+     * @access  protected
+     * @return  string
+     * @param   string  $code
+     */
     function changeKeyCase($code)
     {
         return $this->list->changeKeyCase($code);
     }
 
     /**
-    * Set active language
-    * 
-    * Note that each time you set a different language the corresponding
-    * language file has to be loaded again, too.
-    *
-    * @access   public
-    * @return   bool
-    * @param    string  $language
-    */
+     * Set active language
+     * 
+     * Note that each time you set a different language the corresponding
+     * language file has to be loaded again, too.
+     *
+     * @access  public
+     * @return  bool
+     * @param   string  $language
+     */
     function setLanguage($language)
     {
         return $this->list->setLanguage($language);
     }
     
     /**
-    * Get current language
-    * 
-    * 
-    * @access   public
-    * @return   string
-    */
+     * Get current language
+     * 
+     * @access  public
+     * @return  string
+     */
     function getLanguage()
     {
         return $this->list->getLanguage();
     }
     
     /**
-    * Set active encoding
-    *
-    * @access   public
-    * @return   bool
-    * @param    string  $encoding
-    */
+     * Set active encoding
+     *
+     * @access  public
+     * @return  bool
+     * @param   string  $encoding
+     */
     function setEncoding($encoding)
     {
         return $this->list->setEncoding($encoding);
     }
     
     /** 
-    * Get current encoding
-    * 
-    * @access   public
-    * @return   string
-    */
+     * Get current encoding
+     * 
+     * @access  public
+     * @return  string
+     */
     function getEncoding()
     {
         return $this->list->getEncoding();

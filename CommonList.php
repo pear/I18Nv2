@@ -14,50 +14,65 @@
 // $Id$
 
 /**
-* I18Nv2::CommonList
-* 
-* @author       Michael Wallner <mike@php.net>
-* @package      I18Nv2
-* @category     Internationalization
-*/
+ * I18Nv2::CommonList
+ * 
+ * @author      Michael Wallner <mike@php.net>
+ * @package     I18Nv2
+ * @category    Internationalization
+ */
 
 /** 
-* I18Nv2_CommonList
-* 
-* Base class for I18Nv2_Country and I18Nv2_Language that performs some basic
-* work, so code doesn't get written twice or even more often in the future.
-*
-* @author   Michael Wallner <mike@php.net>
-* @version  $Revision$
-* @access   public
-*/
+ * I18Nv2_CommonList
+ * 
+ * Base class for I18Nv2_Country and I18Nv2_Language that performs some basic
+ * work, so code doesn't get written twice or even more often in the future.
+ *
+ * @author      Michael Wallner <mike@php.net>
+ * @version     $Revision$
+ * @access      public
+ */
 class I18Nv2_CommonList
 {
-    /**#@+
-    * @access protected
-    */
+    /**
+     * Codes
+     * 
+     * @access  protected
+     * @var     array
+     */
     var $codes = array();
-    var $language = '';
-    var $encoding = '';
-    /**#@-**/
     
     /**
-    * Constructor
-    *
-    * @access   public
-    * @return   object
-    * @param    string  $language
-    * @param    string  $encoding
-    */
+     * Language
+     * 
+     * @access  protected
+     * @var     string
+     */
+    var $language = '';
+    
+    /**
+     * Encoding
+     * 
+     * @access  protected
+     * @var     string
+     */
+    var $encoding = '';
+    
+    /**
+     * Constructor
+     *
+     * @access  public
+     * @param   string  $language
+     * @param   string  $encoding
+     */
     function I18Nv2_CommonList($language = null, $encoding = null)
     {
         I18Nv2_CommonList::__construct($language, $encoding);
     }
 
     /**
-    * Constructor (ZE2)
-    * @ignore
-    */
+     * Constructor (ZE2)
+     * @ignore
+     */
     function __construct($language = null, $encoding = null)
     {
         if (!$this->setLanguage($language)) {
@@ -76,15 +91,15 @@ class I18Nv2_CommonList
     }
 
     /**
-    * Set active language
-    * 
-    * Note that each time you set a different language the corresponding
-    * language file has to be loaded again, too.
-    *
-    * @access   public
-    * @return   bool
-    * @param    string  $language
-    */
+     * Set active language
+     * 
+     * Note that each time you set a different language the corresponding
+     * language file has to be loaded again, too.
+     *
+     * @access  public
+     * @return  bool
+     * @param   string  $language
+     */
     function setLanguage($language)
     {
         if (!isset($language)) {
@@ -102,24 +117,23 @@ class I18Nv2_CommonList
     }
     
     /**
-    * Get current language
-    * 
-    * 
-    * @access   public
-    * @return   string
-    */
+     * Get current language
+     * 
+     * @access  public
+     * @return  string
+     */
     function getLanguage()
     {
         return $this->language;
     }
     
     /**
-    * Set active encoding
-    *
-    * @access   public
-    * @return   bool
-    * @param    string  $encoding
-    */
+     * Set active encoding
+     *
+     * @access  public
+     * @return  bool
+     * @param   string  $encoding
+     */
     function setEncoding($encoding)
     {
         if (!isset($encoding)) {
@@ -130,35 +144,35 @@ class I18Nv2_CommonList
     }
     
     /** 
-    * Get current encoding
-    * 
-    * @access   public
-    * @return   string
-    */
+     * Get current encoding
+     * 
+     * @access  public
+     * @return  string
+     */
     function getEncoding()
     {
         return $this->encoding;
     }
 
     /**
-    * Check if code is valid
-    * 
-    * @access   public
-    * @return   bool
-    * @param    string  $code   code
-    */
+     * Check if code is valid
+     * 
+     * @access  public
+     * @return  bool
+     * @param   string  $code   code
+     */
     function isValidCode($code)
     {
         return isset($this->codes[$this->changeKeyCase($code)]);
     }
 
     /**
-    * Return corresponding name of code
-    * 
-    * @access   public
-    * @return   string  name
-    * @param    string  $code   code
-    */
+     * Return corresponding name of code
+     * 
+     * @access  public
+     * @return  string  name
+     * @param   string  $code   code
+     */
     function getName($code)
     {
         $code = $this->changeKeyCase($code);
@@ -172,11 +186,11 @@ class I18Nv2_CommonList
     }
 
     /**
-    * Return all the codes
-    *
-    * @access   public
-    * @return   array   all codes as associative array
-    */
+     * Return all the codes
+     *
+     * @access  public
+     * @return  array   all codes as associative array
+     */
     function getAllCodes()
     {
         if ('UTF-8' !== $this->encoding) {
@@ -188,45 +202,45 @@ class I18Nv2_CommonList
     }
     
     /**
-    * @access   private
-    * @return   void
-    */
+     * @access  private
+     * @return  void
+     */
     function _iconv(&$code, $key)
     {
         $code = iconv('UTF-8', $this->encoding, $code);
     }
     
     /** 
-    * loadLanguage
-    * 
-    * @access   proteceted
-    * @return   bool
-    * @param    string  $language
-    */
+     * Load Language
+     * 
+     * @access  proteceted
+     * @return  bool
+     * @param   string  $language
+     */
     function loadLanguage($language)
     {
         return false;
     }
     
     /**
-    * changeKeyCase
-    *
-    * @access   protected
-    * @return   string
-    * @param    string  $code
-    */
+     * Change Key Case
+     *
+     * @access  protected
+     * @return  string
+     * @param   string  $code
+     */
     function changeKeyCase($code)
     {
         return $code;
     }
     
     /**
-    * Decorate this list
-    *
-    * @access   public
-    * @return   object  I18NV2_DecoratedList
-    * @param    string  $type
-    */
+     * Decorate this list
+     *
+     * @access  public
+     * @return  object  I18NV2_DecoratedList
+     * @param   string  $type
+     */
     function &toDecoratedList($type)
     {
         require_once 'I18Nv2/DecoratedList/'. $type .'.php';

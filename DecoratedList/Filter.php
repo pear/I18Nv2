@@ -13,46 +13,54 @@
 //
 // $Id$
 
+/**
+ * I18Nv2::DecoratedList::Filter
+ * 
+ * @package     I18Nv2
+ * @category    Internationalization
+ */
+
 require_once 'I18Nv2/DecoratedList.php';
 
 /**
-* I18Nv2_DecoratedList_Filter
-* 
-* The Filter Decorator only operates on getAllCodes().
-*
-* @author       Michael Wallner <mike@php.net>
-* @version      $Revision$
-* @package      I18Nv2
-*/
+ * I18Nv2_DecoratedList_Filter
+ * 
+ * The Filter Decorator only operates on getAllCodes().
+ *
+ * @author      Michael Wallner <mike@php.net>
+ * @version     $Revision$
+ * @package     I18Nv2
+ * @access      public
+ */
 class I18Nv2_DecoratedList_Filter extends I18Nv2_DecoratedList
 {
     /**
-    * filter
-    * 
-    * exclude|include resp. false|true
-    * 
-    * @access   public
-    * @var      mixed
-    */
+     * Filter
+     * 
+     * exclude|include resp. false|true
+     * 
+     * @access  public
+     * @var     mixed
+     */
     var $filter = 'include';
     
     /**
-    * elements
-    * 
-    * Keys that should be filtered
-    * 
-    * @access   public
-    * @var      array
-    */
+     * Elements
+     * 
+     * Keys that should be filtered
+     * 
+     * @access  public
+     * @var     array
+     */
     var $elements = array();
     
     /** 
-    * decorate
-    * 
-    * @access   protected
-    * @return   mixed
-    * @param    mixed   $value
-    */
+     * decorate
+     * 
+     * @access  protected
+     * @return  mixed
+     * @param   mixed   $value
+     */
     function decorate($value)
     {
         if (is_array($value)) {

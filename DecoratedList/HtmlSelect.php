@@ -13,39 +13,47 @@
 //
 // $Id$
 
+/**
+ * I18Nv2::DecoratedList::HtmlSelect
+ * 
+ * @package     I18Nv2
+ * @category    Internationalization
+ */
+
 require_once 'I18Nv2/DecoratedList.php';
 
 /**
-* I18Nv2_DecoratedList_HtmlSelect
-* 
-* Example:
-* <code>
-*   require_once 'I18Nv2/Country.php';
-*   require_once 'I18Nv2/DecoratedList/HtmlSelect.php';
-* 
-*   $country = &new I18Nv2_Country('de', 'iso-8859-1');
-*   $select  = &new I18Nv2_DecoratedList_HtmlSelect($country);
-*   $select->attributes['select']['name'] = 'country';
-*   $select->selected['DE'] = true;
-*   echo $select->getAllCodes();
-* </code>
-*
-* @author       Michael Wallner <mike@php.net>
-* @version      $Revision$
-* @package      I18Nv2
-*/
+ * I18Nv2_DecoratedList_HtmlSelect
+ * 
+ * Example:
+ * <code>
+ *   require_once 'I18Nv2/Country.php';
+ *   require_once 'I18Nv2/DecoratedList/HtmlSelect.php';
+ * 
+ *   $country = &new I18Nv2_Country('de', 'iso-8859-1');
+ *   $select  = &new I18Nv2_DecoratedList_HtmlSelect($country);
+ *   $select->attributes['select']['name'] = 'country';
+ *   $select->selected['DE'] = true;
+ *   echo $select->getAllCodes();
+ * </code>
+ *
+ * @author      Michael Wallner <mike@php.net>
+ * @version     $Revision$
+ * @package     I18Nv2
+ * @access      public
+ */
 class I18Nv2_DecoratedList_HtmlSelect extends I18Nv2_DecoratedList
 {
     /**
-    * HTML attributes of the select and the option tags
-    * 
-    * <code>
-    * $HtmlSelect->attributes['select']['onchange'] = 'this.form.submit()';
-    * </code>
-    * 
-    * @access   public
-    * @var      array
-    */
+     * HTML attributes of the select and the option tags
+     * 
+     * <code>
+     * $HtmlSelect->attributes['select']['onchange'] = 'this.form.submit()';
+     * </code>
+     * 
+     * @access  public
+     * @var     array
+     */
     var $attributes = array(
         'select' => array(
             'size' => 1,
@@ -55,24 +63,24 @@ class I18Nv2_DecoratedList_HtmlSelect extends I18Nv2_DecoratedList
     );
     
     /**
-    * Selected option(s)
-    * 
-    * <code>
-    * $HtmlSelect->selected[$code] = true;
-    * </code>
-    * 
-    * @access   public
-    * @var      array
-    */
+     * Selected option(s)
+     * 
+     * <code>
+     * $HtmlSelect->selected[$code] = true;
+     * </code>
+     * 
+     * @access  public
+     * @var     array
+     */
     var $selected = array();
     
     /** 
-    * decorate
-    * 
-    * @access   protected
-    * @return   string
-    * @param    mixed   $value
-    */
+     * decorate
+     * 
+     * @access  protected
+     * @return  string
+     * @param   mixed   $value
+     */
     function decorate($value)
     {
         static $codes;
@@ -96,12 +104,12 @@ class I18Nv2_DecoratedList_HtmlSelect extends I18Nv2_DecoratedList
     }
     
     /**
-    * Get HTML attributes for the option tag
-    * 
-    * @access   private
-    * @return   string
-    * @param    string  $key
-    */
+     * Get HTML attributes for the option tag
+     * 
+     * @access  private
+     * @return  string
+     * @param   string  $key
+     */
     function _optAttr($key)
     {
         $attributes = 'value="' . $key . '" ' . $this->_getAttr('option');
@@ -112,12 +120,12 @@ class I18Nv2_DecoratedList_HtmlSelect extends I18Nv2_DecoratedList
     }
     
     /**
-    * Get HTML attributes
-    * 
-    * @access   private
-    * @return   string
-    * @param    string  $of
-    */
+     * Get HTML attributes
+     * 
+     * @access  private
+     * @return  string
+     * @param   string  $of
+     */
     function _getAttr($of = 'select')
     {
         $attributes = '';

@@ -16,8 +16,6 @@
 /**
  * I18Nv2::AreaCode
  * 
- * List of two letter country code to international area code mapping.
- * 
  * @package     I18Nv2
  * @category    Internationalization
  */
@@ -27,6 +25,8 @@ require_once 'I18Nv2/CommonList.php';
 /**
  * I18Nv2_AreaCode
  * 
+ * List of two letter country code to international area code mapping.
+ * 
  * @author      Michael Wallner <mike@php.net> 
  * @version     $Revision$
  * @access      public 
@@ -34,6 +34,12 @@ require_once 'I18Nv2/CommonList.php';
  */
 class I18Nv2_AreaCode extends I18Nv2_CommonList
 {
+    /**
+     * Codes
+     * 
+     * @access  protected
+     * @var     array
+     */
     var $codes = array(
         'AF' => 93,
         'AL' => 355,

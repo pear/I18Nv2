@@ -13,27 +13,35 @@
 //
 // $Id$
 
+/**
+ * I18Nv2::DecoratedList::HtmlSpecialchars
+ * 
+ * @package     I18Nv2
+ * @category    Internationalization
+ */
+
 require_once 'I18Nv2/DecoratedList.php';
 
 /**
-* I18Nv2_Decorator_HtmlSpecialchars
-* 
-* When you are going to serve XHTML as XML or XHTML+XML then you will get 
-* problems while displaying umlauts etc. as their HTML entities.
-*
-* @author       Michael Wallner <mike@php.net>
-* @version      $Revision$
-* @package      I18Nv2
-*/
+ * I18Nv2_Decorator_HtmlSpecialchars
+ * 
+ * When you are going to serve XHTML as XML or XHTML+XML then you will get 
+ * problems while displaying umlauts etc. as their HTML entities.
+ *
+ * @author      Michael Wallner <mike@php.net>
+ * @version     $Revision$
+ * @package     I18Nv2
+ * @access      public
+ */
 class I18Nv2_DecoratedList_HtmlSpecialchars extends I18Nv2_DecoratedList
 {
     /** 
-    * decorate
-    * 
-    * @access   protected
-    * @return   mixed
-    * @param    mixed   $value
-    */
+     * decorate
+     * 
+     * @access  protected
+     * @return  mixed
+     * @param   mixed   $value
+     */
     function decorate($value)
     {
         if (is_string($value)) {
