@@ -229,6 +229,7 @@ class I18Nv2
         
         iconv_set_encoding('internal_encoding', $ics);
         iconv_set_encoding('output_encoding', $ocs);
+        iconv_set_encoding('input_encoding', $ocs);
         
         if (!ob_start('ob_iconv_handler')) {
             return PEAR::raiseError('Couldn\'t start output buffering');
