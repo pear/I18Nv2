@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.57 $ -->
+<!-- $Revision: 1.58 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -76,6 +76,8 @@ FINAL NOTE:
   <date>2005-01-xx</date>
   <notes><![CDATA[
 * Fixed bug in I18Nv2_Locale constructor if no locale was supplied
+* Fixed bug where local time discrepancies changed behaviour of I18Nv2_Locale
+* Added filter lists for I18Nv2_Country separated by continent (suggested by hpman28 at gmail dot com)
 ]]>
   </notes>
 
@@ -99,6 +101,12 @@ FINAL NOTE:
       <file name="HtmlSelect.php" />
       <file name="HtmlEntities.php" />
       <file name="HtmlSpecialchars.php" />
+      <file name="AfricanCountries.php" />
+      <file name="AsianCountries.php" />
+      <file name="EuropeanCountries.php" />
+      <file name="NorthAmericanCountries.php" />
+      <file name="OceanianCountries.php" />
+      <file name="SouthAmericanCountries.php" />
     </dir>
 
     <dir name="Country">
