@@ -46,6 +46,8 @@ class I18Nv2_CommonList
     *
     * @access   public
     * @return   object
+    * @param    string  $language
+    * @param    string  $encoding
     */
     function I18Nv2_CommonList($language = null, $encoding = null)
     {
