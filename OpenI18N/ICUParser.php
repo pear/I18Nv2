@@ -85,28 +85,19 @@ class I18Nv2_OpenI18N_ICUParser
     function parse($str)
     {
         $count = 0;
-        $length = strlen($str);
+        $length = strlen($str = $this->stripComments($str));
         while ($count < $length)
         {
-            $token = $str{$count++};
-            
-            switch ($token)
-            {
-                case '{':
-                     $this->node = &$this->node->addChild(
-                        new I18Nv2_OpenI18N_ICUTreeNode($this->buffer)
-                     );
-                break;
-                
-                case '}':
-                    $this->node->setData($this->buffer);
-                    $this->node = &$this->node->parent;
-                break;
-                
-                default:
-                     $this->buffer .= ($token);
-                break;
+            $token = $str{$count};
+            if ('{' === $token) {
+                $this->node = &$this->node->addChild($this->buffer);
+            } elseif ('}' === $token) {
+                $this->node->setData($this->buffer);
+                $this->node = &$this->node->parent;
+            } else {
+                $this->buffer .= $token;
             }
+            ++$count;
         }
         return $length;
     }
@@ -122,6 +113,19 @@ class I18Nv2_OpenI18N_ICUParser
     {
         return $asArray ? $this->tree->toArray() :  $this->tree->getChildren();
     }
+    
+    /** 
+    * Strip comments
+    * 
+    * @access   public
+    * @return   string
+    * @param    string  $string
+    */
+    function stripComments($string)
+    {
+        return preg_replace('/\/\/.*$/m', '', $string);
+    }
+    
 }
 
 /**
@@ -172,11 +176,9 @@ class I18Nv2_OpenI18N_ICURootNode
     * @return   object
     * @param    object
     */
-    function &addChild(&$child)
+    function &addChild($name)
     {
-        if (!is_a($child, 'I18Nv2_OpenI18N_ICUTreeNode')) {
-            return null;
-        }
+        $child = &new I18Nv2_OpenI18N_ICUTreeNode($name);
         $child->setParent($this);
         $this->childs[] = &$child;
         return $child;
@@ -316,10 +318,5 @@ class I18Nv2_OpenI18N_ICUTreeNode extends I18Nv2_OpenI18N_ICURootNode
         return $this->parent;
     }
 }
-
-$t = &new I18Nv2_OpenI18N_ICUParser();
-$t->parse(' ICU { de{ "DE", "Deutsch" } en { "EN", "Englisch" } es { territory {"ES", "Spanien"} currency {"ESP", "Spanischer Peso"} }}');
-#var_dump($t->tree);
-print_r($t->tree->toArray());
 
 ?>
