@@ -289,11 +289,13 @@ class I18Nv2_AreaCode extends I18Nv2_CommonList
     {
         $list = &new I18Nv2_CommonList(
             $country->getLanguage(), 
-            $country->getEncoding()
+            $encoding = $country->getEncoding()
         );
         
+        $country->setEncoding('UTF-8');
         $ctys = $country->getAllCodes();
         $acds = $this->getAllCodes();
+        $country->setEncoding($encoding);
         
         $uniq = array_intersect(array_keys($acds), array_keys($ctys));
         
