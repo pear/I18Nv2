@@ -163,7 +163,29 @@ class I18Nv2_OpenI18N_ICURootNode
     */
     function setData($data)
     {
-        $this->data = trim($data);
+        $this->data = $this->prepareData($data);
+    }
+    
+    /** 
+    * Prepare payload data
+    * 
+    * @access   public
+    * @return   mixed
+    */
+    function prepareData($data)
+    {
+        $result = array();
+        foreach (preg_split('/",\s*"/', $data, -1, PREG_SPLIT_NO_EMPTY) as $d) {
+            $result[] = preg_replace('/^[\s",]*(.+?)[\s",]*$/', '\\1', $d);
+        }
+        
+        if (!$count = count($result)) {
+            return trim($data);
+        } elseif ($count == 1) {
+            return array_shift($result);
+        } else {
+            return $result;
+        }
     }
     
     /**
