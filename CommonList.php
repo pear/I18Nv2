@@ -207,7 +207,7 @@ class I18Nv2_CommonList
      */
     function _iconv(&$code, $key)
     {
-        $code = iconv('UTF-8', $this->encoding, $code);
+        $code = iconv('UTF-8', $this->encoding .'//IGNORE', $code);
     }
     
     /** 
