@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.40 $ -->
+<!-- $Revision: 1.41 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -35,10 +35,13 @@ NOTE: Contributions are very welcome!
   <version>0.8.1</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-10-05</date>
+  <date>2004-10-29</date>
   <notes><![CDATA[
 * I18Nv2::autoConv() may now decode request variables
-* fixed Bug #2541, warnings for unset properties with old PHP versions
+* Fixed Bug #2541, warnings for unset properties with old PHP versions
+
++ Added I18Nv2_AreaCode class (CommonList of international area codes)
++ Added I18Nv2_Charset class (common and not so common charsets and aliases)
 ]]>
   </notes>
 
@@ -51,6 +54,8 @@ NOTE: Contributions are very welcome!
     <file name="CommonList.php" />
     <file name="Country.php" />
     <file name="Language.php" />
+    <file name="AreaCode.php" />
+    <file name="Charset.php" />
     <file name="Negotiator.php" />
     
     <file name="DecoratedList.php" />
