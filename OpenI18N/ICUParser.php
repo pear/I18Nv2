@@ -128,6 +128,35 @@ class I18Nv2_OpenI18N_ICUParser
         return strlen($string);
     }
     
+    /**
+    * Converts literal unicode characters
+    * 
+    * Converts "\u00F4" style unicode to UTF-8 chracters
+    * (thanks to Asgeir Frimannsson)
+    *
+    * @static
+    * @access   public
+    * @return   string
+    * @param    string  $hex
+    */
+    function unichr($hex)
+    {
+        $utf = '';
+        $hex = hexdec((substr($hex, 0,2) === '\\u') ? substr($hex, 2) : $hex);
+        
+        if ($hex < 128) {
+            $utf = chr($hex);
+        } elseif ($hex < 2048) {
+            $utf .= chr(192 + (($hex - ($hex % 64)) / 64));
+            $utf .= chr(128 + ($hex % 64));
+        } else {
+            $utf .= chr(224 + (($hex - ($hex % 4096)) / 4096));
+            $utf .= chr(128 + ((($hex % 4096) - ($hex % 64)) / 64));
+            $utf .= chr(128 + ($hex % 64));
+        }
+        return $utf;
+    }
+    
 }
 
 /**
@@ -177,7 +206,9 @@ class I18Nv2_OpenI18N_ICURootNode
     {
         $result = array();
         foreach (preg_split('/",\s*"/', $data, -1, PREG_SPLIT_NO_EMPTY) as $d) {
-            $result[] = preg_replace('/^[\s",]*(.+?)[\s",]*$/', '\\1', $d);
+            $d = preg_replace('/^[\s",]*(.+?)[\s",]*$/', '\\1', $d);
+            $result[] = preg_replace('/(\\\\u([[:alnum:]]{4}))/e',
+                'I18Nv2_OpenI18N_ICUParser::unichr(\'\\2\')', $d);
         }
         
         if (!$count = count($result)) {
@@ -289,8 +320,6 @@ class I18Nv2_OpenI18N_ICUTreeNode extends I18Nv2_OpenI18N_ICURootNode
     
     /**
     * Constructor
-    * 
-    * Supplied variable gets truncated.
     * 
     * @access   public
     * @return   object
