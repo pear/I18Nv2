@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.27 $ -->
+<!-- $Revision: 1.28 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -36,13 +36,33 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
  </maintainers>
 
  <release>
-  <version>0.7.0</version>
+  <version>0.8.0</version>
   <license>PHP</license>
   <state>alpha</state>
-  <date>2004-05-05</date>
-  <notes>
-+ Added class I18Nv2_DecoratedList_HtmlSpecialchars
-+ Added method &I18Nv2_(Common|Decorated)List::toDecoratedList()
+  <date>2004-05-07</date>
+  <notes><![CDATA[
+BC-BREAK:
+I18Nv2_Locale now has to be instantiated by the factory:
+$locale = &I18Nv2_Locale::factory();
+
+CHANGES:
+# split I18Nv2_Locale up into several backend modules (LibC, ICU, LDML)
+# moved I18Nv2/Locale/* to I18Nv2/Locale/libc/
+# integrated I18Nv2/Locale/Windows.php into I18Nv2.php
+
+NEW FEATURES:
++ added I18Nv2_Util_ICU and I18Nv2_Util_LDML
++ added support to use different backends for the I18Nv2_Locale formatter
+. o LibC implementation: as it was using PHPs setlocale(), localeconv() 
+. . and the I18Nv2_Locale extensions
+. o ICU: International Components for Unicode,
+. . see http://www.ibm.com/developerworks/opensource/icu/project/
+. o LDML: Locale Data Markup Language,
+. . see http://www.OpenI18N.org/modules.php?op=modload&name=Sections&file=index&req=viewarticle&artid=13&page=1
+
+BUGFIXES:
+* CS locale libc extension were missing
+]]>
   </notes>
 
   <filelist>
@@ -51,6 +71,15 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
    <dir name="/" role="php" baseinstalldir="I18Nv2">
 
     <file name="Locale.php" />
+    <dir name="Locale">
+     <file name="libc.php" />
+    </dir>
+    
+    <dir name="Util">
+     <file name="ICU.php" />
+     <file name="LDML.php" />
+    </dir>
+
     <file name="CommonList.php" />
     <file name="Country.php" />
     <file name="Language.php" />
@@ -115,8 +144,9 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
      <file>zh.php</file>
     </dir>
 
-    <dir name="Locale">
+    <dir name="Locale/libc">
      <file name="af.php" />
+     <file name="cs.php" />
      <file name="da.php" />
      <file name="de.php" />
      <file name="en.php" />
@@ -132,7 +162,6 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
      <file name="pt.php" />
      <file name="ru.php" />
      <file name="sl.php" />
-     <file name="Windows.php" />
      <file name="EUR.php" />
      <file name="de_AT.php" />
      <file name="de_DE.php" />
@@ -151,7 +180,7 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
      <file name="sv_FI.php" />
     </dir>
 
-    <dir role="php" name="Language">
+    <dir name="Language">
      <file>am.php</file>
      <file>ar.php</file>
      <file>bg.php</file>
@@ -205,9 +234,12 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
 
    </dir>
 
+<!-- TESTS -->
    <file role="test" install-as="I18Nv2_Locale-PHPUnit_Testcase.php">
     tests/I18Nv2_Locale-PHPUnit_Testcase.php
    </file>
+
+<!-- DOCS -->
    <file role="doc" install-as="examples/retrieving_locale_conventions.php">
     docs/examples/retrieving_locale_conventions.php
    </file>
@@ -285,6 +317,16 @@ Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if
 * Fixed I18Nv2_Language, which didn't extend I18Nv2_CommonList
 * Fixed a typo in I18Nv2_DecoratedList_HtmlSelect (parse error)
 * Fixed key case handling in I18Nv2_Country and I18Nv2_Language
+   </notes>
+  </release>
+  <release>
+   <version>0.7.0</version>
+   <license>PHP</license>
+   <state>alpha</state>
+   <date>2004-05-05</date>
+   <notes>
++ Added class I18Nv2_DecoratedList_HtmlSpecialchars
++ Added method I18Nv2_(Common|Decorated)List::toDecoratedList()
    </notes>
   </release>
  </changelog>
