@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.39 $ -->
+<!-- $Revision: 1.40 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -38,6 +38,7 @@ NOTE: Contributions are very welcome!
   <date>2004-10-05</date>
   <notes><![CDATA[
 * I18Nv2::autoConv() may now decode request variables
+* fixed Bug #2541, warnings for unset properties with old PHP versions
 ]]>
   </notes>
 
