@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.21 $ -->
+<!-- $Revision: 1.22 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -15,9 +15,9 @@ As I'm not able to dig through all locales of the world, any contribution of loc
 
 There's very need of people contributing:
  * locale dependent date/time formatting conventions
- * translations of country names (I18Nv2_Country)
- * translations of language names (I18Nv2_Language)
-Just grab the CVS sources or download the package and see if your language or locale is already fully covered.
+ * translations and reviews of country names (I18Nv2_Country)
+ * translations and reviews of language names (I18Nv2_Language)
+Just browse the CVS sources at http://cvs.php.net/cvs.php/pear/I18Nv2 and see if your language or locale is already fully covered.
  </description>
 
  <maintainers>
@@ -50,6 +50,10 @@ Just grab the CVS sources or download the package and see if your language or lo
 # Switched default encoding of I18Nv2_Country and I18Nv2_Language to UTF-8
 + Added new localizations for I18Nv2_Country; currently 50 languages are (partly) covered
 + Added new localizations for I18Nv2_Language; currently 49 languages are (partly) covered
++ Added DecoratedList:
+  o HtmlEntities
+  o HtmlSelect
++ Added czech locale dependent date/time formats (mishal@centrum.cz)
   </notes>
 
   <filelist>
@@ -222,19 +226,19 @@ Just grab the CVS sources or download the package and see if your language or lo
   <dep type="ext" rel="has" optional="no">pcre</dep>
   <dep type="ext" rel="has" optional="no">iconv</dep>
  </deps>
-  <changelog>
-    <release>
-      <version>0.4.0</version>
-      <license>PHP</license>
-      <state>alpha</state>
-      <date>2004-04-16</date>
-      <notes>
+ <changelog>
+  <release>
+   <version>0.4.0</version>
+   <license>PHP</license>
+   <state>alpha</state>
+   <date>2004-04-16</date>
+   <notes>
 * Reorganized the Win32 locale and "fully qualified locale" maps.
 * Fixed I18Nv2_Locale::loadExtension() to load language extension prior to locale extension.
 + Introduced kind of a fallback mechanism for not recognized locales in I18Nv2::setLocale() (currently only norwegian locales suffer from a reorganization).
 + Started to localize I18Nv2_Country (currently english, german, italian and french are covered)
 + Started to localize I18Nv2_Language (currently english and german are covered)
-      </notes>
-    </release>
-  </changelog>
+   </notes>
+  </release>
+ </changelog>
 </package>
