@@ -212,7 +212,7 @@ class I18Nv2
      * @param   string  $ocs            desired output character set
      * @param   string  $ics            internal character set
      * @param   bool    $decodeRequest  whether to decode request variables
-     *                                  from $ocs to $ics
+     *                                  ($_GET and $_POST) from $ocs to $ics
      */
     function autoConv($ocs = 'UTF-8', $ics = 'ISO-8859-1', $decodeRequest = true)
     {
@@ -248,7 +248,6 @@ class I18Nv2
         if ($decodeRequest) {
             I18Nv2::recursiveIconv($_GET, $ocs, $ics);
             I18Nv2::recursiveIconv($_POST, $ocs, $ics);
-            I18Nv2::recursiveIconv($_REQUEST, $ocs, $ics);
         }
         
         return true;
