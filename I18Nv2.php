@@ -22,7 +22,7 @@
 * I18Nv2
 * 
 * @package      I18Nv2
-* @category     Internationalisation
+* @category     Internationalization
 */
 
 /**
