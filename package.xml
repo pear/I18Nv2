@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.34 $ -->
+<!-- $Revision: 1.35 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -37,9 +37,13 @@ NOTE: Contributions are very welcome!
   <state>devel</state>
   <date>2004-10-01</date>
   <notes><![CDATA[
+Bug Fixes:
 * strftime() codes for I18Nv2_Locale::date() and I18Nv2_Locale::time() were mixed up
 * set inconv's input encoding ecoding to the same as output encoding in I18Nv2::autoConv()
+
+New Features:
 + allow overriding of the currency symbol in I18Nv2_Locale::formatCurrency() (requested by Andreas Schamberger)
++ added a filtering decorator for lists, I18Nv2_DecoratedList_Filter
 ]]>
   </notes>
 
@@ -56,6 +60,7 @@ NOTE: Contributions are very welcome!
     
     <file name="DecoratedList.php" />
     <dir name="DecoratedList">
+      <file name="Filter.php" />
       <file name="HtmlSelect.php" />
       <file name="HtmlEntities.php" />
       <file name="HtmlSpecialchars.php" />
