@@ -380,5 +380,4 @@ class I18Nv2_Util_ICU_TreeNode extends I18Nv2_Util_ICU_RootNode
         return $this->parent;
     }
 }
-
 ?>
