@@ -19,40 +19,21 @@
 // $Id$
 
 /**
+* I18Nv2::Negotiator
+*
+* @package      I18Nv2
+* @category     Internationalisation
+*/
+
+/**
 * I18Nv2_Negotiator
-*
-* <code>
-* //instantiate I18Nv2_Negotiator
-* $negotiator = & new I18Nv2_Negotiator();
-* 
-* //define which language[s] your site supports  optional
-* $supportLangs = array('fr','jp');
-*
-* //find first matched language
-* $lang =  $negotiator->getLanguageMatch($supportLangs);
-*
-* //define which countries your site supports  optional
-* $supportCountries = array('gb','us');
-*
-* //find first matched Country
-* $countryCode = $negotiator->getCountryMatch($lang, $supportCountries);
-*
-* echo '
-*  Language Code: ' . $lang.'
-*  Language Name: ' . $negotiator->getLanguageName($lang).'
-*  Country Code:  ' . $countryCode.'
-*  Country Name:  ' . $negotiator->getCountryName($countryCode);
-* </code>
 * 
 * @author       Naoki Shima <murahachibu@php.net>
 * @author       Wolfram Kriesing <wk@visionp.de>
 * @author       Michael Wallner <mike@php.net>
-* 
-* @package      I18Nv2
-* @category     Internationalisation
-* 
 * @version      $Revision$
 * @access       public
+* @package      I18Nv2
 */
 class I18Nv2_Negotiator
 {
@@ -144,7 +125,11 @@ class I18Nv2_Negotiator
     {
         $this->__construct($defaultLanguage, $defaultCharset, $defaultCountry);
     }
-    //
+    
+    /**
+    * ZE2 Constructor
+    * @ignore
+    */
     function __construct($defaultLanguage = 'en', $defaultCharset = 'iso-8859-1', $defaultCountry = '')
     {
         $this->_defaultCountry  = $defaultCountry;

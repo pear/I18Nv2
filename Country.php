@@ -19,23 +19,30 @@
 // $Id$
 
 /**
-* I18Nv2_Country
+* I18Nv2::Country
 * 
 * Save list of ISO-3166 two letter country code to 
 * country name mapping.
 *
+* @package      I18Nv2
+* @category     Internationalisation
+*/
+
+/**
+* I18Nv2_Country
+* 
 * @author       Naoki Shima <murahachibu@php.net>
 * @author       Wolfram Kriesing <wk@visionp.de>
 * @author       Michael Wallner <mike@php.net>
-* 
-* @package      I18Nv2
-* @category     Internationalisation
-* 
 * @version      $Revision$
 * @access       public
+* @package      I18Nv2
 */
 class I18Nv2_Country
 {
+    /**
+    * @access private
+    */
     var $_codes = array(
         'AF' => 'AFGHANISTAN',
         'AL' => 'ALBANIA',
@@ -292,6 +299,7 @@ class I18Nv2_Country
 
     /**
     * @access   public
+    * @ignore
     */
     function __construct()
     {

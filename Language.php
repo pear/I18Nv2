@@ -19,6 +19,13 @@
 // $Id$
 
 /**
+* I18Nv2::Language
+* 
+* @package      I18Nv2
+* @category     Internationalisation
+*/
+ 
+/**
 * I18Nv2_Language
 * 
 * Save list of ISO-639-1 two letter resp. ISO-639-2 three letter 
@@ -26,12 +33,9 @@
 * 
 * @author       Wolfram Kriesing <wk@visionp.de>
 * @author       Michael Wallner <mike@php.net>
-* 
-* @package      I18Nv2
-* @category     Internationalisation
-* 
 * @version      $Revision$
 * @access       public
+* @package      I18Nv2
 */
 class I18Nv2_Language
 {
@@ -52,13 +56,17 @@ class I18Nv2_Language
     {
         $this->__construct($threeLetters);
     }
-    //
+    
+    /**
+    * ZE2 Constructor
+    * @ignore
+    */
     function __construct($threeLetters = false)
     {
         if ($threeLetters) {
-            include('I18Nv2/Language/ISO-639-2.php');
+            include 'I18Nv2/Language/ISO-639-2.php';
         } else {
-            include('I18Nv2/Language/ISO-639-1.php');
+            include 'I18Nv2/Language/ISO-639-1.php';
         }
     }
 

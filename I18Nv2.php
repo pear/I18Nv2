@@ -18,7 +18,17 @@
 //
 // $Id$
 
-require_once('PEAR.php');
+/**
+* I18Nv2
+* 
+* @package      I18Nv2
+* @category     Internationalisation
+*/
+
+/**
+* Requires PEAR
+*/
+require_once 'PEAR.php';
 
 /** 
 * I18Nv2 - Internationalization v2
@@ -26,6 +36,7 @@ require_once('PEAR.php');
 * @author   Michael Wallner <mike@php.net>
 * @version  $Revision$
 * @access   public
+* @package  I18Nv2
 */
 class I18Nv2
 {
@@ -72,7 +83,7 @@ class I18Nv2
     /**
     * Get current/prior Locale
     *
-    * This only works, if you I18Nv2::setLocale() has already been called
+    * This only works, if I18Nv2::setLocale() has already been called
     * 
     * @static
     * @access   public
@@ -119,7 +130,7 @@ class I18Nv2
     */
     function &createLocale($locale = null)
     {
-        require_once('I18Nv2/Locale.php');
+        require_once 'I18Nv2/Locale.php';
         return new I18Nv2_Locale($locale);
     }
     
@@ -134,12 +145,8 @@ class I18Nv2
     */
     function &createNegotiator($defLang = 'en', $defCharset = 'iso-8859-1')
     {
-        static $negotiator;
-        if (!isset($negotiator)) {
-            require_once('I18Nv2/Negotiator.php');
-            $negotiator = &new I18Nv2_Negotiator($defLang, $defCharset);
-        }
-        return $negotiator;
+        require_once 'I18Nv2/Negotiator.php';
+        return new I18Nv2_Negotiator($defLang, $defCharset);
     }
     
     /**
@@ -185,12 +192,12 @@ class I18Nv2
     }
     
     /**
-    * Mimics PEAR::getStaticProperty()
+    * Get access to static property
     * 
     * @static
     * @access   public
-    * @return   mixed   reference to static property
-    * @param    string  $property   property
+    * @return   mixed   Returns a reference to a static property
+    * @param    string  $property   the static property
     */
     function &getStaticProperty($property)
     {
@@ -201,7 +208,10 @@ class I18Nv2
     /**
     * This one gets called automatically
     *
-    * @access   internal
+    * @ignore
+    * @static
+    * @internal
+    * @access   private
     * @return   void
     */
     function _main()
@@ -212,10 +222,10 @@ class I18Nv2
         
         if (OS_WINDOWS) {
             // include Win32 locales map
-            include_once('I18Nv2/Locale/MapWindows.php');
+            include_once 'I18Nv2/Locale/MapWindows.php';
         } else {
             // or some standard mappings for other systems (?)
-            include_once('I18Nv2/Locale/Map.php');
+            include_once 'I18Nv2/Locale/Map.php';
         }
     }
 }

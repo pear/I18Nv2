@@ -13,8 +13,14 @@
 //
 // $Id$
 
-require_once('I18Nv2.php');
+/**
+* I18Nv2::Locale
+* 
+* @package      I18Nv2
+* @category     Internationalisation
+*/
 
+/**#@+ Constants **/
 define('I18Nv2_NUMBER',                   10);
 define('I18Nv2_CURRENCY',                 20);
 define('I18Nv2_DATETIME',                 30);
@@ -30,19 +36,26 @@ define('I18Nv2_DATETIME_DEFAULT',         32);
 define('I18Nv2_DATETIME_MEDIUM',          33);
 define('I18Nv2_DATETIME_LONG',            34);
 define('I18Nv2_DATETIME_FULL',            35);
+/**#@-*/
+
+/**
+* Requires I18Nv2
+*/
+require_once 'I18Nv2.php';
 
 /** 
 * I18Nv2_Locale
 *
-* @package      I18Nv2
-* @category     Internationalisation
-* 
 * @author       Michael Wallner <mike@php.net>
 * @version      $Revision$
 * @access       public
+* @package      I18Nv2
 */
 class I18Nv2_Locale
 {
+    /**#@+
+    * @access   private
+    */
     var $_locale = 'en_US';
     
     var $_days;
@@ -61,7 +74,8 @@ class I18Nv2_Locale
     var $_currentCurrencyFormat;
     
     var $_customFormats;
-
+    /**#@-*/
+    
     /**
     * Constructor
     *
@@ -75,6 +89,8 @@ class I18Nv2_Locale
     }
 
     /**
+    * ZE2 Constructor
+    * @ignore
     * @access   public
     * @return   object
     * @param    string  $locale
@@ -226,7 +242,7 @@ class I18Nv2_Locale
         $locale = I18Nv2::lastLocale(0, true);
         if (isset($locale)) {
             foreach ($locale as $lc) {
-                if (@include('I18Nv2/Locale/'. $lc .'.php')) {
+                if (@include 'I18Nv2/Locale/'. $lc .'.php') {
                     return true;
                 }
             }
