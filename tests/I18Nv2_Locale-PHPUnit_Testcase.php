@@ -105,8 +105,10 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     function testsetCustomFormat()
     {
         $tf = '%d. %B %Y';
-        $this->l->setCustomFormat(I18Nv2_DATETIME, $tf);
-        $this->assertEquals($tf, $this->l->customFormats[I18Nv2_DATETIME]);
+        $this->l->setCustomFormat(I18Nv2_DATETIME_DEFAULT, $tf);
+        $this->assertEquals($tf, $this->l->customFormats[I18Nv2_DATETIME_DEFAULT]);
+        $this->l->setDateTimeFormat(I18Nv2_DATETIME_DEFAULT, true);
+        $this->assertTrue(preg_match('/^\d+\. \w+ \d{4}$/', $this->l->formatDateTime(time())));
     }
 
     /**
