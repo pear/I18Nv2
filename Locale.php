@@ -235,19 +235,16 @@ class I18Nv2_Locale
     * Loads corresponding locale extension
     *
     * @access   public
-    * @return   bool
+    * @return   void
     */
     function loadExtension()
     {
         $locale = I18Nv2::lastLocale(0, true);
         if (isset($locale)) {
             foreach ($locale as $lc) {
-                if (@include 'I18Nv2/Locale/'. $lc .'.php') {
-                    return true;
-                }
+                @include 'I18Nv2/Locale/'. $lc .'.php';
             }
         }
-        return false;
     }
     
     /**
