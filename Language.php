@@ -11,9 +11,7 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 2004 The PEAR Group                                    |
 // +----------------------------------------------------------------------+
-// | Authors:   Naoki Shima <murahachibu@php.net>                         |
-// |            Wolfram Kriesing <wk@visionp.de>                          |
-// |            Michael Wallner <mike@iworks.at>                          |
+// | Authors:   Michael Wallner <mike@iworks.at>                          |
 // +----------------------------------------------------------------------+
 //
 // $Id$
@@ -22,7 +20,7 @@
 * I18Nv2::Language
 * 
 * @package      I18Nv2
-* @category     Internationalisation
+* @category     Internationalization
 */
  
 /**
@@ -30,7 +28,6 @@
 * 
 * List of ISO-639-1 two letter language code to language name mapping.
 * 
-* @author       Wolfram Kriesing <wk@visionp.de>
 * @author       Michael Wallner <mike@php.net>
 * @version      $Revision$
 * @access       public
@@ -38,95 +35,15 @@
 */
 class I18Nv2_Language
 {
-    /**#@+
-    * @access   private
-    */
-    var $_codes = array();
-    var $_language = 'en';
-    var $_encoding = 'UTF-8';
-    /**#@-**/
-
     /**
-    * Constructor
-    * 
-    * @access   public
-    * @return   object  I18Nv2_Language
-    * @param    string  $language
-    */
-    function I18Nv2_Language($language = null, $encoding = null)
-    {
-        $this->__construct($language, $encoding);
-    }
-    
-    /**
-    * ZE2 Constructor
-    * @ignore
-    */
-    function __construct($language = null, $encoding = null)
-    {
-        if (isset($encoding)) {
-            $this->_encoding = $encoding;
-        }
-        if (isset($language)) {
-            $this->_language = $language;
-            @include 'I18Nv2/Language/' . strToLower($language) . '.php';
-        } elseif (class_exists('I18Nv2')) {
-            $locale = I18Nv2::lastLocale(0, true);
-            if (isset($locale)) {
-                $this->_language = $locale['language'];
-                @include 'I18Nv2/Language/' . $locale['language'] . '.php';
-            }
-        }
-        if (!count($this->_codes)) {
-            $this->_language = 'en';
-            include 'I18Nv2/Language/en.php';
-        }
-    }
-
-    /**
-    * Check language code is valid
-    * 
-    * @access   public
-    * @return   boolean
-    * @param    string  $code   language code
-    */
-    function isValidCode($code)
-    {
-        return isset($this->_codes[strToLower($code)]);
-    }
-
-    /**
-    * Return name of the language for language code
-    * 
-    * @access   public
-    * @return   string  name of the language
-    * @param    string  $code   language code
-    */
-    function getName($code)
-    {
-        return iconv('UTF-8', $this->_encoding, $this->_codes[strToLower($code)]);
-    }
-
-    /**
-    * Return all the codes
+    * Load language file
     *
-    * @access   public
-    * @return   array
-    */
-    function getAllCodes()
-    {
-        $codes = $this->_codes;
-        array_walk($codes, array(&$this, '_iconv'));
-        return $codes;
-    }
-
-    /**
     * @access   private
-    * @return   void
+    * @return   bool
     */
-    function _iconv(&$code, $key)
+    function _loadLanguage($language)
     {
-        $code = iconv('UTF-8', $this->_encoding, $code);
+        return @include 'I18Nv2/Language/' . $language . '.php';
     }
 }
 ?>
