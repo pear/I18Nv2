@@ -7,6 +7,7 @@
  * @language  ta
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'LU' => 'லக்ஸ்சம்பர்க்',
     'LV' => 'லாட்வியா',
     'LA' => 'லாவோஸ்',
@@ -228,6 +229,7 @@ $this->_codes = array(
     'ST' => 'Sao Tome and Principe',
     'SN' => 'Senegal',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
     'SC' => 'Seychelles',
     'SL' => 'Sierra Leone',
     'SO' => 'Somalia',
@@ -245,7 +247,6 @@ $this->_codes = array(
     'UM' => 'United States Minor Outlying Islands',
     'WF' => 'Wallis and Futuna',
     'EH' => 'Western Sahara',
-    'YU' => 'Yugoslavia',
     'ZM' => 'Zambia',
 );
 ?>

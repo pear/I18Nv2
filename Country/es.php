@@ -7,6 +7,7 @@
  * @language  es
  */
 $this->_codes = array(
+    'AX' => 'Åland Isle',
     'AF' => 'AfganistÃ¡n',
     'AL' => 'Albania',
     'DE' => 'Alemania',
@@ -205,6 +206,7 @@ $this->_codes = array(
     'VC' => 'San Vicente y las Granadinas',
     'SN' => 'Senegal',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
     'SC' => 'Seychelles',
     'SL' => 'Sierra Leona',
     'SG' => 'Singapur',
@@ -244,7 +246,6 @@ $this->_codes = array(
     'WF' => 'Wallis y Futuna',
     'YE' => 'Yemen',
     'DJ' => 'Yibuti',
-    'YU' => 'Yugoslavia',
     'ZM' => 'Zambia',
     'ZW' => 'Zimbabue',
 );

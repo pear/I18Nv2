@@ -7,6 +7,7 @@
  * @language  lv
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'CL' => 'Čīle',
     'TD' => 'Čada',
     'CZ' => 'Čehija',
@@ -62,7 +63,6 @@ $this->_codes = array(
     'ZA' => 'Dienvidāfrika',
     'GS' => 'Dienviddžordžija un Dienvidsendviču salas',
     'KR' => 'Dienvidkoreja',
-    'YU' => 'Dienvidslāvija',
     'DO' => 'Dominikānas Republika',
     'DM' => 'Dominika',
     'EC' => 'Ekvadora',
@@ -203,6 +203,7 @@ $this->_codes = array(
     'LC' => 'Sentlūsija',
     'VC' => 'Sentvinsenta un Grenadīnas',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
     'SG' => 'Singapūra',
     'SL' => 'Sjerraleone',
     'SK' => 'Slovākija',

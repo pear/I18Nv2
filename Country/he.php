@@ -7,6 +7,7 @@
  * @language  he
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'UG' => 'אוגנדה',
     'UZ' => 'אוזבקיסטן',
     'AT' => 'אוסטריה',
@@ -129,7 +130,6 @@ $this->_codes = array(
     'TF' => 'טריטוריות דרומיות של צרפת',
     'TT' => 'טרינידד וטובגו',
     'TZ' => 'טנזניה',
-    'YU' => 'יוגוסלביה',
     'GR' => 'יוון',
     'JP' => 'יפן',
     'JO' => 'ירדן',
@@ -247,5 +247,6 @@ $this->_codes = array(
     'NA' => 'נמיביה',
     'NP' => 'נפאל',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
 );
 ?>

@@ -7,6 +7,7 @@
  * @language  eo
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'TD' => 'Ĉado',
     'CZ' => 'Ĉeĥujo',
     'CL' => 'Ĉilio',
@@ -199,6 +200,7 @@ $this->_codes = array(
     'LC' => 'Sent-Lucio',
     'PM' => 'Sent-Piero kaj Mikelono',
     'VC' => 'Sent-Vincento kaj la Grenadinoj',
+    'CS' => 'Serbia and Montenegro',
     'SP' => 'Serbujo',
     'SL' => 'Siera-Leono',
     'SG' => 'Singapuro',
@@ -244,7 +246,6 @@ $this->_codes = array(
     'VA' => 'Vatikano',
     'VE' => 'Venezuelo',
     'VN' => 'Vjetnamo',
-    'YU' => 'Yugoslavia',
     'ZM' => 'Zambio',
     'ZW' => 'Zimbabvo',
 );

@@ -7,6 +7,7 @@
  * @language  th
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'KP' => 'เกาหลีเหนือ',
     'KR' => 'เกาหลีใต้',
     'KE' => 'เคนย่า',
@@ -152,7 +153,6 @@ $this->_codes = array(
     'MT' => 'มัลต้า',
     'UA' => 'ยูเครน',
     'VI' => 'ยูเอสเวอร์จินไอส์แลนด์',
-    'YU' => 'ยูโกสลาเวีย',
     'RW' => 'ราวัลดา',
     'RO' => 'รูเมเนีย',
     'RU' => 'รัสเซีย',
@@ -240,6 +240,7 @@ $this->_codes = array(
     'WS' => 'Samoa',
     'SM' => 'San Marino',
     'ST' => 'Sao Tome and Principe',
+    'CS' => 'Serbia and Montenegro',
     'SB' => 'Solomon Islands',
     'GS' => 'South Georgia and South Sandwich Islands',
     'SJ' => 'Svalbard and Jan Mayen',

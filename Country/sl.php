@@ -7,6 +7,7 @@
  * @language  sl
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'TD' => 'Čad',
     'CZ' => 'Češka',
     'CL' => 'Čile',
@@ -108,7 +109,6 @@ $this->_codes = array(
     'ZA' => 'Južna Afrika',
     'GS' => 'Južna Georgija in Južni Sandwich Islands',
     'KR' => 'Južna Koreja',
-    'YU' => 'Jugoslavija',
     'KY' => 'Kajmanski otoki',
     'KH' => 'Kambodža',
     'CM' => 'Kamerun',
@@ -205,6 +205,7 @@ $this->_codes = array(
     'SC' => 'Sejšeli',
     'SN' => 'Senegal',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
     'KP' => 'Severna Koreja',
     'MP' => 'Severni Marianski otoki',
     'SL' => 'Sierra Leone',

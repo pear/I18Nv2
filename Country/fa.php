@@ -7,6 +7,7 @@
  * @language  fa
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'ZM' => 'زامبیا',
     'NZ' => 'زلاند نو',
     'ZW' => 'زیمبابوه',
@@ -245,7 +246,7 @@ $this->_codes = array(
     'GW' => 'گینه‌ی بیسائو',
     'YE' => 'یمن',
     'GR' => 'یونان',
-    'YU' => 'یوگسلاوی',
     'PS' => 'Palestinian Territory',
+    'CS' => 'Serbia and Montenegro',
 );
 ?>

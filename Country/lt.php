@@ -7,6 +7,7 @@
  * @language  lt
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'TD' => 'Čadas',
     'CZ' => 'Čekijos respublika',
     'CL' => 'Čilė',
@@ -104,7 +105,6 @@ $this->_codes = array(
     'VI' => 'JAV Virginijos salos',
     'YE' => 'Jemenas',
     'JO' => 'Jordanija',
-    'YU' => 'Jugoslavija',
     'AE' => 'Jungtiniai Arabų Emyratai',
     'KY' => 'Kaimanų salos',
     'CX' => 'Kalėdų sala',
@@ -208,6 +208,7 @@ $this->_codes = array(
     'PM' => 'Sen Pjeras ir Mikelonas',
     'KN' => 'Sent Kitsas ir Nevis',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
     'SL' => 'Siera Leonė',
     'SG' => 'Singapūras',
     'SY' => 'Sirija',

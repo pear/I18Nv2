@@ -7,6 +7,7 @@
  * @language  vi
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'AR' => 'Ác-hen-ti-na',
     'AM' => 'Ác-mê-ni-a',
     'AT' => 'Áo',
@@ -195,6 +196,7 @@ $this->_codes = array(
     'CY' => 'Síp',
     'SH' => 'Saint Helena',
     'PM' => 'Saint Pierre and Miquelon',
+    'CS' => 'Serbia and Montenegro',
     'GS' => 'South Georgia and South Sandwich Islands',
     'SJ' => 'Svalbard and Jan Mayen',
     'TJ' => 'Tát-gi-ki-xtan',
@@ -246,6 +248,5 @@ $this->_codes = array(
     'SD' => 'Xu-đăng',
     'SR' => 'Xu-ri-nam',
     'YE' => 'Y-ê-men',
-    'YU' => 'Yugoslavia',
 );
 ?>

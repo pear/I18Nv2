@@ -7,6 +7,7 @@
  * @language  hu
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'MP' => 'Északi Mariana-szigetek',
     'EE' => 'Észtország',
     'IE' => 'Írország',
@@ -111,7 +112,6 @@ $this->_codes = array(
     'JP' => 'Japán',
     'YE' => 'Jemen',
     'JO' => 'Jordánia',
-    'YU' => 'Jugoszlávia',
     'CC' => 'Kókusz (Keeling)-szigetek',
     'CN' => 'Kína',
     'CF' => 'Közép-afrikai Köztársaság',
@@ -203,6 +203,7 @@ $this->_codes = array(
     'SB' => 'Salamon-szigetek',
     'SM' => 'San Marino',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
     'SC' => 'Seychelles',
     'SL' => 'Sierra Leone',
     'ES' => 'Spanyolország',

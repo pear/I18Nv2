@@ -7,6 +7,7 @@
  * @language  ga
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'YE' => 'Éimin',
     'IE' => 'Éire',
     'UZ' => 'Úisbéiceastáin',
@@ -66,7 +67,6 @@ $this->_codes = array(
     'GW' => 'An Ghuine-Bhissau',
     'GQ' => 'An Ghuine Mheánchriosach',
     'AI' => 'Anguilla',
-    'YU' => 'An Iúgslaiv',
     'IQ' => 'An Iaráic',
     'IR' => 'An Iaráin',
     'IN' => 'An India',
@@ -231,6 +231,7 @@ $this->_codes = array(
     'SM' => 'San Mairíne',
     'ST' => 'Sao Tome agus Principe',
     'TD' => 'Sead',
+    'CS' => 'Serbia and Montenegro',
     'SL' => 'Siarra Leon',
     'SG' => 'Singeapór',
     'LK' => 'Srí Lanca',

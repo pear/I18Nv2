@@ -7,6 +7,7 @@
  * @language  ca
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'AT' => 'Âustria',
     'IN' => 'Índia',
     'AF' => 'Afganistan',
@@ -114,7 +115,6 @@ $this->_codes = array(
     'IS' => 'Islàndia',
     'IL' => 'Israel',
     'IT' => 'Itàlia',
-    'YU' => 'Iugoslàvia',
     'JM' => 'Jamaica',
     'JP' => 'Japó',
     'JO' => 'Jordània',
@@ -201,6 +201,7 @@ $this->_codes = array(
     'SM' => 'San Marino',
     'ST' => 'Sao Tome and Principe',
     'SN' => 'Senegal',
+    'CS' => 'Serbia and Montenegro',
     'SC' => 'Seychelles',
     'SL' => 'Sierra Leone',
     'SG' => 'Singapur',

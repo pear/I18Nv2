@@ -7,6 +7,7 @@
  * @language  ti
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'SY' => 'ሲሪያ',
     'SG' => 'ሲንጋፖር',
     'SA' => 'ሳውድአረቢያ',
@@ -114,7 +115,6 @@ $this->_codes = array(
     'PF' => 'የፈረንሳይ ፖሊኔዢያ',
     'UZ' => 'ዩዝበኪስታን',
     'UG' => 'ዩጋንዳ',
-    'YU' => 'ዩጎዝላቪያ',
     'KP' => 'ደቡብ ኮሪያ',
     'ZA' => 'ደቡብ አፍሪካ',
     'DK' => 'ዴንማርክ',
@@ -224,6 +224,7 @@ $this->_codes = array(
     'WS' => 'Samoa',
     'SM' => 'San Marino',
     'ST' => 'Sao Tome and Principe',
+    'CS' => 'Serbia and Montenegro',
     'SC' => 'Seychelles',
     'SL' => 'Sierra Leone',
     'SB' => 'Solomon Islands',

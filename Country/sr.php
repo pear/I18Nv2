@@ -7,11 +7,11 @@
  * @language  sr
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'JM' => 'Јамајка',
     'JP' => 'Јапан',
     'YE' => 'Јемен',
     'JO' => 'Јордан',
-    'YU' => 'Југославија',
     'ZA' => 'Јужна Африка',
     'KR' => 'Јужна Кореја',
     'DJ' => 'Џибути',
@@ -236,6 +236,7 @@ $this->_codes = array(
     'WS' => 'Samoa',
     'SM' => 'San Marino',
     'ST' => 'Sao Tome and Principe',
+    'CS' => 'Serbia and Montenegro',
     'SB' => 'Solomon Islands',
     'GS' => 'South Georgia and South Sandwich Islands',
     'SJ' => 'Svalbard and Jan Mayen',

@@ -7,6 +7,7 @@
  * @language  nl
  */
 $this->_codes = array(
+    'AX' => '�land Isle',
     'AF' => 'Afghanistan',
     'AL' => 'Albanië',
     'DZ' => 'Algerije',
@@ -111,7 +112,6 @@ $this->_codes = array(
     'JM' => 'Jamaica',
     'JP' => 'Japan',
     'YE' => 'Jemen',
-    'YU' => 'Joegoslavië',
     'JO' => 'Jordanië',
     'CV' => 'Kaapverdië',
     'CM' => 'Kameroen',
@@ -202,6 +202,7 @@ $this->_codes = array(
     'ST' => 'Sao Tomé en Principe',
     'SN' => 'Senegal',
     'SP' => 'Serbia',
+    'CS' => 'Serbia and Montenegro',
     'SC' => 'Seychellen',
     'SL' => 'Sierra Leone',
     'SG' => 'Singapore',
