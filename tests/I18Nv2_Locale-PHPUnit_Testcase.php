@@ -106,7 +106,7 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     {
         $tf = '%d. %B %Y';
         $this->l->setCustomFormat(I18Nv2_DATETIME, $tf);
-        $this->assertEquals($tf, $this->l->_customFormats[I18Nv2_DATETIME]);
+        $this->assertEquals($tf, $this->l->customFormats[I18Nv2_DATETIME]);
     }
 
     /**
@@ -158,7 +158,7 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     */
     function testtime()
     {
-        $this->assertEquals(strftime('%x', $this->t), $this->l->time($this->t));
+        $this->assertEquals(strftime('%X', $this->t), $this->l->time($this->t));
     }
 
     /**
@@ -168,7 +168,7 @@ class I18Nv2_LocaleTest extends PHPUnit_TestCase
     */
     function testdate()
     {
-        $this->assertEquals(strftime('%X', $this->t), $this->l->date($this->t));
+        $this->assertEquals(strftime('%x', $this->t), $this->l->date($this->t));
     }
 
     /**
