@@ -38,10 +38,11 @@ class I18Nv2_Language
     /**
     * Load language file
     *
-    * @access   private
+    * @access   proteceted
     * @return   bool
+    * @param    string  $language
     */
-    function _loadLanguage($language)
+    function loadLanguage($language)
     {
         return @include 'I18Nv2/Language/' . $language . '.php';
     }
