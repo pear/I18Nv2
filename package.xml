@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.18 $ -->
+<!-- $Revision: 1.19 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -33,13 +33,13 @@ Just grab the CVS sources or download the package and see if your language or lo
    <email>quipo@php.net</email>
    <role>contributor</role>
   </maintainer>
+  <maintainer>
+   <user>sagi</user>
+   <name>Sagi Bashari</name>
+   <email>sagi@php.net</email>
+   <role>helper</role>
+  </maintainer>
  </maintainers>
- <maintainer>
-  <user>sagi</user>
-  <name>Sagi Bashari</name>
-  <email>sagi@php.net</email>
-  <role>helper</role>
- </maintainer>
 
  <release>
   <version>0.5.0</version>
