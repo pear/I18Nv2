@@ -48,6 +48,11 @@ $cnf = array(
         'max'   => 0,
         'desc'  => 'update I18Nv2 countries',
     ),
+    'currencies'=> array(
+        'short' => 'y',
+        'max'   => 0,
+        'desc'  => 'update I18Nv2 currencies',
+    ),
     'verbose'   => array(
         'short' => 'v',
         'max'   => 0,
@@ -109,6 +114,13 @@ $cnf = array(
         'default'=>'../Country',
         'desc'  => 'path where updated country files should be put',
     ),
+    'currenciesdir'=>array(
+        'short' => 'dy',
+        'max'   => 1,
+        'min'   => 1,
+        'default'=>'../Currency',
+        'desc'  => 'path where updated currency files should be put',
+    )
 );
 
 $opt = &Console_Getargs::factory($cnf);
@@ -119,7 +131,8 @@ if (PEAR::isError($opt)) {
 
 if (    !$opt->isDefined('updatecvs')   and
         !$opt->isDefined('languages')   and
-        !$opt->isDefined('countries')) {
+        !$opt->isDefined('countries')   and
+        !$opt->isDefined('currencies')) {
     usage();
 }
 
@@ -127,10 +140,13 @@ if ($opt->isDefined('updatecvs')) {
     updatecvs();
 }
 if ($opt->isDefined('languages')) {
-    languages();
+    languages(realpath($opt->getValue('checkoutdir')));
 }
 if ($opt->isDefined('countries')) {
-    countries();
+    countries(realpath($opt->getValue('checkoutdir')));
+}
+if ($opt->isDefined('currencies')) {
+    currencies(realpath($opt->getValue('checkoutdir')));
 }
 
 # --- functions
@@ -152,7 +168,7 @@ function verbose($str)
 {
     global $opt;
     if ($opt->isDefined('verbose')) {
-        echo $str ."\n";
+        echo $str == '.' ? $str : $str ."\n";
     }
 }
 
@@ -194,11 +210,8 @@ function updatecvs()
     verbose("Updating from CVS done\n");
 }
 
-function countries()
+function countries($path)
 {
-    global $opt;
-    $path = realpath($opt->getValue('checkoutdir'));
-    
     verbose("Updating countries");
     
     // load english
@@ -216,11 +229,8 @@ function countries()
     verbose("Updated $count country files\n");
 }
 
-function languages()
+function languages($path)
 {
-    global $opt;
-    $path = realpath($opt->getValue('checkoutdir'));
-    
     verbose("Updating languages");
     
     // load english
@@ -238,6 +248,25 @@ function languages()
     verbose("Updated $count language files\n");
 }
 
+function currencies($path)
+{
+    verbose("Updating currencies");
+    
+    // load english
+    $en = sx_load_crrcys($path .'/en.xml');
+    
+    $count = 0;
+    foreach (glob($path .'/??.xml') as $file) {
+        list($lang) = explode('.', basename($file));
+        $codes = array_merge($en, sx_load_crrcys($file));
+        write_currency_file($lang, $codes);
+        verbose("Done\n");
+        ++$count;
+    }
+    
+    verbose("Updated $count currency files\n");
+}
+
 function sx_load_langs($file)
 {
     verbose("Loading languages of '$file'");
@@ -250,6 +279,20 @@ function sx_load_ctrys($file)
     verbose("Loading countries of '$file'");
     $sx = simplexml_load_file($file);
     return sx_load($sx->localeDisplayNames->territories[0], 'strtoupper');
+}
+
+function sx_load_crrcys($file)
+{
+    verbose("Loading currencies of '$file'");
+    $sx = simplexml_load_file($file);
+    $ar = array();
+    if (count($sx->numbers->currencies[0]))
+    foreach ($sx->numbers->currencies[0] as $c) {
+        verbose('.');
+        $ar[(string) $c['type']] = $c->displayName;
+    }
+    verbose("Loaded ". count($ar) ." codes");
+    return $ar;
 }
 
 function sx_load($array, $casefunc)
@@ -281,6 +324,14 @@ function write_country_file($lang, $codes)
     global $opt;
     $path = realpath($opt->getValue('countriesdir'));
     verbose("Writing country codes of language '$lang'");
+    return write_file($path ."/$lang.php", $codes);
+}
+
+function write_currency_file($lang, $codes)
+{
+    global $opt;
+    $path = realpath($opt->getValue('currenciesdir'));
+    verbose("Writing currency codes of language '$lang'");
     return write_file($path ."/$lang.php", $codes);
 }
 
