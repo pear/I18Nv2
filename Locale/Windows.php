@@ -81,6 +81,8 @@ $windows = array(
     'sl_SI' => 'slv',
     
     'pl_PL' => 'plk',
+    
+    'cs_CZ' => 'csy',
 );
 
 ?>

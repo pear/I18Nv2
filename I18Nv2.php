@@ -340,6 +340,7 @@ class I18Nv2
             'sl'    => 'sl_SI',
             'hu'    => 'hu_HU',
             'ru'    => 'ru_RU',
+            'cs'    => 'cs_CZ',
         );
         
         // define locale fallbacks
