@@ -2,7 +2,7 @@
 /**
 * $Id$
 *
-* @author   Michael Wallner <mike@php.net>
+* @author   Lorenzo Alberton <quipo@php.net>
 * @charset  ISO-8859-1
 * @language en
 */
