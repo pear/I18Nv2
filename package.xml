@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.58 $ -->
+<!-- $Revision: 1.59 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -73,7 +73,7 @@ FINAL NOTE:
   <version>0.11.1</version>
   <license>PHP</license>
   <state>beta</state>
-  <date>2005-01-xx</date>
+  <date>2005-02-21</date>
   <notes><![CDATA[
 * Fixed bug in I18Nv2_Locale constructor if no locale was supplied
 * Fixed bug where local time discrepancies changed behaviour of I18Nv2_Locale
