@@ -731,7 +731,7 @@ class I18Nv2_Locale
     {
         $format = isset($overrideFormat) ? 
             $this->dateFormats[$overrideFormat] : $this->currentDateFormat;
-        $this->paramoid and setLocale(LC_ALL, $this->usedLocale);
+        $this->paranoid and setLocale(LC_ALL, $this->usedLocale);
         $date = strftime($format, isset($timestamp) ? $timestamp : time());
         $this->paranoid and setLocale(LC_ALL, 'C');
         return $date;
