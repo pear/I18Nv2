@@ -38,9 +38,7 @@ define('I18Nv2_DATETIME_LONG',            34);
 define('I18Nv2_DATETIME_FULL',            35);
 /**#@-*/
 
-/**
-* Requires I18Nv2
-*/
+require_once 'PEAR.php';
 require_once 'I18Nv2.php';
 
 /** 
@@ -427,8 +425,8 @@ class I18Nv2_Locale
     */
     function setCustomFormat($type = null, $format = null)
     {
-        if (is_null($format)) {
-            if (is_null($type)) {
+        if (!isset($format)) {
+            if (!isset($type)) {
                 $this->_customFormats = array();
             } else {
                 unset($this->_customFormats[$type]);
