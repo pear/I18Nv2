@@ -192,6 +192,56 @@ class I18Nv2
     }
     
     /**
+    * Traverse locales to languages
+    * 
+    * Returns en-US, de-DE from en_US and de_DE
+    *
+    * @static
+    * @access   public
+    * @return   array
+    * @param    array   $locales
+    */
+    function locales2langs($locales)
+    {
+        return I18Nv2::_traverseLL($locales, '_', '-');
+    }
+    
+    /**
+    * Traverse languages to locales
+    *
+    * Returns en_US, de_DE from en-US and de-DE
+    *
+    * @static
+    * @access   public
+    * @return   array
+    * @param    array   $languages
+    */
+    function langs2locales($languages)
+    {
+        return I18Nv2::_traverseLL($languages, '-', '_');
+    }
+    
+    /**
+    * Helper for traversing locales and languages
+    *
+    * @static
+    * @access   private
+    * @return   array
+    * @param    array   $array
+    * @param    string  $from
+    * @param    string  $to
+    */
+    function _traverseLL($array, $from, $to)
+    {
+        setType($array, 'array');
+        foreach ($array as $key => $entry) {
+            $array[$key] = str_replace($from, $to, $entry);
+        }
+        return $array;
+    }
+    
+    
+    /**
     * Get access to static property
     * 
     * @static
