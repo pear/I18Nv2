@@ -177,7 +177,7 @@ class I18Nv2
     function &createLocale($locale = null, $paranoid = false)
     {
         require_once 'I18Nv2/Locale.php';
-        return new I18Nv2_Locale($locale);
+        return new I18Nv2_Locale($locale, $paranoid);
     }
     
     /**
