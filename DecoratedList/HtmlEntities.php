@@ -20,6 +20,7 @@ require_once 'I18Nv2/DecoratedList.php';
 *
 * @author       Michael Wallner <mike@php.net>
 * @version      $Revision$
+* @package      I18Nv2
 */
 class I18Nv2_DecoratedList_HtmlEntities extends I18Nv2_DecoratedList
 {
@@ -39,6 +40,5 @@ class I18Nv2_DecoratedList_HtmlEntities extends I18Nv2_DecoratedList
         }
         return $value;
     }
-    
 }
 ?>

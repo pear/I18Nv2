@@ -18,16 +18,25 @@
 *
 * @author       Michael Wallner <mike@php.net>
 * @version      $Revision$
+* @package      I18Nv2
 */
 class I18Nv2_DecoratedList
 {
     /**
-    * I18Nv2_CommonList
+    * I18Nv2_(Common|Decorated)List
+    * 
     * @access   protected
     * @var      object
     */
     var $list;
     
+    /**
+    * Constructor
+    * 
+    * @access   public
+    * @return   object
+    * @param    object  $list   I18Nv2_DecoratedList or I18Nv2_CommonList
+    */
     function I18Nv2_DecoratedList(&$list)
     {
         I18Nv2_DecoratedList::__construct($list);
@@ -61,6 +70,7 @@ class I18Nv2_DecoratedList
     * 
     * @access   public
     * @return   bool
+    * @param    string  $code
     */
     function isValidCode($code)
     {
@@ -72,6 +82,7 @@ class I18Nv2_DecoratedList
     * 
     * @access   public
     * @return   string
+    * @param    string  $code
     */
     function getName($code)
     {
