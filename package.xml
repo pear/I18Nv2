@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.15 $ -->
+<!-- $Revision: 1.16 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -41,8 +41,8 @@ Just grab the CVS sources or download the package and see if your language or lo
   <state>alpha</state>
   <date>2004-04-20</date>
   <notes>
-+ Added new localizations for I18Nv2_Country (currently 49 languages are covered)
-+ Added new localizations for I18Nv2_Language (currently 50 languages are covered)
++ Added new localizations for I18Nv2_Country (currently 50 languages are covered)
++ Added new localizations for I18Nv2_Language (currently 49 languages are covered)
   </notes>
 
   <filelist>
