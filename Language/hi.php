@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  hi
  */
-$this->_codes = array(
+$this->codes = array(
     'lo' => 'लाओथीयन्',
     'lv' => 'लाटवियन् (लेट्टीश)',
     'ln' => 'लिंगाला',

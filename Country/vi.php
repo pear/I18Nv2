@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  vi
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'AR' => 'Ác-hen-ti-na',
     'AM' => 'Ác-mê-ni-a',

@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ja
  */
-$this->_codes = array(
+$this->codes = array(
     'xh' => 'コサ語',
     'co' => 'コルシカ語',
     'kw' => 'コーンウォール語',

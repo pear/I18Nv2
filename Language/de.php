@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  de
  */
-$this->_codes = array(
+$this->codes = array(
     'ab' => 'Abchasisch',
     'aa' => 'Afar',
     'ps' => 'Afghanisch (Paschtu)',

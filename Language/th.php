@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  th
  */
-$this->_codes = array(
+$this->codes = array(
     'ko' => 'เกาหลี',
     'km' => 'เขมร',
     'ky' => 'เคอร์กิซ',

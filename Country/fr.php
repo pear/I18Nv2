@@ -7,7 +7,7 @@
 * @language fr
 */
 
-$this->_codes = array(
+$this->codes = array(
     'AF' => 'Afghanistan',
     'ZA' => 'Afrique du Sud',
     'AX' => 'Åland, Îles d\'',

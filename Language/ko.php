@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ko
  */
-$this->_codes = array(
+$this->codes = array(
     'gl' => '갈리시아어',
     'gn' => '구아라니어',
     'gu' => '구자라트어',

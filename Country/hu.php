@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  hu
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'MP' => 'Északi Mariana-szigetek',
     'EE' => 'Észtország',

@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  bg
  */
-$this->_codes = array(
+$this->codes = array(
     'en' => 'Английски',
     'ar' => 'Арабски',
     'bg' => 'Български',

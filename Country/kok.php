@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  kok
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'IN' => 'भारत',
     'AF' => 'Afghanistan',

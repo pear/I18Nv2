@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ta
  */
-$this->_codes = array(
+$this->codes = array(
     'la' => 'லாதின்',
     'ln' => 'லிங்காலா',
     'lt' => 'லுத்தேனியன்',

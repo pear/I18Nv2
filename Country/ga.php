@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ga
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'YE' => 'Éimin',
     'IE' => 'Éire',

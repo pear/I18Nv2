@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  et
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'GB' => 'Ühendkuningriik',
     'UM' => 'Ühendriikide hajasaared',

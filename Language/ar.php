@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ar
  */
-$this->_codes = array(
+$this->codes = array(
     'dz' => 'الزونخاية',
     'sw' => 'السواحلية',
     'he' => 'العبرية',

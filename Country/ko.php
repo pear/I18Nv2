@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ko
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'GP' => '과달로프',
     'GT' => '과테말라',

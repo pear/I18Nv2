@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  el
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'VC' => 'Άγιος Βικέντιος και Γρεναδίνες',
     'SM' => 'Άγιος Μαρίνος',

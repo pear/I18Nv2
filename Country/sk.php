@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  sk
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'IE' => 'Írsko',
     'CN' => 'Čína',

@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ps
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'SA' => 'سعودی عربستان',
     'SV' => 'سالوېډور',

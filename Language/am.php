@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  am
  */
-$this->_codes = array(
+$this->codes = array(
     'sd' => 'ሲንድሂኛ',
     'sm' => 'ሳሞአኛ',
     'sa' => 'ሳንስክሪትኛ',

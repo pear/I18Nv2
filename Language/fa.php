@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  fa
  */
-$this->_codes = array(
+$this->codes = array(
     'zu' => 'زولویی',
     'sc' => 'ساردینیایی',
     'sm' => 'ساموآیی',

@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  zh
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'UG' => '乌干达',
     'UZ' => '乌兹别克斯坦',

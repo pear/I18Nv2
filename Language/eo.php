@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  eo
  */
-$this->_codes = array(
+$this->codes = array(
     'cs' => 'ĉeĥa',
     'zh' => 'ĉina',
     'za' => 'ĝuanga',

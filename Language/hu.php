@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  hu
  */
-$this->_codes = array(
+$this->codes = array(
     'et' => 'észt',
     'ga' => 'ír',
     'hy' => 'örmény',

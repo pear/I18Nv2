@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  ja
  */
-$this->_codes = array(
+$this->codes = array(
     'AX' => '�land Isle',
     'CC' => 'ココス (キーリング) 諸島',
     'CR' => 'コスタリカ',

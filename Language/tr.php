@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  tr
  */
-$this->_codes = array(
+$this->codes = array(
     'cs' => 'Çekçe',
     'zh' => 'Çince',
     'uz' => 'Özbekçe',

@@ -6,7 +6,7 @@
  * @charset   UTF-8
  * @language  sl
  */
-$this->_codes = array(
+$this->codes = array(
     'cs' => 'Češčina',
     'es' => 'Španščina',
     'sv' => 'Švedščina',
