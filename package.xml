@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.41 $ -->
+<!-- $Revision: 1.42 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -37,8 +37,10 @@ NOTE: Contributions are very welcome!
   <state>alpha</state>
   <date>2004-10-29</date>
   <notes><![CDATA[
-* I18Nv2::autoConv() may now decode request variables
 * Fixed Bug #2541, warnings for unset properties with old PHP versions
+* I18Nv2::splitLocale() now always returns a 2 element array
+* I18Nv2::autoConv() may now decode request variables
+* Fixed locale infromation for cs
 
 + Added I18Nv2_AreaCode class (CommonList of international area codes)
 + Added I18Nv2_Charset class (common and not so common charsets and aliases)
