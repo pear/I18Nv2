@@ -39,10 +39,13 @@
 */
 class I18Nv2_Country
 {
-    /**
+    /**#@+
     * @access private
     */
     var $_codes = array();
+    var $_language = 'en';
+    var $_encoding = 'UTF-8';
+    /**#@-**/
     
     /**
     * Constructor
@@ -51,26 +54,32 @@ class I18Nv2_Country
     * @return   object  I18Nv2_Country
     * @param    string  $language
     */
-    function I18Nv2_Country($language = null)
+    function I18Nv2_Country($language = null, $encoding = null)
     {
-        $this->__construct($language);
+        $this->__construct($language, $encoding);
     }
 
     /**
     * @access   public
     * @ignore
     */
-    function __construct($language = null)
+    function __construct($language = null, $encoding = null)
     {
+        if (isset($encoding)) {
+            $this->_encoding = $encoding;
+        }
         if (isset($language)) {
+            $this->_language = $language;
             @include 'I18Nv2/Country/' . strToLower($language) . '.php';
         } elseif (class_exists('I18Nv2')) {
             $locale = I18Nv2::lastLocale(0, true);
             if (isset($locale)) {
+                $this->_language = $locale['language'];
                 @include 'I18Nv2/Country/' . $locale['language'] . '.php';
             }
         }
         if (!count($this->_codes)) {
+            $this->_language = 'en';
             include 'I18Nv2/Country/en.php';
         }
     }
@@ -96,7 +105,7 @@ class I18Nv2_Country
     */
     function getName($code)
     {
-        return @$this->_codes[strToUpper($code)];
+        return iconv('UTF-8', $this->_encoding, @$this->_codes[strToUpper($code)]);
     }
 
     /**
@@ -107,7 +116,18 @@ class I18Nv2_Country
     */
     function getAllCodes()
     {
-        return $this->_codes;
+        $codes = $this->_codes;
+        array_walk($codes, array(&$this, '_iconv'));
+        return $codes;
+    }
+    
+    /**
+    * @access   private
+    * @return   void
+    */
+    function _iconv(&$code, $key)
+    {
+        $code = iconv('UTF-8', $this->_encoding, $code);
     }
 }
 ?>
