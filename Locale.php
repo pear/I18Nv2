@@ -121,8 +121,8 @@ class I18Nv2_Locale
     */
     function __construct($locale = null, $opts = null)
     {
-        $this->setLocale($locale);
         $this->setOptions($opts);
+        $this->setLocale($locale);
     }
     
     /**
