@@ -197,14 +197,16 @@ class I18Nv2
     /**
     * Automatically transform output between character sets
     *
-    * This method utilizes ob_iconv_handler(), so you should call
-    * it at the beginning of your script (prior to output)
+    * This method utilizes ob_iconv_handler(), so you should call it at the 
+    * beginning of your script (prior to output).  If any output buffering has 
+    * been started before, the contents will be fetched with ob_get_contents() 
+    * and the buffers will be destroyed by ob_end_clean().
     * 
     * <code>
     *   <?php
     *   require_once('I18Nv2.php');
-    *   I18Nv2::autoConv('iso-8859-1', 'utf-8');
-    *   print('...'); // some utf-8 stuff gets converted to iso-8859-1
+    *   I18Nv2::autoConv('CP1252');
+    *   print('...'); // some iso-8859-1 stuff gets converted to Windows-1252
     *   // ...
     *   ?>
     * </code>
@@ -231,9 +233,18 @@ class I18Nv2
         iconv_set_encoding('output_encoding', $ocs);
         iconv_set_encoding('input_encoding', $ocs);
         
+        $buffer = '';
+        if ($level = ob_get_level()) {
+            while ($level--) {
+                $buffer .= ob_get_contents();
+                ob_end_clean();
+            }
+        }
+        
         if (!ob_start('ob_iconv_handler')) {
             return PEAR::raiseError('Couldn\'t start output buffering');
         }
+        echo $buffer;
         
         return true;
     }
@@ -306,7 +317,7 @@ class I18Nv2
     */
     function languageOf($locale)
     {
-        return array_shift(I18Nv2_Util::splitLocale($locale));
+        return array_shift(I18Nv2::splitLocale($locale));
     }
     
     /**
@@ -319,7 +330,7 @@ class I18Nv2
     */
     function countryOf($locale)
     {
-        return array_pop(I18NV2_Util::splitLocale($locale));
+        return array_pop(I18Nv2::splitLocale($locale));
     }
     
     /**
