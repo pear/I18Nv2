@@ -26,8 +26,15 @@ $s->attributes['select']['name'] = 'CountrySelect';
 $s->attributes['select']['onchange'] = 'this.form.submit()';
 
 // set a selected entry
-$s->selected['DE'] = true;
+if (isset($_POST['CountrySelect'])) {
+    printf(
+        'You selected: %s (%s)<br />', 
+        $c->getName($_POST['CountrySelect']), 
+        $_POST['CountrySelect']
+    );
+    $s->selected[$_POST['CountrySelect']] = true;
+}
 
 // print a HTML select box
-echo $s->getAllCodes();
+echo '<form action="?" method="post">'. $s->getAllCodes() .'</form><pre>';
 ?>
