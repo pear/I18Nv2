@@ -69,12 +69,12 @@ class I18Nv2_Negotiator
     var $_defaultLanguage;
 
     /**
-     * Save default charset code.
+     * Save default encoding code.
      *
      * @var     string
      * @access  private
      */
-    var $_defaultCharset;
+    var $_defaultEncoding;
 
     /**
      * HTTP_ACCEPT_CHARSET
@@ -82,7 +82,7 @@ class I18Nv2_Negotiator
      * @var     array
      * @access  private
      */
-    var $_acceptCharset = array();
+    var $_acceptEncoding = array();
     
     /**
      * HTTP_ACCEPT_LANGUAGE
@@ -111,31 +111,31 @@ class I18Nv2_Negotiator
     /**
      * Constructor
      * 
-     * Find language code, country code, charset code, and dialect or variant
+     * Find language code, country code, encoding code, and dialect or variant
      * of Locale setting in HTTP request headers.
      *
      * @access  public
      * @param   string  $defaultLanguage    Default Language
-     * @param   string  $defaultCharset     Default Charset
+     * @param   string  $defaultEncoding    Default Encoding
      * @param   string  $defaultCountry     Default Country
      */
-    function I18Nv2_Negotiator($defaultLanguage = 'en', $defaultCharset = 'iso-8859-1', $defaultCountry = '')
+    function I18Nv2_Negotiator($defaultLanguage = 'en', $defaultEncoding = 'iso-8859-1', $defaultCountry = '')
     {
-        $this->__construct($defaultLanguage, $defaultCharset, $defaultCountry);
+        $this->__construct($defaultLanguage, $defaultEncoding, $defaultCountry);
     }
     
     /**
      * ZE2 Constructor
      * @ignore
      */
-    function __construct($defaultLanguage = 'en', $defaultCharset = 'iso-8859-1', $defaultCountry = '')
+    function __construct($defaultLanguage = 'en', $defaultEncoding = 'iso-8859-1', $defaultCountry = '')
     {
         $this->_defaultCountry  = $defaultCountry;
         $this->_defaultLanguage = $defaultLanguage;
-        $this->_defaultCharset  = $defaultCharset;
+        $this->_defaultEncoding  = $defaultEncoding;
         
         $this->_negotiateLanguage();
-        $this->_negotiateCharset();
+        $this->_negotiateEncoding();
     }
     
     /**
@@ -178,19 +178,19 @@ class I18Nv2_Negotiator
     }
     
     /**
-     * Negotiate Charset
+     * Negotiate Encoding
      *
      * @access  private
      * @return  void
      */
-    function _negotiateCharset()
+    function _negotiateEncoding()
     {
         if (!isset($_SERVER['HTTP_ACCEPT_CHARSET'])) {
             return;
         }
-        foreach (explode(',', $_SERVER['HTTP_ACCEPT_CHARSET']) as $charset) {
-            if (!empty($charset)) {
-                $this->_acceptCharset[] = preg_replace('/;.*/', '', $charset);
+        foreach (explode(',', $_SERVER['HTTP_ACCEPT_CHARSET']) as $encoding) {
+            if (!empty($encoding)) {
+                $this->_acceptEncoding[] = preg_replace('/;.*/', '', $encoding);
             }
         }
     }
@@ -221,22 +221,39 @@ class I18Nv2_Negotiator
      */
     function getVariantInfo($lang)
     {
-        return @$this->_langVariation[$lang];
+        return isset($this->_langVariation[$lang]) ? $this->_langVariation[$lang] : null;
     }
 
     /**
-     * Find Charset match
+     * Find Encoding match
+     * 
+     * @deprecated
+     * @access  public
+     * @return  string
+     * @param   array   $encodings
+     */
+    function getCharsetMatch($encodings = null)
+    {
+        return $this->_getMatch(
+            $encodings, 
+            $this->_acceptEncoding, 
+            $this->_defaultEncoding
+        );
+    }
+
+    /**
+     * Find Encoding match
      * 
      * @access  public
      * @return  string
-     * @param   array   $charsets
+     * @param   array   $encodings
      */
-    function getCharsetMatch($charsets = null)
+    function getEncodingMatch($encodings = null)
     {
         return $this->_getMatch(
-            $charsets, 
-            $this->_acceptCharset, 
-            $this->_defaultCharset
+            $encodings, 
+            $this->_acceptEncoding, 
+            $this->_defaultEncoding
         );
     }
 
@@ -333,7 +350,7 @@ class I18Nv2_Negotiator
             include_once 'I18Nv2/Language.php';
             $this->I18NLang = &new I18Nv2_Language(
                 $this->_defaultLanguage, 
-                $this->_defaultCharset
+                $this->_defaultEncoding
             );
         }
         return $this->I18NLang;
@@ -351,7 +368,7 @@ class I18Nv2_Negotiator
             include_once 'I18Nv2/Country.php';
             $this->I18NCountry = &new I18Nv2_Country(
                 $this->_defaultLanguage,
-                $this->_defaultCharset
+                $this->_defaultEncoding
             );
         }
         return $this->I18NCountry;

@@ -52,12 +52,12 @@ require_once 'I18Nv2.php';
 class I18Nv2_Locale
 {
     /**
-     * Initialized
+     * Initialized Locale
      * 
      * @access  protected
-     * @var     bool
+     * @var     string
      */
-    var $initialized = false;
+    var $initialized = '';
     
     /**
      * Full day names
@@ -180,6 +180,14 @@ class I18Nv2_Locale
     var $customFormats = array();
     
     /**
+     * Locale Data Cache
+     * 
+     * @access  protected
+     * @var     array
+     */
+    var $cache = array();
+    
+    /**
      * Constructor
      *
      * @access  public
@@ -212,7 +220,7 @@ class I18Nv2_Locale
      */
     function setLocale($locale, $force = false)
     {
-        if (!$force && $this->initialized) {
+        if (!$force && $this->initialized == $locale) {
             $last = I18Nv2::lastLocale(0, true);
             if (is_array($last)) {
                 if (    $locale == $last['syslocale']   || 
@@ -236,139 +244,182 @@ class I18Nv2_Locale
      */
     function initialize($locale)
     {
-        $this->initialized = true;
+        $this->initialized = $locale;
         $usedLocale = I18Nv2::setLocale($locale);
 
-        $this->days = array(
-            strftime('%A', 320000),
-            strftime('%A', 406000),
-            strftime('%A', 492800),
-            strftime('%A', 579200),
-            strftime('%A', 665600),
-            strftime('%A', 752000),
-            strftime('%A', 838400),
-        );
-        
-        $this->abbrDays = array(
-            strftime('%a', 320000),
-            strftime('%a', 406000),
-            strftime('%a', 492800),
-            strftime('%a', 579200),
-            strftime('%a', 665600),
-            strftime('%a', 752000),
-            strftime('%a', 838400),
-        );
-
-        $this->months = array(
-            strftime('%B', 978307261),
-            strftime('%B', 980985661),
-            strftime('%B', 983404861),
-            strftime('%B', 986079661),
-            strftime('%B', 988671661),
-            strftime('%B', 991350061),
-            strftime('%B', 993942061),
-            strftime('%B', 996620461),
-            strftime('%B', 999298861),
-            strftime('%B', 1001890861),
-            strftime('%B', 1004572861),
-            strftime('%B', 1007164861),
-        );
-        
-        $this->abbrMonths = array(
-            strftime('%b', 978307261),
-            strftime('%b', 980985661),
-            strftime('%b', 983404861),
-            strftime('%b', 986079661),
-            strftime('%b', 988671661),
-            strftime('%b', 991350061),
-            strftime('%b', 993942061),
-            strftime('%b', 996620461),
-            strftime('%b', 999298861),
-            strftime('%b', 1001890861),
-            strftime('%b', 1004572861),
-            strftime('%b', 1007164861),
-        );
-        
-        $info = I18Nv2::getInfo();
-        
-        /*
-         * The currency symbol is old shit on Win2k, though.
-         * Some get extended/overwritten with other local conventions.
-         */
-        $this->currencyFormats = array(
-            I18Nv2_CURRENCY_LOCAL => array(
-                $info['currency_symbol'],
-                $info['int_frac_digits'],
-                $info['mon_decimal_point'],
-                $info['mon_thousands_sep'],
-                $info['negative_sign'],
-                $info['positive_sign'],
-                $info['n_cs_precedes'],
-                $info['p_cs_precedes'],
-                $info['n_sep_by_space'],
-                $info['p_sep_by_space'],
-                $info['n_sign_posn'],
-                $info['p_sign_posn'],
-            ),
-            I18Nv2_CURRENCY_INTERNATIONAL => array(
-                $info['int_curr_symbol'],
-                $info['int_frac_digits'],
-                $info['mon_decimal_point'],
-                $info['mon_thousands_sep'],
-                $info['negative_sign'],
-                $info['positive_sign'],
-                $info['n_cs_precedes'],
-                $info['p_cs_precedes'],
-                true,
-                true,
-                $info['n_sign_posn'],
-                $info['p_sign_posn'],
-            ),
-        );
-        
-        $this->numberFormats = array(
-            I18Nv2_NUMBER_FLOAT => array(
-                $info['frac_digits'],
-                $info['decimal_point'],
-                $info['thousands_sep']
-            ),
-            I18Nv2_NUMBER_INTEGER => array(
-                '0',
-                $info['decimal_point'],
-                $info['thousands_sep']
-            ),
-
-        );
-        
-        $this->loadExtension();
-
-        if (!count($this->dateTimeFormats)) {
-            $this->dateTimeFormats = array(
-                I18Nv2_DATETIME_SHORT   => 
-                    $this->dateFormats[I18Nv2_DATETIME_SHORT]
-                    . ', ' .
-                    $this->timeFormats[I18Nv2_DATETIME_SHORT],
-                I18Nv2_DATETIME_MEDIUM   => 
-                    $this->dateFormats[I18Nv2_DATETIME_MEDIUM]
-                    . ', ' .
-                    $this->timeFormats[I18Nv2_DATETIME_MEDIUM],
-                I18Nv2_DATETIME_DEFAULT   => 
-                    $this->dateFormats[I18Nv2_DATETIME_DEFAULT]
-                    . ', ' .
-                    $this->timeFormats[I18Nv2_DATETIME_DEFAULT],
-                I18Nv2_DATETIME_LONG   => 
-                    $this->dateFormats[I18Nv2_DATETIME_LONG]
-                    . ', ' .
-                    $this->timeFormats[I18Nv2_DATETIME_LONG],
-                I18Nv2_DATETIME_FULL   => 
-                    $this->dateFormats[I18Nv2_DATETIME_FULL]
-                    . ', ' .
-                    $this->timeFormats[I18Nv2_DATETIME_FULL],
+        if (!$this->loadCache($usedLocale)) {
+            $this->days = array(
+                strftime('%A', 320000),
+                strftime('%A', 406000),
+                strftime('%A', 492800),
+                strftime('%A', 579200),
+                strftime('%A', 665600),
+                strftime('%A', 752000),
+                strftime('%A', 838400),
             );
+            
+            $this->abbrDays = array(
+                strftime('%a', 320000),
+                strftime('%a', 406000),
+                strftime('%a', 492800),
+                strftime('%a', 579200),
+                strftime('%a', 665600),
+                strftime('%a', 752000),
+                strftime('%a', 838400),
+            );
+    
+            $this->months = array(
+                strftime('%B', 978307261),
+                strftime('%B', 980985661),
+                strftime('%B', 983404861),
+                strftime('%B', 986079661),
+                strftime('%B', 988671661),
+                strftime('%B', 991350061),
+                strftime('%B', 993942061),
+                strftime('%B', 996620461),
+                strftime('%B', 999298861),
+                strftime('%B', 1001890861),
+                strftime('%B', 1004572861),
+                strftime('%B', 1007164861),
+            );
+            
+            $this->abbrMonths = array(
+                strftime('%b', 978307261),
+                strftime('%b', 980985661),
+                strftime('%b', 983404861),
+                strftime('%b', 986079661),
+                strftime('%b', 988671661),
+                strftime('%b', 991350061),
+                strftime('%b', 993942061),
+                strftime('%b', 996620461),
+                strftime('%b', 999298861),
+                strftime('%b', 1001890861),
+                strftime('%b', 1004572861),
+                strftime('%b', 1007164861),
+            );
+            
+            $info = I18Nv2::getInfo();
+            
+            /*
+             * The currency symbol is old shit on Win2k, though.
+             * Some get extended/overwritten with other local conventions.
+             */
+            $this->currencyFormats = array(
+                I18Nv2_CURRENCY_LOCAL => array(
+                    $info['currency_symbol'],
+                    $info['int_frac_digits'],
+                    $info['mon_decimal_point'],
+                    $info['mon_thousands_sep'],
+                    $info['negative_sign'],
+                    $info['positive_sign'],
+                    $info['n_cs_precedes'],
+                    $info['p_cs_precedes'],
+                    $info['n_sep_by_space'],
+                    $info['p_sep_by_space'],
+                    $info['n_sign_posn'],
+                    $info['p_sign_posn'],
+                ),
+                I18Nv2_CURRENCY_INTERNATIONAL => array(
+                    $info['int_curr_symbol'],
+                    $info['int_frac_digits'],
+                    $info['mon_decimal_point'],
+                    $info['mon_thousands_sep'],
+                    $info['negative_sign'],
+                    $info['positive_sign'],
+                    $info['n_cs_precedes'],
+                    $info['p_cs_precedes'],
+                    true,
+                    true,
+                    $info['n_sign_posn'],
+                    $info['p_sign_posn'],
+                ),
+            );
+            
+            $this->numberFormats = array(
+                I18Nv2_NUMBER_FLOAT => array(
+                    $info['frac_digits'],
+                    $info['decimal_point'],
+                    $info['thousands_sep']
+                ),
+                I18Nv2_NUMBER_INTEGER => array(
+                    '0',
+                    $info['decimal_point'],
+                    $info['thousands_sep']
+                ),
+    
+            );
+            
+            $this->loadExtension();
+    
+            if (!count($this->dateTimeFormats)) {
+                $this->dateTimeFormats = array(
+                    I18Nv2_DATETIME_SHORT   => 
+                        $this->dateFormats[I18Nv2_DATETIME_SHORT]
+                        . ', ' .
+                        $this->timeFormats[I18Nv2_DATETIME_SHORT],
+                    I18Nv2_DATETIME_MEDIUM   => 
+                        $this->dateFormats[I18Nv2_DATETIME_MEDIUM]
+                        . ', ' .
+                        $this->timeFormats[I18Nv2_DATETIME_MEDIUM],
+                    I18Nv2_DATETIME_DEFAULT   => 
+                        $this->dateFormats[I18Nv2_DATETIME_DEFAULT]
+                        . ', ' .
+                        $this->timeFormats[I18Nv2_DATETIME_DEFAULT],
+                    I18Nv2_DATETIME_LONG   => 
+                        $this->dateFormats[I18Nv2_DATETIME_LONG]
+                        . ', ' .
+                        $this->timeFormats[I18Nv2_DATETIME_LONG],
+                    I18Nv2_DATETIME_FULL   => 
+                        $this->dateFormats[I18Nv2_DATETIME_FULL]
+                        . ', ' .
+                        $this->timeFormats[I18Nv2_DATETIME_FULL],
+                );
+            }
+            $this->updateCache($usedLocale);
         }
-
+        
         $this->setDefaults();
         return $usedLocale;
+    }
+    
+    /**
+     * Update Cache
+     * 
+     * @access  protected
+     * @return  void
+     * @param   string  $locale
+     */
+    function updateCache($locale)
+    {
+        if (!isset($this->cache[$locale])) {
+            $cache = get_object_vars($this);
+            $cvars = preg_grep(
+                '/^(init|current|custom|cache)/', 
+                array_keys($cache), 
+                PREG_GREP_INVERT
+            );
+            foreach ($cvars as $var) {
+                $this->cache[$locale][$var] = $cache[$var];
+            }
+        }
+    }
+    
+    /**
+     * Load Cache
+     * 
+     * @access  protected
+     * @return  bool
+     * @param   string  $locale
+     */
+    function loadCache($locale)
+    {
+        if (!isset($this->cache[$locale])) {
+            return false;
+        }
+        foreach ($this->cache[$locale] as $var => $value) {
+            $this->$var = $value;
+        }
+        return true;
     }
     
     /**

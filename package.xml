@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.49 $ -->
+<!-- $Revision: 1.50 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -63,12 +63,13 @@ FINAL NOTE:
  </maintainers>
 
  <release>
-  <version>0.9.3</version>
+  <version>0.10.0</version>
   <license>PHP</license>
   <state>alpha</state>
   <date>2004-11-29</date>
   <notes><![CDATA[
-* transliterate unkown unicode characters in I18Nv2_CommonList
++ cache already loaded locales in I18Nv2_Locale
+- renamed I18Nv2_Charset to I18Nv2_Encoding
 ]]>
   </notes>
 
@@ -82,7 +83,7 @@ FINAL NOTE:
     <file name="Country.php" />
     <file name="Language.php" />
     <file name="AreaCode.php" />
-    <file name="Charset.php" />
+    <file name="Encoding.php" />
     <file name="Negotiator.php" />
     
     <file name="DecoratedList.php" />
@@ -473,6 +474,16 @@ New Features:
 
 * Fixed Bug #2816 (Inconsistent capitalization of language names)
 * Fixed Bug #2847 (Missing third paramter in I18Nv2::createNegotiator)
+]]>
+   </notes>
+  </release>
+  <release>
+   <version>0.9.3</version>
+   <license>PHP</license>
+   <state>alpha</state>
+   <date>2004-11-29</date>
+   <notes><![CDATA[
+* transliterate unkown unicode characters in I18Nv2_CommonList
 ]]>
    </notes>
   </release>

@@ -186,17 +186,17 @@ class I18Nv2
      * @access  public
      * @return  object  I18Nv2_Negotiator
      * @param   string  $defLang        default language
-     * @param   string  $defCharset     default character set
+     * @param   string  $defEncoding     default encoding
      * @param   string  $defCtry        default country
      */
-    function &createNegotiator($defLang = 'en', $defCharset = 'iso-8859-1', $defCtry = '')
+    function &createNegotiator($defLang = 'en', $defEncoding = 'iso-8859-1', $defCtry = '')
     {
         require_once 'I18Nv2/Negotiator.php';
-        return new I18Nv2_Negotiator($defLang, $defCharset, $defCtry);
+        return new I18Nv2_Negotiator($defLang, $defEncoding, $defCtry);
     }
     
     /**
-     * Automatically transform output between character sets
+     * Automatically transform output between encodings
      *
      * This method utilizes ob_iconv_handler(), so you should call it at the 
      * beginning of your script (prior to output).  If any output buffering has 
@@ -214,14 +214,14 @@ class I18Nv2
      * @access  public
      * @return  mixed   Returns &true; on success or 
      *                  <classname>PEAR_Error</classname> on failure.
-     * @param   string  $ocs            desired output character set
-     * @param   string  $ics            internal character set
+     * @param   string  $ocs            desired output encoding
+     * @param   string  $ics            internal encoding
      * @param   bool    $decodeRequest  whether to decode request variables
      *                                  ($_GET and $_POST) from $ocs to $ics
      */
-    function autoConv($ocs = 'UTF-8', $ics = 'ISO-8859-1', $decodeRequest = true)
+    function autoConv($oe = 'UTF-8', $ie = 'ISO-8859-1', $decodeRequest = true)
     {
-        if (!strcasecmp($ocs, $ics)) {
+        if (!strcasecmp($oe, $ie)) {
             return true;
         }
         
@@ -232,9 +232,9 @@ class I18Nv2
             }
         }
         
-        iconv_set_encoding('internal_encoding', $ics);
-        iconv_set_encoding('output_encoding', $ocs);
-        iconv_set_encoding('input_encoding', $ocs);
+        iconv_set_encoding('internal_encoding', $ie);
+        iconv_set_encoding('output_encoding', $oe);
+        iconv_set_encoding('input_encoding', $oe);
         
         $buffer = '';
         if ($level = ob_get_level()) {
@@ -251,8 +251,8 @@ class I18Nv2
         echo $buffer;
         
         if ($decodeRequest) {
-            I18Nv2::recursiveIconv($_GET, $ocs, $ics);
-            I18Nv2::recursiveIconv($_POST, $ocs, $ics);
+            I18Nv2::recursiveIconv($_GET, $oe, $ie);
+            I18Nv2::recursiveIconv($_POST, $oe, $ie);
         }
         
         return true;
@@ -265,8 +265,8 @@ class I18Nv2
      * @access  public
      * @return  void
      * @param   array   $value
-     * @param   string  $ocs
-     * @param   string  $ics
+     * @param   string  $from
+     * @param   string  $to
      */
     function recursiveIconv(&$value, $from, $to)
     {
