@@ -41,7 +41,6 @@ define('I18Nv2_DATETIME_FULL',            35);
 require_once 'PEAR.php';
 require_once 'I18Nv2.php';
 
-
 /** 
 * I18Nv2_Locale
 *
@@ -181,9 +180,10 @@ class I18Nv2_Locale
     * Initialize the locale
     *
     * @access   protected
-    * @return   void
+    * @return   mixed
+    * @param    mixed   $result The result that should be passed through.
     */
-    function init()
+    function init($result = true)
     {
         if (!count($this->formats['datetime'])) {
             $this->formats['datetime'] = array(
@@ -211,6 +211,7 @@ class I18Nv2_Locale
         }
 
         $this->setDefaults();
+        return $result;
     }
     
     /**
@@ -466,6 +467,30 @@ class I18Nv2_Locale
     function monthName($month, $short = false)
     {
         return $this->names['months'][$short ? 'short' : 'long'][$month];
+    }
+    
+    /**
+    * Country name
+    *
+    * @access   public
+    * @return   string
+    * @param    string  ISO country code
+    */
+    function countryName($country)
+    {
+        return $this->names['countries'][$country];
+    }
+    
+    /**
+    * Language name
+    *
+    * @access   public
+    * @return   string
+    * @param    string  ISO langage code
+    */
+    function languageName($language)
+    {
+        return $this->names['languages'][$language];
     }
 }
 ?>
