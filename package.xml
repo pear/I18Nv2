@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.44 $ -->
+<!-- $Revision: 1.45 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -370,6 +370,6 @@ New Features:
 + Added I18Nv2_Charset class (common and not so common charsets and aliases)
 ]]>
    </notes>
-  </release
+  </release>
  </changelog>
 </package>
