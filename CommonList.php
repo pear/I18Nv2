@@ -180,7 +180,7 @@ class I18Nv2_CommonList
             return '';
         }
         if ('UTF-8' !== $this->encoding) {
-            return iconv('UTF-8', $this->encoding, $this->codes[$code]);
+            return iconv('UTF-8', $this->encoding .'//TRANSLIT', $this->codes[$code]);
         }
         return $this->codes[$code];
     }
