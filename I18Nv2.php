@@ -72,8 +72,6 @@ class I18Nv2
 
         if (!isset($triedFallbacks[$locale])) {
             $triedFallbacks[$locale] = false;
-        } else {
-            $setlocale = $triedFallbacks[$locale];
         }
         
         $syslocale = setLocale($cat, $setlocale);
