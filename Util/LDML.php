@@ -138,20 +138,22 @@ class I18Nv2_Util_LDML extends XML_Parser
     */
     function getFullLocale($locale)
     {
-        if (is_a($en = $this->getLocale('en'), 'PEAR_Error')) {
-            return $en;
+        if (is_a($root = $this->getLocale('root'), 'PEAR_Error') ||
+            is_a($en = $this->getLocale('en'), 'PEAR_Error')) {
+            //
+            return $root;
         }
 
         @list($lang, $country) = I18Nv2_Util::splitLocale($locale);
         if ($locale === 'en' || !is_array($langdata = $this->getLocale($lang))) {
-            return $en;
+            return I18Nv2_Util::merge($root, $en);
         }
 
         if ($lang === $locale || !is_array($localedata = $this->getLocale($locale))) {
-            return I18Nv2_Util::merge($en, $langdata);
+            return I18Nv2_Util::mergeMany($root, $en, $langdata);
         } else {
             
-            $data = $this->mergeMany($en, $langdata, $localedata);
+            $data = I18Nv2_Util::mergeMany($root, $en, $langdata, $localedata);
             
             // check for the currency symbol and fracdigits in supplemental data
             if (isset($this->_supp[$this->tgtenc]['currencies'][$country])) {
@@ -219,22 +221,65 @@ class I18Nv2_Util_LDML extends XML_Parser
                 $this->_fmt = 'date';
                 $this->_pos = &$this->_data['formats']['date'];
             break;
+
             case 'TIMEFORMATS':
                 $this->_fmt = 'time';
                 $this->_pos = &$this->_data['formats']['time'];
             break;
+            
+            case 'DECIMALFORMATS':
+                $this->_fmt = 'number';
+            break;
+            
+            case 'CURRENCYFORMATS':
+                $this->_fmt = 'currency';
+            break;
+
             case 'DEFAULT':
                 $this->_pos['default'] = $a['TYPE'];
             break;
+
             case 'DATEFORMATLENGTH':
             case 'TIMEFORMATLENGTH':
                 $this->_pos = &$this->_data['formats'][$this->_fmt][$a['TYPE']];
             break;
+
             case 'PATTERN':
                 if ($this->_fmt) {
                     $this->_get = true;
                 }
             break;
+            
+            case 'DECIMAL':
+                $this->_get = true;
+                $this->_pos = &$this->_data['formats']['number']['decimal_point'];
+            break;
+            
+            case 'GROUP':
+                $this->_get = true;
+                $this->_pos = &$this->_data['formats']['number']['thousands_sep'];
+            break;
+
+            case 'LIST':
+                $this->_get = true;
+                $this->_pos = &$this->_data['formats']['number']['pattern_sep'];
+            break;
+
+            case 'PATTERNDIGIT':
+                $this->_get = true;
+                $this->_pos = &$this->_data['formats']['number']['pattern_digit'];
+            break;
+
+            case 'PLUSSIGN':
+                $this->_get = true;
+                $this->_pos = &$this->_data['formats']['number']['positive_sign'];
+            break;
+
+            case 'MINUSSIGN':
+                $this->_get = true;
+                $this->_pos = &$this->_data['formats']['number']['negative_sign'];
+            break;
+
         }
     }
     
@@ -247,7 +292,7 @@ class I18Nv2_Util_LDML extends XML_Parser
     function endHandler($p, $e)
     {
         $this->_get = false;
-        if (preg_match('/(DATE|TIME)FORMATS$/', strToUpper($e))) {
+        if (preg_match('/FORMATS$/i', $e)) {
             $this->_fmt = false;
         }
     }
@@ -260,7 +305,7 @@ class I18Nv2_Util_LDML extends XML_Parser
     */
     function cdataHandler($p, $cdata)
     {
-        if($this->_get) {
+        if ($this->_get) {
             $this->_pos .= $cdata;
         }
     }
