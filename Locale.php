@@ -750,8 +750,9 @@ class I18Nv2_Locale
         $format = isset($overrideFormat) ? 
             $this->timeFormats[$overrideFormat] : $this->currentTimeFormat;
         $this->paranoid and setLocale(LC_ALL, $this->usedLocale);
-        $date = strftime($format, isset($timestamp) ? $timestamp : time());
+        $time = strftime($format, isset($timestamp) ? $timestamp : time());
         $this->paranoid and setLocale(LC_ALL, 'C');
+        return $time;
     }
 
     /**
@@ -800,6 +801,7 @@ class I18Nv2_Locale
         $this->paranoid and setLocale(LC_ALL, $this->usedLocale);
         $date = strftime('%x', isset($timestamp) ? $timestamp : time());
         $this->paranoid and setLocale(LC_ALL, 'C');
+        return $date;
     }
     
     /**
