@@ -220,5 +220,18 @@ class I18Nv2_CommonList
         return $code;
     }
     
+    /**
+    * Decorate this list
+    *
+    * @access   public
+    * @return   object  I18NV2_DecoratedList
+    * @param    string  $type
+    */
+    function &toDecoratedList($type)
+    {
+        require_once 'I18Nv2/DecoratedList/'. $type .'.php';
+        $decoratedList = 'I18Nv2_DecoratedList_' . $type;
+        return new $decoratedList($this);
+    }
 }
 ?>
