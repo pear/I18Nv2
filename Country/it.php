@@ -3,14 +3,14 @@
 * $Id$
 *
 * @author   Lorenzo Alberton <quipo@php.net>
-* @charset  ISO-8859-1
+* @charset  UTF-8
 * @language it
 */
 
 $this->_codes = array(
     'AF' => 'Afghanistan',
     'AL' => 'Albania',
-    'AX' => 'Åland, Isola',
+    'AX' => 'Ã…land, Isola',
     'DZ' => 'Algeria',
     'AD' => 'Andorra',
     'AO' => 'Angola',
@@ -198,7 +198,7 @@ $this->_codes = array(
     'SM' => 'San Marino',
     'SH' => 'Sant\'Elena',
     'LC' => 'Santa Lucia',
-    'ST' => 'Sao Tomé e Principe',
+    'ST' => 'Sao TomÃ© e Principe',
     'SN' => 'Senegal',
     'CS' => 'Serbia e Montenegro',
     'SC' => 'Seychelles',
@@ -239,7 +239,7 @@ $this->_codes = array(
     'UY' => 'Uruguay',
     'UZ' => 'Uzbekistan',
     'VU' => 'Vanuatu',
-    'VA' => 'Vaticano, Città del (Santa Sede)',
+    'VA' => 'Vaticano, CittÃ  del (Santa Sede)',
     'VE' => 'Venezuela',
     'VN' => 'Vietnam',
     'VG' => 'Vergini, Isole (britanniche)',

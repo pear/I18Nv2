@@ -3,13 +3,13 @@
 * $Id$
 * 
 * @author   Michael Wallner <mike@php.net>
-* @charset  ISO-8859-1
+* @charset  UTF-8
 * @language en
 */
 
 $this->_codes = array(
     'AF' => 'Afghanistan',
-    'AX' => 'Åland Isle',
+    'AX' => 'Ã…land Isle',
     'AL' => 'Albania',
     'DZ' => 'Algeria',
     'AS' => 'American Samoa',
