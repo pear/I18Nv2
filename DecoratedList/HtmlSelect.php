@@ -25,7 +25,7 @@ require_once 'I18Nv2/DecoratedList.php';
 * 
 *   $country = &new I18Nv2_Country('de', 'iso-8859-1');
 *   $select  = &new I18Nv2_DecoratedList_HtmlSelect($country);
-*   $select->attrubutes['select']['name'] = 'country';
+*   $select->attributes['select']['name'] = 'country';
 *   $select->selected['DE'] = true;
 *   echo $select->getAllCodes();
 * </code>
