@@ -21,7 +21,7 @@
 * @category     Internationalization
 */
 
-require_once 'I18Nv2/Util.php';
+require_once '../Util.php';
 
 /**
 * I18Nv2_Util_ICU
@@ -37,6 +37,14 @@ require_once 'I18Nv2/Util.php';
 */
 class I18Nv2_Util_ICU
 {
+    /**
+    * Path to ICU files
+    * 
+    * @var      string
+    * @access   public
+    */
+    var $datapath = '@DATA_DIR@/I18Nv2/ICU';
+    
     /**
     * Reference to the current node in the tree
     * 
@@ -81,9 +89,8 @@ class I18Nv2_Util_ICU
     */
     function __construct($options = array())
     {
-        $this->tree = &new I18Nv2_Util_ICU_RootNode;
-        $this->node = &$this->tree;
         $this->setOptions($options);
+        $this->init();
     }
     
     /**
@@ -95,9 +102,21 @@ class I18Nv2_Util_ICU
     */
     function setOptions($options)
     {
-        foreach ((array) $options as $property => $value) {
-            $this->$property = $value;
+        if (isset($options['datapath'])) {
+            $this->datapath = $options['datapath'];
         }
+    }
+    
+    /**
+    * Init
+    *
+    * @access   public
+    * @return   void
+    */
+    function init()
+    {
+        $this->tree = &new I18Nv2_Util_ICU_RootNode;
+        $this->node = &$this->tree;
     }
     
     /**
@@ -140,6 +159,7 @@ class I18Nv2_Util_ICU
         if (!is_file($file)) {
             return false;
         }
+        $this->init();
         return $this->parse(file_get_contents($file));
     }
     
@@ -167,6 +187,48 @@ class I18Nv2_Util_ICU
         $string = preg_replace('/\/\/.*$/m', '', $string);
         return strlen($string);
     }
+    
+    /**
+    * Get locale data
+    *
+    * @access   public
+    * @return   mixed
+    * @param    sring   $locale
+    */
+    function getLocale($locale)
+    {
+        if (!is_file($file = $this->datapath . '/' . $locale . '.txt')) {
+            include_once 'PEAR.php';
+            return PEAR::raiseError("File for locale '$locale' doesn't exist.");
+        }
+        $this->parseFile($file);
+        return array_shift($this->getTree());
+    }
+    
+    /**
+    * Get full locale data
+    *
+    * @access   public
+    * @return   mixed
+    */
+    function getFullLocale($locale)
+    {
+        if (!is_array($en = $this->getLocale('en'))) {
+            return $en;
+        }
+        
+        @list($lang, $country) = I18Nv2_Util::splitLocale($locale);
+        if ('en' === $locale || !is_array($langdata = $this->getLocale($lang))) {
+            return $en;
+        }
+        
+        if ($lang === $locale || !is_array($localedata = $this->getLocale($locale))) {
+            return I18Nv2_Util::merge($en, $langdata);
+        }
+        
+        return I18Nv2_Util::mergeMany($en, $langdata, $localedata);
+    }
+    
 }
 
 /**
@@ -214,11 +276,12 @@ class I18Nv2_Util_ICU_RootNode
     */
     function prepareData($data)
     {
+        static $search  = array('/^[\s",]*(.+?)[\s",]*$/', '/(\\\\u([[:alnum:]]{4}))/e');
+        static $replace = array('\\1', 'I18Nv2_Util::unichr(\'\\2\')');
+        
         $result = array();
         foreach (preg_split('/",\s*"/', $data, -1, PREG_SPLIT_NO_EMPTY) as $d) {
-            $d = preg_replace('/^[\s",]*(.+?)[\s",]*$/', '\\1', $d);
-            $result[] = preg_replace('/(\\\\u([[:alnum:]]{4}))/e',
-                'I18Nv2_Util::unichr(\'\\2\')', $d);
+            $result[] = preg_replace($search, $replace, $d);
         }
         
         if (!$count = count($result)) {
