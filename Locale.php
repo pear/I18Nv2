@@ -52,12 +52,12 @@ require_once 'I18Nv2.php';
 class I18Nv2_Locale
 {
     /**
-     * Locale
+     * Initialized
      * 
      * @access  protected
-     * @var     string
+     * @var     bool
      */
-    var $locale = 'en_US';
+    var $initialized = false;
     
     /**
      * Full day names
@@ -196,6 +196,7 @@ class I18Nv2_Locale
      */
     function __construct($locale = null)
     {
+        $locale or $locale = I18Nv2::lastLocale();
         $this->setLocale($locale);
     }
     
@@ -205,20 +206,26 @@ class I18Nv2_Locale
      * This automatically calls I18Nv2_Locale::initialize()
      *
      * @access  public
-     * @return  mixed
+     * @return  string  used system locale
      * @param   string  $locale
+     * @param   bool    $force
      */
-    function setLocale($locale)
+    function setLocale($locale, $force = false)
     {
-        if (isset($locale)) {
-            if (!preg_match('/^[a-z]{2}(_[A-Z]{2})?$/', $locale)) {
-                return PEAR::raiseError('Invalid locale supplied: ' . $locale);
+        if (!$force && $this->initialized) {
+            $last = I18Nv2::lastLocale(0, true);
+            if (is_array($last)) {
+                if (    $locale == $last['syslocale']   || 
+                        $locale == $last['locale']      ||
+                        $locale == $last['language']) {
+                    return $last['syslocale'];
+                }
+            } elseif ($last == $locale) {
+                return $last;
             }
-            $this->locale = $locale;
         }
         
-        $this->initialize();
-        return true;
+        return $this->initialize($locale);
     }
     
     /**
@@ -227,9 +234,10 @@ class I18Nv2_Locale
      * @access  public
      * @return  void
      */
-    function initialize()
+    function initialize($locale)
     {
-        I18Nv2::setLocale($this->locale);
+        $this->initialized = true;
+        $usedLocale = I18Nv2::setLocale($locale);
 
         $this->days = array(
             strftime('%A', 320000),
@@ -360,6 +368,7 @@ class I18Nv2_Locale
         }
 
         $this->setDefaults();
+        return $usedLocale;
     }
     
     /**
