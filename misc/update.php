@@ -304,7 +304,8 @@ function sx_load($array, $casefunc)
             verbose('.');
             $ar[$casefunc($p['type'])] = 
                 mb_ereg_replace('\'', '\\\'', 
-                mb_convert_case($p, MB_CASE_TITLE, 'UTF-8'));
+                mb_strtoupper(mb_substr($p, 0, 1, 'UTF-8')) .
+                mb_substr($p, 1, mb_strlen($p), 'UTF-8'));
         }
     }
     verbose("Loaded ". count($ar) ." codes");
