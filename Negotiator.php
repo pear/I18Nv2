@@ -306,7 +306,7 @@ class I18Nv2_Negotiator
         if (!$needle) {
             return array_shift($haystack);
         }
-        if ($result = array_shift(array_intersect($haystack, $needle))) {
+        if ($result = array_shift($a = array_intersect($haystack, $needle))) {
             return $result;
         }
         return $default;

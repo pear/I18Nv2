@@ -177,7 +177,8 @@ class I18Nv2
     function &createLocale($locale = null, $paranoid = false)
     {
         require_once 'I18Nv2/Locale.php';
-        return new I18Nv2_Locale($locale, $paranoid);
+        $obj = &new I18Nv2_Locale($locale, $paranoid);
+        return $obj;
     }
     
     /**
@@ -193,7 +194,8 @@ class I18Nv2
     function &createNegotiator($defLang = 'en', $defEnc = 'iso-8859-1', $defCtry = '')
     {
         require_once 'I18Nv2/Negotiator.php';
-        return new I18Nv2_Negotiator($defLang, $defEnc, $defCtry);
+        $obj = &new I18Nv2_Negotiator($defLang, $defEnc, $defCtry);
+        return $obj;
     }
     
     /**
@@ -355,7 +357,7 @@ class I18Nv2
      */
     function languageOf($locale)
     {
-        return array_shift(I18Nv2::splitLocale($locale));
+        return array_shift($a = I18Nv2::splitLocale($locale));
     }
     
     /**
@@ -368,7 +370,7 @@ class I18Nv2
      */
     function countryOf($locale)
     {
-        return array_pop(I18Nv2::splitLocale($locale));
+        return array_pop($a = I18Nv2::splitLocale($locale));
     }
     
     /**
