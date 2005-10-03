@@ -138,13 +138,13 @@ if ($opt->isDefined('updatecvs')) {
     updatecvs();
 }
 if ($opt->isDefined('languages')) {
-    languages(realpath($opt->getValue('checkoutdir') . 'cldr/common/main'));
+    languages(realpath($opt->getValue('checkoutdir')));
 }
 if ($opt->isDefined('countries')) {
-    countries(realpath($opt->getValue('checkoutdir') . 'cldr/common/main'));
+    countries(realpath($opt->getValue('checkoutdir')));
 }
 if ($opt->isDefined('currencies')) {
-    currencies(realpath($opt->getValue('checkoutdir') . 'cldr/common/main'));
+    currencies(realpath($opt->getValue('checkoutdir')));
 }
 
 # --- functions
