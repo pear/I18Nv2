@@ -296,6 +296,7 @@ function updatecvs()
 
 function cleanup()
 {
+    global $opt;
     // cleanup
     require_once 'System.php';
     $cvs = $opt->getValue('cvsdir');
