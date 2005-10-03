@@ -48,15 +48,6 @@ class I18Nv2_DecoratedList
      */
     function I18Nv2_DecoratedList(&$list)
     {
-        I18Nv2_DecoratedList::__construct($list);
-    }
-    
-    /**
-     * ZE2 Constructor
-     * @ignore
-     */
-    function __construct(&$list)
-    {
         if (is_a($list, 'I18Nv2_CommonList') ||
             is_a($list, 'I18Nv2_DecoratedList')) {
             $this->list = &$list;

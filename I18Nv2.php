@@ -357,7 +357,7 @@ class I18Nv2
      */
     function languageOf($locale)
     {
-        return array_shift($a = I18Nv2::splitLocale($locale));
+        return current($a = I18Nv2::splitLocale($locale));
     }
     
     /**
@@ -370,7 +370,7 @@ class I18Nv2
      */
     function countryOf($locale)
     {
-        return array_pop($a = I18Nv2::splitLocale($locale));
+        return end($a = I18Nv2::splitLocale($locale));
     }
     
     /**

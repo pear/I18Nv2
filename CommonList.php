@@ -66,15 +66,6 @@ class I18Nv2_CommonList
      */
     function I18Nv2_CommonList($language = null, $encoding = null)
     {
-        I18Nv2_CommonList::__construct($language, $encoding);
-    }
-
-    /**
-     * Constructor (ZE2)
-     * @ignore
-     */
-    function __construct($language = null, $encoding = null)
-    {
         if (!$this->setLanguage($language)) {
             if (class_exists('I18Nv2')) {
                 $l = I18Nv2::lastLocale(0, true);
