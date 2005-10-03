@@ -95,7 +95,7 @@ $cnf = array(
         'short' => 'cm',
         'max'   => 1,
         'min'   => 1,
-        'default'=>'locale/common/main',
+        'default'=>'cldr/common/main',
         'desc'  => 'CVS module',
     ),
     'checkoutdir'=>array(
