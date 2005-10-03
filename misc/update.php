@@ -215,16 +215,15 @@ function updatecvs()
 
     // Create needed dirs
     require_once 'System.php';
-    $system =& new System();
 
     $cvs = $opt->getValue('cvsdir');
-    $result = $system->mkDir($cvs);
+    $result = System::mkDir($cvs);
     if (!$result) {
         verbose("Creating dir $cvs failed");
     }
 
     $locales = $opt->getValue('checkoutdir');
-    $result = $system->mkDir($locales);
+    $result = System::mkDir($locales);
     if (!$result) {
         verbose("Creating dir $locales failed");
     }
@@ -298,20 +297,21 @@ function updatecvs()
 function cleanup()
 {
     // cleanup
+    require_once 'System.php';
     $cvs = $opt->getValue('cvsdir');
-    $result = $system->rm("-rf $cvs");
+    $result = System::rm("-rf $cvs");
     if (!$result) {
         verbose("Could not remove $cvs");
     }
 
     $locales = $opt->getValue('checkoutdir');
-    $result = $system->rm("-rf $locales");
+    $result = System::rm("-rf $locales");
     if (!$result) {
         verbose("Could not remove $locales");
     }
 
     $file = $opt->getValue('snapshotfile');
-    $result = @unlink($file);
+    $result = System::rm($file);
     if (!$result) {
         verbose("Could not remove $file");
     }
