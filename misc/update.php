@@ -336,6 +336,7 @@ function sx_load_crrcys($file)
 
 function sx_load($array, $casefunc)
 {
+    mb_regex_encoding('UTF-8');
     $ar = array();
     if (count($array))
     foreach ($array as $p) {
@@ -343,8 +344,8 @@ function sx_load($array, $casefunc)
             verbose('.');
             $ar[$casefunc($p['type'])] =
                 mb_ereg_replace('\'', '\\\'',
-                mb_strtoupper(mb_substr($p, 0, 1, 'UTF-8')) .
-                mb_substr($p, 1, mb_strlen($p), 'UTF-8'));
+                mb_strtoupper(mb_substr($p, 0, 1, 'UTF-8'), 'UTF-8') .
+                mb_substr($p, 1, mb_strlen($p, 'UTF-8'), 'UTF-8'));
         }
     }
     verbose("Loaded ". count($ar) ." codes");
