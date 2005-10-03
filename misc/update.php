@@ -17,7 +17,7 @@ ini_set('track_errors', true);
  *  o PHP5
  *  o PEAR
  *  o Console_Getargs
- *  o pecl/cvsclient (only for --updatecvs)
+ *  o Archive_Tar
  *  o ext/mbstring
  *  o ext/simplexml
  */
@@ -58,7 +58,12 @@ $cnf = array(
         'max'   => 0,
         'desc'  => 'verbose output',
     ),
-    'cvsserver' => array(
+    'cleanup' => array(
+        'short' => 'cu',
+        'max'   => 0,
+        'desc'  => 'cleanups after the update',
+    ),
+    /*'cvsserver' => array(
         'short' => 'cs',
         'max'   => 1,
         'min'   => 1,
@@ -85,7 +90,7 @@ $cnf = array(
         'min'   => 1,
         'default'=>'anoncvs',
         'desc'  => 'CVS pserver password',
-    ),
+    ),*/
     'cvsmodule' => array(
         'short' => 'cm',
         'max'   => 1,
@@ -99,6 +104,27 @@ $cnf = array(
         'min'   => 1,
         'default'=>'locales',
         'desc'  => 'checkout directory to use',
+    ),
+    'cvsdir' => array(
+        'short' => 'dd',
+        'max'   => 1,
+        'min'   => 1,
+        'default'=>'cvs',
+        'desc'  => 'cvs directory to use',
+    ),
+    'snapshothost' => array(
+        'short' => 'ssh',
+        'max'   => 1,
+        'min'   => 1,
+        'default'=>'ftp://ftp.unicode.org/Public/cldr/',
+        'desc'  => 'host to fetch the snapshot from',
+    ),
+    'snapshotfile' => array(
+        'short' => 'ssf',
+        'max'   => 1,
+        'min'   => 1,
+        'default'=>'cldr-repository-daily.tgz',
+        'desc'  => 'name of the snapshot',
     ),
     'languagesdir'=>array(
         'short' => 'dl',
@@ -140,13 +166,13 @@ if ($opt->isDefined('updatecvs')) {
     updatecvs();
 }
 if ($opt->isDefined('languages')) {
-    languages(realpath($opt->getValue('checkoutdir')));
+    languages(realpath($opt->getValue('checkoutdir') . 'cldr/common/main'));
 }
 if ($opt->isDefined('countries')) {
-    countries(realpath($opt->getValue('checkoutdir')));
+    countries(realpath($opt->getValue('checkoutdir') . 'cldr/common/main'));
 }
 if ($opt->isDefined('currencies')) {
-    currencies(realpath($opt->getValue('checkoutdir')));
+    currencies(realpath($opt->getValue('checkoutdir') . 'cldr/common/main'));
 }
 
 # --- functions
@@ -175,21 +201,80 @@ function verbose($str)
 function updatecvs()
 {
     global $opt;
-    verbose('Updating CVS checkout');
-    
-    if (!PEAR::loadExtension('cvsclient')) {
-        usage('ext/cvsclient not available!');
+    verbose('Fetching snapshot');
+    // Fetch the snapshot
+    $host = $opt->getValue('snapshothost');
+    $file = $opt->getValue('snapshotfile');
+    $command = escapeshellcmd("wget $host$file");
+    $output = shell_exec($command);
+
+    verbose('Fetching complete');
+    verbose($output);
+
+    verbose('Now creating needed dirs');
+
+    // Create needed dirs
+    require_once 'System.php';
+    $system =& new System();
+
+    $cvs = $opt->getValue('cvsdir');
+    $result = $system->mkDir($cvs);
+    if (!$result) {
+        verbose("Creating dir $cvs failed");
     }
-    
-    $host = $opt->getValue('cvsserver');
+
+    $locales = $opt->getValue('checkoutdir');
+    $result = $system->mkDir($locales);
+    if (!$result) {
+        verbose("Creating dir $locales failed");
+    }
+
+    verbose('Creating needed dirs is done');
+
+    verbose('Extracting snapshot file');
+
+    // Extract the snapshot
+    require_once 'Archive/Tar.php';
+
+    $tar = new Archive_Tar($file);
+    $tar->extract($cvs);
+
+    verbose('Extracting snapshot file done');
+
+    verbose('Checking out files out of local CVS');
+
+    // Checkout the snapshot (locally)
+
+    $current = dirname(__FILE__) . '/';
+    // Go to the dir that everything will be checked into
+    chdir($current.$locales);
+
+    $mod  = $opt->getValue('cvsmodule');
+    $command = escapeshellcmd("cvs -d $current$cvs co $mod");
+    $output = shell_exec($command);
+
+    // lets go back to the root
+    chdir($current);
+
+    verbose($output);
+    verbose('Checkout done');
+
+
+    verbose('Updating CVS checkout');
+
+    #if (!PEAR::loadExtension('cvsclient')) {
+    #    usage('ext/cvsclient not available!');
+    #}
+
+    /*$host = $opt->getValue('cvsserver');
     $repo = $opt->getValue('cvsrepo');
     verbose("Connecting to CVS pserver $host:$repo");
-    
+
     if (!$cvs = cvsclient_connect($host, $repo)) {
         usage($php_errormsg);
     }
     verbose("Connected to CVS pserver $host:$repo");
-    
+
     $user = $opt->getValue('cvsuser');
     $pass = $opt->getValue('cvspass');
     verbose("Logging in to CVS pserver with '$user:$pass'");
@@ -197,8 +282,8 @@ function updatecvs()
         usage($php_errormsg);
     }
     verbose("Logged in as '$user:$pass'");
-    
-    $mod  = $opt->getValue('cvsmodule');
+
+
     $path = realpath($opt->getValue('checkoutdir'));
     verbose("Updating $mod in $path");
     foreach (glob($path .'/??.xml') as $file) {
@@ -207,16 +292,40 @@ function updatecvs()
             usage($php_errormsg);
         }
     }
-    verbose("Updating from CVS done\n");
+    verbose("Updating from CVS done\n");*/
+}
+
+function cleanup()
+{
+    // cleanup
+    $cvs = $opt->getValue('cvsdir');
+    $result = $system->rm("-rf $cvs");
+    if (!$result) {
+        verbose("Could not remove $cvs");
+    }
+
+    $locales = $opt->getValue('checkoutdir');
+    $result = $system->rm("-rf $locales");
+    if (!$result) {
+        verbose("Could not remove $locales");
+    }
+
+    $file = $opt->getValue('snapshotfile');
+    $result = @unlink($file);
+    if (!$result) {
+        verbose("Could not remove $file");
+    }
+
+    verbose('Cleanup complete');
 }
 
 function countries($path)
 {
     verbose("Updating countries");
-    
+
     // load english
     $en = sx_load_ctrys($path .'/en.xml');
-    
+
     $count = 0;
     foreach (glob($path .'/??.xml') as $file) {
         list($lang) = explode('.', basename($file));
@@ -225,17 +334,17 @@ function countries($path)
         verbose("Done\n");
         ++$count;
     }
-    
+
     verbose("Updated $count country files\n");
 }
 
 function languages($path)
 {
     verbose("Updating languages");
-    
+
     // load english
     $en = sx_load_langs($path .'/en.xml');
-    
+
     $count = 0;
     foreach (glob($path .'/??.xml') as $file) {
         list($lang) = explode('.', basename($file));
@@ -244,17 +353,17 @@ function languages($path)
         verbose("Done\n");
         ++$count;
     }
-    
+
     verbose("Updated $count language files\n");
 }
 
 function currencies($path)
 {
     verbose("Updating currencies");
-    
+
     // load english
     $en = sx_load_crrcys($path .'/en.xml');
-    
+
     $count = 0;
     foreach (glob($path .'/??.xml') as $file) {
         list($lang) = explode('.', basename($file));
@@ -263,7 +372,7 @@ function currencies($path)
         verbose("Done\n");
         ++$count;
     }
-    
+
     verbose("Updated $count currency files\n");
 }
 
@@ -302,8 +411,8 @@ function sx_load($array, $casefunc)
     foreach ($array as $p) {
         if (strlen($p['type']) == 2) {
             verbose('.');
-            $ar[$casefunc($p['type'])] = 
-                mb_ereg_replace('\'', '\\\'', 
+            $ar[$casefunc($p['type'])] =
+                mb_ereg_replace('\'', '\\\'',
                 mb_strtoupper(mb_substr($p, 0, 1, 'UTF-8')) .
                 mb_substr($p, 1, mb_strlen($p), 'UTF-8'));
         }
@@ -339,7 +448,7 @@ function write_currency_file($lang, $codes)
 function write_file($path, $codes)
 {
     verbose("Writing ". count($codes) ." codes to '$path'");
-    
+
     if (!is_dir($dir = dirname($path))) {
         require_once 'System.php';
         verbose("Createding directory '$dir'");
