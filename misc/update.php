@@ -63,34 +63,6 @@ $cnf = array(
         'max'   => 0,
         'desc'  => 'cleanups after the update',
     ),
-    /*'cvsserver' => array(
-        'short' => 'cs',
-        'max'   => 1,
-        'min'   => 1,
-        'default'=>'oss.software.ibm.com',
-        'desc'  => 'CVS pserver hostname',
-    ),
-    'cvsrepo'   => array(
-        'short' => 'cr',
-        'max'   => 1,
-        'min'   => 1,
-        'default'=>'/usr/cvs/icu',
-        'desc'  => 'CVS pserver repository',
-    ),
-    'cvsuser'   => array(
-        'short' => 'cu',
-        'max'   => 1,
-        'min'   => 1,
-        'default'=>'anoncvs',
-        'desc'  => 'CVS pserver username',
-    ),
-    'cvspass'   => array(
-        'short' => 'cp',
-        'max'   => 1,
-        'min'   => 1,
-        'default'=>'anoncvs',
-        'desc'  => 'CVS pserver password',
-    ),*/
     'cvsmodule' => array(
         'short' => 'cm',
         'max'   => 1,
@@ -201,97 +173,54 @@ function verbose($str)
 function updatecvs()
 {
     global $opt;
-    verbose('Fetching snapshot');
-    // Fetch the snapshot
+    
+    require_once 'System.php';
+    
     $host = $opt->getValue('snapshothost');
     $file = $opt->getValue('snapshotfile');
-    $command = escapeshellcmd("wget $host$file");
-    $output = shell_exec($command);
-
+    $wget = $host . $file;
+    verbose("Fetching snapshot $wget");
+    verbose(shell_exec("wget $wget"));
+    if (!file_exists($file)) {
+        return verbose("Failed");
+    }
     verbose('Fetching complete');
-    verbose($output);
 
-    verbose('Now creating needed dirs');
-
-    // Create needed dirs
-    require_once 'System.php';
-
+    verbose('Creating directories');
     $cvs = $opt->getValue('cvsdir');
-    $result = System::mkDir($cvs);
-    if (!$result) {
-        verbose("Creating dir $cvs failed");
+    verbose("mkdir -p $cvs");
+    if (!System::mkdir(array('-p', $cvs))) {
+        return verbose("Failed");
     }
-
     $locales = $opt->getValue('checkoutdir');
-    $result = System::mkDir($locales);
-    if (!$result) {
-        verbose("Creating dir $locales failed");
+    verbose("mkdir -p $locales");
+    if (!System::mkdir(array('-p', $locales))) {
+        return verbose("Failed");
     }
+    verbose('Done');
 
-    verbose('Creating needed dirs is done');
-
-    verbose('Extracting snapshot file');
-
-    // Extract the snapshot
+    verbose('Extracting snapshot');
+    verbose("tar xzf $file");
     require_once 'Archive/Tar.php';
-
     $tar = new Archive_Tar($file);
-    $tar->extract($cvs);
+    if (true !== $tar->extract($cvs)) {
+        return verbose("Failed");
+    }
+    verbose("Done");
 
-    verbose('Extracting snapshot file done');
-
-    verbose('Checking out files out of local CVS');
-
-    // Checkout the snapshot (locally)
-
+    verbose('Checking out files out from local CVS');
     $current = dirname(__FILE__) . '/';
-    // Go to the dir that everything will be checked into
+    verbose("chdir $current$locales");
     chdir($current.$locales);
-
+    $root = realpath($current.$cvs);
     $mod  = $opt->getValue('cvsmodule');
-    $command = escapeshellcmd("cvs -d $current$cvs co $mod");
-    $output = shell_exec($command);
-
-    // lets go back to the root
+    $command = "cvs -d \"$root\" co -d \".\" $mod";
+    verbose($command);
+    verbose(shell_exec($command));
+    verbose("chdir $current");
     chdir($current);
+    verbose('Done');
 
-    verbose($output);
-    verbose('Checkout done');
-
-
-    verbose('Updating CVS checkout');
-
-    #if (!PEAR::loadExtension('cvsclient')) {
-    #    usage('ext/cvsclient not available!');
-    #}
-
-    /*$host = $opt->getValue('cvsserver');
-    $repo = $opt->getValue('cvsrepo');
-    verbose("Connecting to CVS pserver $host:$repo");
-
-    if (!$cvs = cvsclient_connect($host, $repo)) {
-        usage($php_errormsg);
-    }
-    verbose("Connected to CVS pserver $host:$repo");
-
-    $user = $opt->getValue('cvsuser');
-    $pass = $opt->getValue('cvspass');
-    verbose("Logging in to CVS pserver with '$user:$pass'");
-    if (!cvsclient_login($cvs, $user, $pass)) {
-        usage($php_errormsg);
-    }
-    verbose("Logged in as '$user:$pass'");
-
-
-    $path = realpath($opt->getValue('checkoutdir'));
-    verbose("Updating $mod in $path");
-    foreach (glob($path .'/??.xml') as $file) {
-        verbose("Retrieving $file");
-        if (!cvsclient_retrieve($cvs, $mod, basename($file), $file)) {
-            usage($php_errormsg);
-        }
-    }
-    verbose("Updating from CVS done\n");*/
 }
 
 function cleanup()
@@ -299,21 +228,21 @@ function cleanup()
     global $opt;
     // cleanup
     require_once 'System.php';
+    
+    verbose("Performing cleanup");
+    
     $cvs = $opt->getValue('cvsdir');
-    $result = System::rm("-rf $cvs");
-    if (!$result) {
+    if (!System::rm("-rf $cvs")) {
         verbose("Could not remove $cvs");
     }
 
     $locales = $opt->getValue('checkoutdir');
-    $result = System::rm("-rf $locales");
-    if (!$result) {
+    if (!System::rm("-rf $locales")) {
         verbose("Could not remove $locales");
     }
 
     $file = $opt->getValue('snapshotfile');
-    $result = System::rm($file);
-    if (!$result) {
+    if (!System::rm($file)) {
         verbose("Could not remove $file");
     }
 
