@@ -30,7 +30,7 @@ $this->codes = array(
     'ch' => 'Chamorro',
     'co' => 'Corsican',
     'cr' => 'Cree',
-    'cs' => 'čehu',
+    'cs' => 'Čehu',
     'cu' => 'Church Slavic',
     'cv' => 'Chuvash',
     'cy' => 'Welsh',
@@ -187,7 +187,7 @@ $this->codes = array(
     'yi' => 'Yiddish',
     'yo' => 'Yoruba',
     'za' => 'Zhuang',
-    'zh' => 'ķīniešu',
+    'zh' => 'Ķīniešu',
     'zu' => 'Zulu',
 );
 ?>

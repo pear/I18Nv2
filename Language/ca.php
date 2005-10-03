@@ -3,18 +3,18 @@
  * $Id$
  */
 $this->codes = array(
-    'aa' => 'àfar',
+    'aa' => 'Àfar',
     'ab' => 'Abkhaz',
     'ae' => 'Avestan',
     'af' => 'Afrikaans',
     'ak' => 'Akan',
     'am' => 'Amhàric',
     'an' => 'Aragonese',
-    'ar' => 'àrab',
+    'ar' => 'Àrab',
     'as' => 'Assamès',
     'av' => 'Avaric',
     'ay' => 'Aimara',
-    'az' => 'àzeri',
+    'az' => 'Àzeri',
     'ba' => 'Baixkir',
     'be' => 'Bielorús',
     'bg' => 'Búlgar',
