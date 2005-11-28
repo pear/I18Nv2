@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.65 $ -->
+<!-- $Revision: 1.66 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -62,6 +62,12 @@ FINAL NOTE:
    <role>lead</role>
   </maintainer>
   <maintainer>
+   <user>dufuz</user>
+   <name>Helgo Thormar</name>
+   <email>dufuz@php.net</email>
+   <role>lead</role>
+  </maintainer>
+  <maintainer>
    <user>quipo</user>
    <name>Lorenzo Alberton</name>
    <email>quipo@php.net</email>
@@ -78,6 +84,7 @@ FINAL NOTE:
 + Fetching and destroying of already started output buffers in I18Nv2::autoConv() is now optional
 + Added I18Nv2_Timezone (simple country code to time zone name map)
 * Transliterate in I18Nv2::autoConv()
+* Fixed several occurrences of array_shift(explode())
 ]]>
   </notes>
 

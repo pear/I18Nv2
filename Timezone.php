@@ -71,7 +71,7 @@ class I18Nv2_Timezone
         
         if (!count($GLOBALS['_I18Nv2_Continental_Timezones'])) {
             foreach (I18Nv2_Timezone::getAll(true) as $tz) {
-                $cn = array_shift(explode('/', $tz, 2));
+                $cn = current($a = explode('/', $tz, 2));
                 $GLOBALS['_I18Nv2_Continental_Timeszones'][$cn][] = $tz;
             }
         }
