@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Revision: 1.67 $ -->
+<!-- $Revision: 1.68 $ -->
 <package version="1.0">
  <name>I18Nv2</name>
  <summary>
@@ -79,7 +79,7 @@ FINAL NOTE:
   <version>0.11.4</version>
   <license>PHP</license>
   <state>beta</state>
-  <date>2005-03-00</date>
+  <date>2006-03-00</date>
   <notes><![CDATA[
 + Fetching and destroying of already started output buffers in I18Nv2::autoConv() is now optional
 + Added I18Nv2_Timezone (simple country code to time zone name map)
