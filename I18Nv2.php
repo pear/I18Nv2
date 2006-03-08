@@ -73,9 +73,15 @@ class I18Nv2
         // if the locale is not recognized by the system, check if there 
         // is a fallback locale and try that, otherwise return false
         if (!$syslocale) {
-            $fallbacks = I18Nv2::getStaticProperty('fallbacks');
+            $fallbacks = &I18Nv2::getStaticProperty('fallbacks');
             if (isset($fallbacks[$locale])) {
-                return I18Nv2::setLocale($fallbacks[$locale], $cat);
+                // avoid endless recursion with circular fallbacks
+                $trylocale = $fallbacks[$locale];
+                unset($fallbacks[$locale]);
+                if ($retlocale = I18Nv2::setLocale($trylocale, $cat)) {
+                    $fallbacks[$locale] = $trylocale;
+                    return $retlocale;
+                }
             }
             return false;
         }
