@@ -15,9 +15,9 @@
 
 /**
  * I18Nv2::DecoratedList
- * 
+ *
  * Decorator for I18Nv2_CommonList objects.
- * 
+ *
  * @package     I18Nv2
  * @category    Internationalization
  */
@@ -34,15 +34,15 @@ class I18Nv2_DecoratedList
 {
     /**
      * I18Nv2_(Common|Decorated)List
-     * 
+     *
      * @access  protected
      * @var     object
      */
     var $list = null;
-    
+
     /**
      * Constructor
-     * 
+     *
      * @access  public
      * @param   object  $list   I18Nv2_DecoratedList or I18Nv2_CommonList
      */
@@ -54,9 +54,9 @@ class I18Nv2_DecoratedList
         }
     }
 
-    /** 
+    /**
      * Get all codes
-     * 
+     *
      * @access  public
      * @return  array
      */
@@ -64,10 +64,10 @@ class I18Nv2_DecoratedList
     {
         return $this->decorate($this->list->getAllCodes());
     }
-    
-    /** 
+
+    /**
      * Check if code is valid
-     * 
+     *
      * @access  public
      * @return  bool
      * @param   string  $code
@@ -76,10 +76,10 @@ class I18Nv2_DecoratedList
     {
         return $this->decorate($this->list->isValidCode($code));
     }
-    
-    /** 
+
+    /**
      * Get name for code
-     * 
+     *
      * @access  public
      * @return  string
      * @param   string  $code
@@ -88,10 +88,10 @@ class I18Nv2_DecoratedList
     {
         return $this->decorate($this->list->getName($code));
     }
-    
+
     /**
      * Decorate
-     * 
+     *
      * @abstract
      * @access  protected
      * @return  mixed
@@ -113,7 +113,8 @@ class I18Nv2_DecoratedList
     {
         require_once 'I18Nv2/DecoratedList/'. $type .'.php';
         $decoratedList = 'I18Nv2_DecoratedList_' . $type;
-        return new $decoratedList($this);
+        $obj = new $decoratedList($this);
+        return $obj;
     }
 
     /**
@@ -130,7 +131,7 @@ class I18Nv2_DecoratedList
 
     /**
      * Set active language
-     * 
+     *
      * Note that each time you set a different language the corresponding
      * language file has to be loaded again, too.
      *
@@ -142,10 +143,10 @@ class I18Nv2_DecoratedList
     {
         return $this->list->setLanguage($language);
     }
-    
+
     /**
      * Get current language
-     * 
+     *
      * @access  public
      * @return  string
      */
@@ -153,7 +154,7 @@ class I18Nv2_DecoratedList
     {
         return $this->list->getLanguage();
     }
-    
+
     /**
      * Set active encoding
      *
@@ -165,10 +166,10 @@ class I18Nv2_DecoratedList
     {
         return $this->list->setEncoding($encoding);
     }
-    
-    /** 
+
+    /**
      * Get current encoding
-     * 
+     *
      * @access  public
      * @return  string
      */
