@@ -8,7 +8,7 @@ $this->dateFormats = array(
     I18Nv2_DATETIME_DEFAULT   =>  '%d-%b-%Y',
     I18Nv2_DATETIME_MEDIUM    =>  '%d-%b-%Y',
     I18Nv2_DATETIME_LONG      =>  '%e. %B %Y',
-    I18Nv2_DATETIME_FULL      =>  '%A, d. %d. %B %Y'
+    I18Nv2_DATETIME_FULL      =>  '%A, den %d. %B %Y'
 );
 $this->timeFormats = array(
     I18Nv2_DATETIME_SHORT     =>  '%H:%M',
