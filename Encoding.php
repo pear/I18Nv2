@@ -56,7 +56,7 @@ class I18Nv2_Encoding
      */
     function isEncoding($encoding)
     {
-        $name = I18Nv3_Encoding::standardize($encoding);
+        $name = I18Nv2_Encoding::standardize($encoding);
         return isset($GLOBALS['_I18Nv2_Encoding_Names'][$name]);
     }
     
@@ -133,9 +133,9 @@ class I18Nv2_Encoding
     function forAlias($alias)
     {
         $name = I18Nv2_Encoding::standardize($alias);
-        foreach (array_keys($GLOBALS['_I18Nv2_Encoding_Aliases']) as $a) {
-            if (in_array($name, $GLOBALS['_I18Nv2_Encoding_Aliases'][$a])) {
-                return $GLOBALS['_I18Nv2_Encoding_Names'][$a];
+        foreach ($GLOBALS['_I18Nv2_Encoding_Aliases'] as $k => $a) {
+            if (in_array($name, $a)) {
+                return $GLOBALS['_I18Nv2_Encoding_Names'][$k];
             }
         }
         return false;
