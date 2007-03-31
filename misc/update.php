@@ -53,6 +53,11 @@ $cnf = array(
         'max'   => 0,
         'desc'  => 'update I18Nv2 currencies',
     ),
+    'locales'=> array(
+        'short' => 'a',
+        'max'   => 0,
+        'desc'  => 'update I18Nv2 locales',
+    ),
     'verbose'   => array(
         'short' => 'v',
         'max'   => 0,
@@ -118,6 +123,13 @@ $cnf = array(
         'min'   => 1,
         'default'=>'../Currency',
         'desc'  => 'path where updated currency files should be put',
+    ),
+    'localesdir'=>array(
+        'short' => 'do',
+        'max'   => 1,
+        'min'   => 1,
+        'default'=>'../Locales',
+        'desc'  => 'path where updated locales files should be put',
     )
 );
 
@@ -127,10 +139,13 @@ if (PEAR::isError($opt)) {
     usage($opt);
 }
 
-if (    !$opt->isDefined('updatecvs')   and
-        !$opt->isDefined('languages')   and
-        !$opt->isDefined('countries')   and
-        !$opt->isDefined('currencies')) {
+if (
+    !$opt->isDefined('updatecvs')   &&
+    !$opt->isDefined('languages')   &&
+    !$opt->isDefined('countries')   &&
+    !$opt->isDefined('currencies')  &&
+    !$opt->isDefined('locales')
+) {
     usage();
 }
 
@@ -146,6 +161,10 @@ if ($opt->isDefined('countries')) {
 if ($opt->isDefined('currencies')) {
     currencies(realpath($opt->getValue('checkoutdir')));
 }
+if ($opt->isDefined('locales')) {
+    locales(realpath($opt->getValue('checkoutdir')));
+}
+
 
 # --- functions
 
@@ -173,9 +192,9 @@ function verbose($str)
 function updatecvs()
 {
     global $opt;
-    
+
     require_once 'System.php';
-    
+
     $host = $opt->getValue('snapshothost');
     $file = $opt->getValue('snapshotfile');
     $wget = $host . $file;
@@ -192,9 +211,12 @@ function updatecvs()
     if (!System::mkdir(array('-p', $cvs))) {
         return verbose("Failed");
     }
+
+    $current = dirname(__FILE__) . '/';
+
     $locales = $opt->getValue('checkoutdir');
-    verbose("mkdir -p $locales");
-    if (!System::mkdir(array('-p', $locales))) {
+    verbose("mkdir -p $current$locales");
+    if (!System::mkdir(array('-p', $current.$locales))) {
         return verbose("Failed");
     }
     verbose('Done');
@@ -203,13 +225,12 @@ function updatecvs()
     verbose("tar xzf $file");
     require_once 'Archive/Tar.php';
     $tar = new Archive_Tar($file);
-    if (true !== $tar->extract($cvs)) {
+    if (true !== $tar->extract($current.$cvs)) {
         return verbose("Failed");
     }
-    verbose("Done");
+    verbose('Done');
 
     verbose('Checking out files out from local CVS');
-    $current = dirname(__FILE__) . '/';
     verbose("chdir $current$locales");
     chdir($current.$locales);
     $root = realpath($current.$cvs);
@@ -228,9 +249,9 @@ function cleanup()
     global $opt;
     // cleanup
     require_once 'System.php';
-    
-    verbose("Performing cleanup");
-    
+
+    verbose('Performing cleanup');
+
     $cvs = $opt->getValue('cvsdir');
     if (!System::rm("-rf $cvs")) {
         verbose("Could not remove $cvs");
@@ -251,7 +272,7 @@ function cleanup()
 
 function countries($path)
 {
-    verbose("Updating countries");
+    verbose('Updating countries');
 
     // load english
     $en = sx_load_ctrys($path .'/en.xml');
@@ -270,7 +291,7 @@ function countries($path)
 
 function languages($path)
 {
-    verbose("Updating languages");
+    verbose('Updating languages');
 
     // load english
     $en = sx_load_langs($path .'/en.xml');
@@ -289,7 +310,7 @@ function languages($path)
 
 function currencies($path)
 {
-    verbose("Updating currencies");
+    verbose('Updating currencies');
 
     // load english
     $en = sx_load_crrcys($path .'/en.xml');
@@ -304,6 +325,29 @@ function currencies($path)
     }
 
     verbose("Updated $count currency files\n");
+}
+
+function locales($path)
+{
+    verbose('Updating locales');
+
+    // load english
+//     $en = sx_load_????($path .'/en.xml');
+
+    $count = 0;
+    // First we fetch the global files
+    foreach (glob($path .'/??.xml') as $file) {
+        $locale = sx_load_locales($file);
+        // Now we fetch the sub locales
+        $pattern = "$path/" . substr($file, strlen($file)-6, -4) . '_??.xml';
+        foreach (glob($pattern) as $sfile) {
+            verbose("$sfile\n");
+        }
+        verbose("Done\n");
+        ++$count;
+    }
+
+    verbose("Updated $count locale files\n");
 }
 
 function sx_load_langs($file)
@@ -325,30 +369,65 @@ function sx_load_crrcys($file)
     verbose("Loading currencies of '$file'");
     $sx = simplexml_load_file($file);
     $ar = array();
-    if (count($sx->numbers->currencies[0]))
-    foreach ($sx->numbers->currencies[0] as $c) {
-        verbose('.');
-        $ar[(string) $c['type']] = $c->displayName;
+    if (count($sx->numbers->currencies[0])) {
+        foreach ($sx->numbers->currencies[0] as $c) {
+            verbose('.');
+            $ar[(string) $c['type']] = $c->displayName;
+        }
     }
-    verbose("Loaded ". count($ar) ." codes");
+    verbose('Loaded ' . count($ar) . ' codes');
     return $ar;
+}
+
+function sx_load_locales($file)
+{
+    verbose("Loading locales of '$file'");
+    $sx = simplexml_load_file($file);
+    $ar = array();
+    if (count($sx->dates->calendars->calendar->dateFormats[0])) {
+        foreach ($sx->dates->calendars->calendar->dateFormats[0] as $l) {
+            $ar['date'][(string)$l['type']] = (string)$l->dateFormat->pattern;
+        }
+    } else {
+        $ar['date'] = array();
+    }
+
+    if (count($sx->dates->calendars->calendar->timeFormats[0])) {
+        foreach ($sx->dates->calendars->calendar->timeFormats[0] as $t) {
+            $ar['time'][(string)$t['type']] = (string)$t->timeFormat->pattern;
+        }
+    } else {
+        $ar['time'] = array();
+    }
+
+    if (count($sx->numbers->currencyFormats[0])) {
+        foreach ($sx->numbers->currencyFormats[0] as $c) {
+            $ar['currency'][] = (string)$c->currencyFormatLength->pattern;
+        }
+    } else {
+        $ar['currency'] = array();
+    }
+
+var_dump($ar);
+    exit;
 }
 
 function sx_load($array, $casefunc)
 {
     mb_regex_encoding('UTF-8');
     $ar = array();
-    if (count($array))
-    foreach ($array as $p) {
-        if (strlen($p['type']) == 2) {
-            verbose('.');
-            $ar[$casefunc($p['type'])] =
-                mb_ereg_replace('\'', '\\\'',
-                mb_strtoupper(mb_substr($p, 0, 1, 'UTF-8'), 'UTF-8') .
-                mb_substr($p, 1, mb_strlen($p, 'UTF-8'), 'UTF-8'));
+    if (count($array)) {
+        foreach ($array as $p) {
+            if (strlen($p['type']) == 2) {
+                verbose('.');
+                $ar[$casefunc($p['type'])] =
+                    mb_ereg_replace('\'', '\\\'',
+                    mb_strtoupper(mb_substr($p, 0, 1, 'UTF-8'), 'UTF-8') .
+                    mb_substr($p, 1, mb_strlen($p, 'UTF-8'), 'UTF-8'));
+            }
         }
     }
-    verbose("Loaded ". count($ar) ." codes");
+    verbose('Loaded ' . count($ar) . ' codes');
     return $ar;
 }
 
@@ -357,7 +436,7 @@ function write_lang_file($lang, $codes)
     global $opt;
     $path = realpath($opt->getValue('languagesdir'));
     verbose("Writing language codes of language '$lang'");
-    return write_file($path ."/$lang.php", $codes);
+    return write_file("$path/$lang.php", $codes);
 }
 
 function write_country_file($lang, $codes)
@@ -365,7 +444,7 @@ function write_country_file($lang, $codes)
     global $opt;
     $path = realpath($opt->getValue('countriesdir'));
     verbose("Writing country codes of language '$lang'");
-    return write_file($path ."/$lang.php", $codes);
+    return write_file("$path/$lang.php", $codes);
 }
 
 function write_currency_file($lang, $codes)
@@ -373,7 +452,42 @@ function write_currency_file($lang, $codes)
     global $opt;
     $path = realpath($opt->getValue('currenciesdir'));
     verbose("Writing currency codes of language '$lang'");
-    return write_file($path ."/$lang.php", $codes);
+    return write_file("$path/$lang.php", $codes);
+}
+
+function write_locale_file($locale, $data)
+{
+    global $opt;
+    $path = realpath($opt->getValue('localesdir'));
+    verbose("Writing data of locale '$locale'");
+    $path = "$path/$locale.php";
+
+    if (!is_dir($dir = dirname($path))) {
+        require_once 'System.php';
+        verbose("Createding directory '$dir'");
+        System::mkdir(array('-p', $dir));
+    }
+
+    $content = "<?php\n/**\n * \$Id\$\n */\n";
+
+    // process dates
+    $content .= '$this->dateFormats = array(' . "\n";
+    foreach ($data['date'] as $code => $string) {
+        verbose('.');
+        $content .= "    '$code'   => '$string',\n";
+    }
+    $content .= ");\n";
+
+    // process times
+    $content .= '$this->timeFormats = array(' . "\n";
+    foreach ($data['time'] as $code => $string) {
+        verbose('.');
+        $content .= "    '$code'   => '$string',\n";
+    }
+    $content .= ");\n";
+
+    $content .= "?>\n";
+    return file_put_contents($path, $content);
 }
 
 function write_file($path, $codes)
