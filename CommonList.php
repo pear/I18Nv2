@@ -15,15 +15,15 @@
 
 /**
  * I18Nv2::CommonList
- * 
+ *
  * @author      Michael Wallner <mike@php.net>
  * @package     I18Nv2
  * @category    Internationalization
  */
 
-/** 
+/**
  * I18Nv2_CommonList
- * 
+ *
  * Base class for I18Nv2_Country and I18Nv2_Language that performs some basic
  * work, so code doesn't get written twice or even more often in the future.
  *
@@ -35,28 +35,28 @@ class I18Nv2_CommonList
 {
     /**
      * Codes
-     * 
+     *
      * @access  protected
      * @var     array
      */
     var $codes = array();
-    
+
     /**
      * Language
-     * 
+     *
      * @access  protected
      * @var     string
      */
     var $language = '';
-    
+
     /**
      * Encoding
-     * 
+     *
      * @access  protected
      * @var     string
      */
     var $encoding = '';
-    
+
     /**
      * Constructor
      *
@@ -83,7 +83,7 @@ class I18Nv2_CommonList
 
     /**
      * Set active language
-     * 
+     *
      * Note that each time you set a different language the corresponding
      * language file has to be loaded again, too.
      *
@@ -106,10 +106,10 @@ class I18Nv2_CommonList
         }
         return false;
     }
-    
+
     /**
      * Get current language
-     * 
+     *
      * @access  public
      * @return  string
      */
@@ -117,7 +117,7 @@ class I18Nv2_CommonList
     {
         return $this->language;
     }
-    
+
     /**
      * Set active encoding
      *
@@ -133,10 +133,10 @@ class I18Nv2_CommonList
         $this->encoding = strToUpper($encoding);
         return true;
     }
-    
-    /** 
+
+    /**
      * Get current encoding
-     * 
+     *
      * @access  public
      * @return  string
      */
@@ -147,7 +147,7 @@ class I18Nv2_CommonList
 
     /**
      * Check if code is valid
-     * 
+     *
      * @access  public
      * @return  bool
      * @param   string  $code   code
@@ -159,7 +159,7 @@ class I18Nv2_CommonList
 
     /**
      * Return corresponding name of code
-     * 
+     *
      * @access  public
      * @return  string  name
      * @param   string  $code   code
@@ -191,7 +191,7 @@ class I18Nv2_CommonList
         }
         return $this->codes;
     }
-    
+
     /**
      * @access  private
      * @return  void
@@ -200,10 +200,10 @@ class I18Nv2_CommonList
     {
         $code = iconv('UTF-8', $this->encoding .'//TRANSLIT', $code);
     }
-    
-    /** 
+
+    /**
      * Load Language
-     * 
+     *
      * @access  proteceted
      * @return  bool
      * @param   string  $language
@@ -212,7 +212,7 @@ class I18Nv2_CommonList
     {
         return false;
     }
-    
+
     /**
      * Change Key Case
      *
@@ -224,7 +224,7 @@ class I18Nv2_CommonList
     {
         return $code;
     }
-    
+
     /**
      * Decorate this list
      *
@@ -236,7 +236,7 @@ class I18Nv2_CommonList
     {
         require_once 'I18Nv2/DecoratedList/'. $type .'.php';
         $decoratedList = 'I18Nv2_DecoratedList_' . $type;
-        return new $decoratedList($this);
-    }    
+        $decorator = new $decoratedList($this);
+        return $decorator;
+    }
 }
-?>
