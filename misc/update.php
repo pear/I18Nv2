@@ -464,7 +464,7 @@ function write_locale_file($locale, $data)
 
     if (!is_dir($dir = dirname($path))) {
         require_once 'System.php';
-        verbose("Createding directory '$dir'");
+        verbose("Creating directory '$dir'");
         System::mkdir(array('-p', $dir));
     }
 
