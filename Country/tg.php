@@ -5,7 +5,7 @@
 $this->codes = array(
     'AD' => 'Andorra',
     'AE' => 'United Arab Emirates',
-    'AF' => 'Afghanistan',
+    'AF' => 'Афғонистан',
     'AG' => 'Antigua and Barbuda',
     'AI' => 'Anguilla',
     'AL' => 'Albania',
@@ -111,7 +111,7 @@ $this->codes = array(
     'IE' => 'Ireland',
     'IL' => 'Israel',
     'IM' => 'Isle of Man',
-    'IN' => 'ଭାରତ',
+    'IN' => 'India',
     'IO' => 'British Indian Ocean Territory',
     'IQ' => 'Iraq',
     'IR' => 'Iran',
