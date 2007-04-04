@@ -124,7 +124,7 @@ $this->codes = array(
     'no' => 'ນໍເວວ',
     'nr' => 'South Ndebele',
     'nv' => 'Navajo',
-    'ny' => 'Nyanja; Chichewa; Chewa',
+    'ny' => 'Nyanja',
     'oc' => 'ອອັກຊິທັນ',
     'oj' => 'Ojibwa',
     'om' => 'ໂອໂລໂມ(ອາຟານ)',
@@ -190,4 +190,3 @@ $this->codes = array(
     'zh' => 'ຈີນ',
     'zu' => 'ຊູລູ',
 );
-?>
