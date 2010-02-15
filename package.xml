@@ -92,7 +92,7 @@ FINAL NOTE:
   <filelist>
    <file role="php" name="I18Nv2.php" />
 
-   <dir name="/" role="php" baseinstalldir="I18Nv2">
+   <dir name="/" role="php" baseinstalldir="/">
 
     <file name="Locale.php" />
     <file name="CommonList.php" />
