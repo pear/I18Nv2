@@ -374,7 +374,7 @@ class I18Nv2_Locale
             
             $this->loadExtension();
     
-            if (!count($this->dateTimeFormats)) {
+            if (empty($this->dateTimeFormats) && !empty($this->dateFormats) && !empty($this->timeFormats)) {
                 $this->dateTimeFormats = array(
                     I18Nv2_DATETIME_SHORT   => 
                         $this->dateFormats[I18Nv2_DATETIME_SHORT]
@@ -477,11 +477,31 @@ class I18Nv2_Locale
      */
     function setDefaults()
     {
-        $this->currentTimeFormat        = $this->timeFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentDateFormat        = $this->dateFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentDateTimeFormat    = $this->dateTimeFormats[I18Nv2_DATETIME_DEFAULT];
-        $this->currentNumberFormat      = $this->numberFormats[I18Nv2_NUMBER_FLOAT];
-        $this->currentCurrencyFormat    = $this->currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
+        $this->currentTimeFormat     = null;
+        $this->currentDateFormat     = null;
+        $this->currentDateTimeFormat = null;
+        $this->currentNumberFormat   = null;
+        $this->currentCurrencyFormat = null;
+
+        if (isset($this->timeFormats[I18Nv2_DATETIME_DEFAULT])) {
+            $this->currentTimeFormat = $this->timeFormats[I18Nv2_DATETIME_DEFAULT];
+        }
+
+        if (isset($this->dateFormats[I18Nv2_DATETIME_DEFAULT])) {
+            $this->currentDateFormat = $this->dateFormats[I18Nv2_DATETIME_DEFAULT];
+        }
+
+        if (isset($this->dateTimeFormats[I18Nv2_DATETIME_DEFAULT])) {
+            $this->currentDateTimeFormat = $this->dateTimeFormats[I18Nv2_DATETIME_DEFAULT];
+        }
+
+        if (isset($this->numberFormats[I18Nv2_NUMBER_FLOAT])) {
+            $this->currentNumberFormat = $this->numberFormats[I18Nv2_NUMBER_FLOAT];
+        }
+
+        if (isset($this->currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL])) {
+            $this->currentCurrencyFormat = $this->currencyFormats[I18Nv2_CURRENCY_INTERNATIONAL];
+        }
     }
     
     /**
